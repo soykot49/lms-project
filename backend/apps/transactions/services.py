@@ -1,0 +1,136 @@
+from datetime import date, timedelta
+from django.conf import settings
+from apps.core.services.base import BaseService
+from apps.core.exceptions import BusinessLogicException, ValidationException
+from .models import Transaction, Reservation
+from apps.books.services import BookService
+from apps.members.services import MemberService
+
+
+class TransactionService(BaseService):
+    model = Transaction
+    
+    def issue_book(self, member_id: int, book_id: int, issued_by, days: int = None):
+        '''Issue a book to a member'''
+        member_service = MemberService()
+        book_service = BookService()
+        
+        # Check if member can borrow
+        if not member_service.can_borrow(member_id):
+            raise BusinessLogicException("Member cannot borrow books (blocked or has fines)")
+        
+        # Check book availability
+        if not book_service.check_availability(book_id):
+            raise BusinessLogicException("Book is not available")
+        
+        # Calculate due date
+        if days is None:
+            days = settings.LIBRARY_SETTINGS['DEFAULT_BORROWING_DAYS']
+        due_date = date.today() + timedelta(days=days)
+        
+        # Create transaction
+        transaction = self.model.objects.create(
+            member_id=member_id,
+            book_id=book_id,
+            issued_by=issued_by,
+            due_date=due_date,
+            status='issued'
+        )
+        
+        # Decrease book availability
+        book_service.decrease_availability(book_id)
+        
+        # Create notification
+        from apps.notifications.services import NotificationService
+        notif_service = NotificationService()
+        notif_service.create_notification(
+            member_id=member_id,
+            title="Book Issued",
+            message=f"You have borrowed '{transaction.book.title}'. Due date: {due_date}",
+            notification_type="issue"
+        )
+        
+        return transaction
+    
+    def return_book(self, transaction_id: int):
+        '''Return a borrowed book'''
+        transaction = self.get_object(transaction_id)
+        
+        if transaction.status == 'returned':
+            raise BusinessLogicException("Book already returned")
+        
+        transaction.return_date = date.today()
+        transaction.status = 'returned'
+        transaction.save()
+        
+        # Increase book availability
+        book_service = BookService()
+        book_service.increase_availability(transaction.book.id)
+        
+        # Calculate fine if overdue
+        if transaction.return_date > transaction.due_date:
+            from apps.fines.services import FineService
+            fine_service = FineService()
+            fine_service.create_fine_for_transaction(transaction)
+        
+        return transaction
+    
+    def get_overdue_transactions(self):
+        '''Get all overdue transactions'''
+        return self.model.objects.filter(
+            status='issued',
+            due_date__lt=date.today()
+        )
+
+
+class ReservationService(BaseService):
+    model = Reservation
+    
+    def create_reservation(self, member_id: int, book_id: int):
+        '''Create a reservation'''
+        member_service = MemberService()
+        if not member_service.can_borrow(member_id):
+            raise BusinessLogicException("Member cannot make reservations")
+        
+        expires_on = date.today() + timedelta(
+            days=settings.LIBRARY_SETTINGS['RESERVATION_EXPIRY_DAYS']
+        )
+        
+        reservation = self.model.objects.create(
+            member_id=member_id,
+            book_id=book_id,
+            expires_on=expires_on,
+            status='pending'
+        )
+        return reservation
+    
+    def approve_reservation(self, reservation_id: int):
+        '''Approve a reservation'''
+        reservation = self.get_object(reservation_id)
+        if reservation.status != 'pending':
+            raise BusinessLogicException("Only pending reservations can be approved")
+        
+        reservation.status = 'ready'
+        reservation.save()
+        
+        # Notify member
+        from apps.notifications.services import NotificationService
+        notif_service = NotificationService()
+        notif_service.create_notification(
+            member_id=reservation.member.id,
+            title="Reservation Ready",
+            message=f"'{reservation.book.title}' is ready for pickup",
+            notification_type="reservation"
+        )
+        
+        return reservation
+    
+    def cancel_reservation(self, reservation_id: int):
+        '''Cancel a reservation'''
+        reservation = self.get_object(reservation_id)
+        if reservation.status in ['fulfilled', 'cancelled']:
+            raise BusinessLogicException("Cannot cancel this reservation")
+        
+        reservation.status = 'cancelled'
+        reservation.save()
+        return reservation

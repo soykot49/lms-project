@@ -49,80 +49,74 @@
       overflow-x: hidden;
     }
     a { text-decoration: none; color: inherit; }
-    
+
+    /* SVG ICON BASE */
+    .icon-svg {
+      width: 18px;
+      height: 18px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.75;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      flex-shrink: 0;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .icon-svg.lg { width: 24px; height: 24px; }
+    .icon-svg.xl { width: 28px; height: 28px; }
+    .icon-svg.xxl { width: 36px; height: 36px; }
+    .icon-svg.sm { width: 14px; height: 14px; }
+
     /* SIDEBAR */
     .sidebar {
-      position: fixed;
-      left: 0;
-      top: 0;
-      width: var(--sidebar-w);
-      height: 100vh;
+      position: fixed; left: 0; top: 0;
+      width: var(--sidebar-w); height: 100vh;
       background: var(--surface);
       border-right: 1px solid var(--border);
-      display: flex;
-      flex-direction: column;
-      z-index: 100;
-      transition: 0.3s;
+      display: flex; flex-direction: column;
+      z-index: 100; transition: 0.3s;
     }
     .sidebar-logo {
       padding: 28px 24px 20px;
       border-bottom: 1px solid var(--border);
       cursor: pointer;
+      display: flex; align-items: center; gap: 10px;
     }
-    .sidebar-logo h1 {
+    .sidebar-logo-icon {
+      width: 36px; height: 36px;
+      background: linear-gradient(135deg, var(--accent), #a07830);
+      border-radius: 9px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .sidebar-logo-icon svg { color: #fff; }
+    .sidebar-logo-text h1 {
       font-family: 'Playfair Display', serif;
-      font-size: 22px;
-      color: var(--accent);
-      letter-spacing: 0.5px;
+      font-size: 20px; color: var(--accent); letter-spacing: 0.5px;
     }
-    .sidebar-logo span {
-      font-size: 11px;
-      color: var(--muted);
-      letter-spacing: 2px;
-      text-transform: uppercase;
+    .sidebar-logo-text span {
+      font-size: 10px; color: var(--muted);
+      letter-spacing: 2px; text-transform: uppercase;
     }
-    .nav {
-      flex: 1;
-      padding: 20px 12px;
-      overflow-y: auto;
-    }
+    .nav { flex: 1; padding: 20px 12px; overflow-y: auto; }
     .nav-section {
-      font-size: 10px;
-      color: var(--muted);
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      padding: 14px 12px 6px;
-      margin-top: 8px;
+      font-size: 10px; color: var(--muted);
+      letter-spacing: 2px; text-transform: uppercase;
+      padding: 14px 12px 6px; margin-top: 8px;
     }
     .nav-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 10px 12px;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: 0.2s;
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--muted);
-      border: none;
-      background: none;
-      width: 100%;
-      text-align: left;
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 12px; border-radius: 8px;
+      cursor: pointer; transition: 0.2s;
+      font-size: 13.5px; font-weight: 500;
+      color: var(--muted); border: none;
+      background: none; width: 100%; text-align: left;
     }
-    .nav-item:hover {
-      background: var(--surface2);
-      color: var(--text);
-    }
+    .nav-item:hover { background: var(--surface2); color: var(--text); }
     .nav-item.active {
-      background: linear-gradient(135deg, rgba(201, 168, 76, 0.15), rgba(201, 168, 76, 0.05));
-      color: var(--accent);
-      border: 1px solid rgba(201, 168, 76, 0.2);
-    }
-    .nav-item .icon {
-      width: 18px;
-      text-align: center;
-      font-size: 16px;
+      background: linear-gradient(135deg, rgba(201,168,76,.15), rgba(201,168,76,.05));
+      color: var(--accent); border: 1px solid rgba(201,168,76,.2);
     }
     .icon, .qa-icon, .topbar-btn {
       font-family: "Segoe UI Symbol", "Apple Color Emoji", "Noto Color Emoji", sans-serif;
@@ -132,29 +126,17 @@
 
     .nav-badge {
       margin-left: auto;
-      background: var(--red);
-      color: #fff;
-      font-size: 10px;
-      font-weight: 700;
-      padding: 2px 6px;
-      border-radius: 10px;
+      background: var(--red); color: #fff;
+      font-size: 10px; font-weight: 700;
+      padding: 2px 6px; border-radius: 10px;
     }
-    .sidebar-footer {
-      padding: 16px;
-      border-top: 1px solid var(--border);
-    }
+    .sidebar-footer { padding: 16px; border-top: 1px solid var(--border); }
     .admin-card {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px;
-      border-radius: 8px;
-      background: var(--surface2);
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px; border-radius: 8px; background: var(--surface2);
     }
     .admin-avatar {
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
+      width: 34px; height: 34px; border-radius: 50%;
       background: linear-gradient(135deg, var(--accent), var(--purple));
       display: flex;
       align-items: center;
@@ -180,56 +162,35 @@
       display: flex;
       flex-direction: column;
     }
+    .admin-info p { font-size: 13px; font-weight: 600; }
+    .admin-info span { font-size: 11px; color: var(--muted); }
+
+    /* MAIN */
+    .main { margin-left: var(--sidebar-w); min-height: 100vh; display: flex; flex-direction: column; }
     .topbar {
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
-      padding: 0 28px;
-      height: 60px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      position: sticky;
-      top: 0;
-      z-index: 50;
+      background: var(--surface); border-bottom: 1px solid var(--border);
+      padding: 0 28px; height: 60px;
+      display: flex; align-items: center; gap: 16px;
+      position: sticky; top: 0; z-index: 50;
     }
-    .topbar-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 18px;
-      flex: 1;
-    }
+    .topbar-title { font-family: 'Playfair Display', serif; font-size: 18px; flex: 1; }
     .search-box {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 7px 14px;
-      width: 240px;
+      display: flex; align-items: center; gap: 8px;
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 8px; padding: 7px 14px; width: 240px;
     }
     .search-box input {
-      background: none;
-      border: none;
-      outline: none;
-      font-size: 13px;
-      color: var(--text);
-      font-family: 'DM Sans', sans-serif;
-      width: 100%;
+      background: none; border: none; outline: none;
+      font-size: 13px; color: var(--text);
+      font-family: 'DM Sans', sans-serif; width: 100%;
     }
     .search-box input::placeholder { color: var(--muted); }
+    .search-box svg { color: var(--muted); flex-shrink: 0; }
     .topbar-btn {
-      width: 36px;
-      height: 36px;
-      border-radius: 8px;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 15px;
-      position: relative;
-      transition: 0.2s;
+      width: 36px; height: 36px; border-radius: 8px;
+      background: var(--surface2); border: 1px solid var(--border);
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      color: var(--muted); position: relative; transition: 0.2s;
     }
     .topbar-btn:hover { border-color: var(--accent); color: var(--accent); }
 
@@ -297,786 +258,459 @@
     }
 
     .notif-dot {
-      position: absolute;
-      top: 6px;
-      right: 6px;
-      width: 7px;
-      height: 7px;
-      background: var(--red);
-      border-radius: 50%;
-      border: 2px solid var(--surface);
+      position: absolute; top: 6px; right: 6px;
+      width: 7px; height: 7px; background: var(--red);
+      border-radius: 50%; border: 2px solid var(--surface);
     }
-    .content {
-      padding: 28px;
-      flex: 1;
-    }
-    
-    /* PAGE SECTIONS - HIDDEN BY DEFAULT */
-    .page {
-      display: none;
-    }
-    .page.active {
-      display: block;
-      animation: fadeIn 0.3s ease;
-    }
+    .content { padding: 28px; flex: 1; }
+
+    .page { display: none; }
+    .page.active { display: block; animation: fadeIn 0.3s ease; }
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    
-    /* COMMON STYLES */
+
+    /* BUTTONS */
     .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      padding: 9px 18px;
-      border-radius: 8px;
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      border: none;
-      transition: 0.2s;
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 9px 18px; border-radius: 8px;
+      font-size: 13px; font-weight: 600;
+      cursor: pointer; border: none; transition: 0.2s;
       font-family: 'DM Sans', sans-serif;
     }
-    .btn-primary {
-      background: var(--accent);
-      color: #0f1117;
-    }
+    .btn-primary { background: var(--accent); color: #0f1117; }
     .btn-primary:hover { background: var(--accent2); }
     .btn-outline {
-      background: transparent;
-      color: var(--text);
+      background: transparent; color: var(--text);
       border: 1px solid var(--border);
     }
-    .btn-outline:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
     .spacer { flex: 1; }
     .badge {
-      display: inline-block;
-      padding: 3px 9px;
-      border-radius: 20px;
-      font-size: 11px;
-      font-weight: 600;
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 3px 9px; border-radius: 20px;
+      font-size: 11px; font-weight: 600;
     }
-    .badge-green { background: rgba(62, 207, 142, 0.12); color: var(--green); }
-    .badge-red { background: rgba(224, 92, 92, 0.12); color: var(--red); }
-    .badge-blue { background: rgba(92, 157, 224, 0.12); color: var(--blue); }
-    .badge-gold { background: rgba(201, 168, 76, 0.12); color: var(--accent2); }
-    
-    /* DASHBOARD SPECIFIC */
+    .badge-green { background: rgba(62,207,142,.12); color: var(--green); }
+    .badge-red { background: rgba(224,92,92,.12); color: var(--red); }
+    .badge-blue { background: rgba(92,157,224,.12); color: var(--blue); }
+    .badge-gold { background: rgba(201,168,76,.12); color: var(--accent2); }
+
+    /* STATS */
     .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 18px;
-      margin-bottom: 28px;
+      display: grid; grid-template-columns: repeat(4,1fr);
+      gap: 18px; margin-bottom: 28px;
     }
     .stat-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 22px;
-      position: relative;
-      overflow: hidden;
-      transition: 0.3s;
-      cursor: default;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 14px; padding: 22px;
+      position: relative; overflow: hidden;
+      transition: 0.3s; cursor: default;
     }
-    .stat-card:hover {
-      border-color: var(--accent);
-      transform: translateY(-2px);
-    }
+    .stat-card:hover { border-color: var(--accent); transform: translateY(-2px); }
     .stat-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 80px;
-      height: 80px;
-      border-radius: 0 14px 0 80px;
-      opacity: 0.08;
+      content: ''; position: absolute; top: 0; right: 0;
+      width: 80px; height: 80px;
+      border-radius: 0 14px 0 80px; opacity: 0.08;
     }
     .stat-card.gold::before { background: var(--accent); }
     .stat-card.green::before { background: var(--green); }
     .stat-card.blue::before { background: var(--blue); }
     .stat-card.red::before { background: var(--red); }
-    .stat-icon { font-size: 26px; margin-bottom: 14px; }
+    .stat-icon {
+      width: 42px; height: 42px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 14px;
+    }
+    .stat-icon.gold { background: rgba(201,168,76,.12); color: var(--accent); }
+    .stat-icon.blue { background: rgba(92,157,224,.12); color: var(--blue); }
+    .stat-icon.green { background: rgba(62,207,142,.12); color: var(--green); }
+    .stat-icon.red { background: rgba(224,92,92,.12); color: var(--red); }
     .stat-val {
       font-family: 'Playfair Display', serif;
-      font-size: 36px;
-      font-weight: 700;
-      line-height: 1;
+      font-size: 34px; font-weight: 700; line-height: 1;
     }
-    .stat-label {
-      font-size: 12px;
-      color: var(--muted);
-      margin-top: 6px;
-      letter-spacing: 0.5px;
-    }
+    .stat-label { font-size: 12px; color: var(--muted); margin-top: 6px; letter-spacing: 0.5px; }
     .stat-change {
-      font-size: 11px;
-      margin-top: 10px;
-      display: flex;
-      align-items: center;
-      gap: 4px;
+      font-size: 11px; margin-top: 10px;
+      display: flex; align-items: center; gap: 4px;
     }
     .stat-change.up { color: var(--green); }
     .stat-change.down { color: var(--red); }
-    
-    /* TOOLBAR & FILTERS */
+
+    /* TOOLBAR */
     .toolbar {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 22px;
-      flex-wrap: wrap;
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 22px; flex-wrap: wrap;
     }
     .filter-select {
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 9px 14px;
-      font-size: 13px;
-      color: var(--text);
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 8px; padding: 9px 14px;
+      font-size: 13px; color: var(--text);
       font-family: 'DM Sans', sans-serif;
-      cursor: pointer;
-      outline: none;
+      cursor: pointer; outline: none;
     }
-    
-    /* GRID & CARDS */
-    .row-grid {
-      display: grid;
-      grid-template-columns: 1fr 380px;
-      gap: 18px;
-      margin-bottom: 18px;
-    }
-    .qa-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 14px;
-      margin-bottom: 18px;
-    }
+
+    /* GRID */
+    .row-grid { display: grid; grid-template-columns: 1fr 380px; gap: 18px; margin-bottom: 18px; }
+    .qa-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin-bottom: 18px; }
     .qa-btn {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 18px 14px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      cursor: pointer;
-      transition: 0.25s;
-      text-align: center;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 18px 14px;
+      display: flex; flex-direction: column; align-items: center;
+      gap: 10px; cursor: pointer; transition: 0.25s; text-align: center;
     }
-    .qa-btn:hover {
-      border-color: var(--accent);
-      background: var(--surface2);
-      transform: translateY(-2px);
+    .qa-btn:hover { border-color: var(--accent); background: var(--surface2); transform: translateY(-2px); }
+    .qa-btn .qa-icon {
+      width: 44px; height: 44px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
     }
-    .qa-btn .qa-icon { font-size: 24px; }
-    .qa-btn span {
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--muted);
-    }
-    
+    .qa-btn span { font-size: 12px; font-weight: 500; color: var(--muted); }
+
     /* PANELS & TABLES */
     .panel {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 22px;
-      overflow: hidden;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 14px; padding: 22px; overflow: hidden;
     }
     .panel-hd {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 18px;
+      display: flex; align-items: center;
+      justify-content: space-between; margin-bottom: 18px;
     }
-    .panel-hd h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 16px;
-    }
-    .panel-hd a {
-      font-size: 12px;
-      color: var(--accent);
-      font-weight: 500;
-      cursor: pointer;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
+    .panel-hd h2 { font-family: 'Playfair Display', serif; font-size: 16px; display: flex; align-items: center; gap: 8px; }
+    .panel-hd a { font-size: 12px; color: var(--accent); font-weight: 500; cursor: pointer; }
+    table { width: 100%; border-collapse: collapse; }
     thead th {
-      font-size: 11px;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      padding: 14px 16px;
-      text-align: left;
+      font-size: 11px; color: var(--muted);
+      text-transform: uppercase; letter-spacing: 1px;
+      padding: 14px 16px; text-align: left;
       border-bottom: 1px solid var(--border);
       background: var(--surface2);
     }
     tbody tr { transition: 0.2s; }
     tbody tr:hover { background: var(--surface2); }
     tbody td {
-      padding: 13px 16px;
-      font-size: 13px;
-      border-bottom: 1px solid rgba(39, 45, 66, 0.5);
+      padding: 13px 16px; font-size: 13px;
+      border-bottom: 1px solid rgba(39,45,66,.5);
     }
-    
-    /* CHARTS */
+
+    /* CHART */
     .chart-bars {
-      display: flex;
-      align-items: flex-end;
-      gap: 5px;
-      height: 80px;
-      margin-top: 16px;
+      display: flex; align-items: flex-end;
+      gap: 5px; height: 80px; margin-top: 16px;
     }
-    .bar-wrap {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 5px;
-    }
-    .bar {
-      width: 100%;
-      background: var(--border);
-      border-radius: 4px 4px 0 0;
-      position: relative;
-      transition: 0.6s ease;
-    }
+    .bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 5px; }
+    .bar { width: 100%; background: var(--border); border-radius: 4px 4px 0 0; }
     .bar.fill-gold { background: linear-gradient(to top, var(--accent), var(--accent2)); }
     .bar.fill-blue { background: linear-gradient(to top, #3a7bd5, var(--blue)); }
     .bar-lbl { font-size: 9px; color: var(--muted); }
-    
+
     /* NOTIFICATIONS & ACTIVITY */
-    .notif-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
+    .notif-list { display: flex; flex-direction: column; gap: 10px; }
     .notif-item {
-      display: flex;
-      gap: 12px;
-      padding: 12px;
-      border-radius: 10px;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      transition: 0.2s;
+      display: flex; gap: 12px; padding: 12px;
+      border-radius: 10px; background: var(--surface2);
+      border: 1px solid var(--border); transition: 0.2s;
     }
     .notif-item:hover { border-color: var(--accent); }
-    .notif-dot2 {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      margin-top: 4px;
+    .notif-icon {
+      width: 32px; height: 32px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
     }
-    .notif-item .ni-title {
-      font-size: 13px;
-      font-weight: 500;
-    }
-    .notif-item .ni-sub {
-      font-size: 11px;
-      color: var(--muted);
-      margin-top: 2px;
-    }
-    .notif-item .ni-time {
-      font-size: 10px;
-      color: var(--muted);
-      margin-top: 4px;
-    }
-    
-    .activity-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-    }
+    .notif-item .ni-title { font-size: 13px; font-weight: 500; }
+    .notif-item .ni-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+    .notif-item .ni-time { font-size: 10px; color: var(--muted); margin-top: 4px; }
+    .activity-list { display: flex; flex-direction: column; }
     .act-item {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 11px 0;
-      border-bottom: 1px solid rgba(39, 45, 66, 0.5);
+      display: flex; align-items: center; gap: 14px;
+      padding: 11px 0; border-bottom: 1px solid rgba(39,45,66,.5);
     }
     .act-item:last-child { border-bottom: none; }
     .act-icon {
-      width: 34px;
-      height: 34px;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 15px;
+      width: 34px; height: 34px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
     }
     .act-info { flex: 1; }
     .act-info p { font-size: 13px; }
-    .act-info span {
-      font-size: 11px;
-      color: var(--muted);
-    }
-    .act-time {
-      font-size: 11px;
-      color: var(--muted);
-      white-space: nowrap;
-    }
-    
+    .act-info span { font-size: 11px; color: var(--muted); }
+    .act-time { font-size: 11px; color: var(--muted); white-space: nowrap; }
+
     /* AUTHOR, BOOKS, MEMBERS CARDS */
     .authors-grid, .books-grid, .members-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 16px;
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); gap: 16px;
     }
     .author-card, .book-card, .member-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 22px;
-      transition: 0.25s;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 14px; padding: 22px; transition: 0.25s;
     }
     .author-card:hover, .book-card:hover, .member-card:hover {
-      border-color: var(--accent);
-      transform: translateY(-2px);
+      border-color: var(--accent); transform: translateY(-2px);
     }
     .author-hd, .member-hd {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      margin-bottom: 16px;
+      display: flex; align-items: center; gap: 14px; margin-bottom: 16px;
     }
     .author-avatar, .member-avatar {
-      width: 50px;
-      height: 50px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      font-weight: 700;
-      color: #fff;
-      flex-shrink: 0;
+      width: 50px; height: 50px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; font-weight: 700; color: #fff; flex-shrink: 0;
     }
-    .author-name, .member-name {
-      font-size: 15px;
-      font-weight: 600;
-    }
-    .author-nationality, .member-role {
-      font-size: 12px;
-      color: var(--muted);
-      margin-top: 2px;
-    }
+    .author-name, .member-name { font-size: 15px; font-weight: 600; }
+    .author-nationality, .member-role { font-size: 12px; color: var(--muted); margin-top: 2px; display: flex; align-items: center; gap: 4px; }
     .author-stats, .member-stats {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-bottom: 14px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px;
     }
     .astat, .mstat {
-      background: var(--surface2);
-      border-radius: 8px;
-      padding: 10px;
-      text-align: center;
+      background: var(--surface2); border-radius: 8px;
+      padding: 10px; text-align: center;
     }
     .astat .val, .mstat .val {
-      font-size: 20px;
-      font-weight: 700;
+      font-size: 20px; font-weight: 700;
       font-family: 'Playfair Display', serif;
     }
-    .astat .lbl, .mstat .lbl {
-      font-size: 10px;
-      color: var(--muted);
-      margin-top: 2px;
-    }
+    .astat .lbl, .mstat .lbl { font-size: 10px; color: var(--muted); margin-top: 2px; }
     .author-genre {
-      font-size: 11px;
-      color: var(--muted);
-      margin-bottom: 12px;
+      font-size: 11px; color: var(--muted);
+      margin-bottom: 12px; display: flex; align-items: center; gap: 5px;
     }
-    .author-actions, .member-actions {
-      display: flex;
-      gap: 8px;
-    }
+    .author-actions, .member-actions { display: flex; gap: 8px; }
     .sm-btn {
-      flex: 1;
-      padding: 7px;
-      border-radius: 7px;
-      font-size: 12px;
-      font-weight: 600;
-      cursor: pointer;
-      border: 1px solid var(--border);
-      background: none;
-      color: var(--text);
-      font-family: 'DM Sans', sans-serif;
-      transition: 0.2s;
-      text-align: center;
+      flex: 1; padding: 7px; border-radius: 7px;
+      font-size: 12px; font-weight: 600; cursor: pointer;
+      border: 1px solid var(--border); background: none; color: var(--text);
+      font-family: 'DM Sans', sans-serif; transition: 0.2s; text-align: center;
     }
-    .sm-btn:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
-    .sm-btn.del {
-      color: var(--red);
-      border-color: rgba(224, 92, 92, 0.2);
-    }
-    .sm-btn.del:hover {
-      background: rgba(224, 92, 92, 0.08);
-    }
-    
-    /* BOOKS SPECIFIC */
+    .sm-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .sm-btn.del { color: var(--red); border-color: rgba(224,92,92,.2); }
+    .sm-btn.del:hover { background: rgba(224,92,92,.08); }
+
+    /* BOOKS */
+    .book-card { padding: 0; overflow: hidden; }
     .book-cover {
       height: 130px;
       background: linear-gradient(135deg, var(--surface2), var(--border));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 48px;
-      position: relative;
-      border-radius: 8px 8px 0 0;
+      display: flex; align-items: center; justify-content: center;
     }
-    .book-card-body {
-      padding: 12px;
+    .book-cover-icon {
+      width: 56px; height: 56px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
     }
+    .book-card-body { padding: 14px; }
     .book-card-body h3 {
-      font-size: 13px;
-      font-weight: 600;
-      margin-bottom: 4px;
+      font-size: 13px; font-weight: 600; margin-bottom: 4px;
       line-height: 1.4;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
+      display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2;
+      -webkit-box-orient: vertical; overflow: hidden;
     }
-    .book-card-body .author {
-      font-size: 11px;
-      color: var(--muted);
-      margin-bottom: 8px;
-    }
-    .book-card-body .meta {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .book-card-body .isbn {
-      font-size: 10px;
-      color: var(--muted);
-    }
-    
+    .book-card-body .author { font-size: 11px; color: var(--muted); margin-bottom: 8px; }
+    .book-card-body .meta { display: flex; justify-content: space-between; align-items: center; }
+    .book-card-body .isbn { font-size: 10px; color: var(--muted); }
+
     /* RESERVATIONS */
-    .reserv-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 16px;
-    }
+    .reserv-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px,1fr)); gap: 16px; }
     .reserv-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 20px;
-      transition: 0.25s;
-      position: relative;
-      overflow: hidden;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 14px; padding: 20px; transition: 0.25s;
+      position: relative; overflow: hidden;
     }
-    .reserv-card:hover {
-      border-color: var(--accent);
-      transform: translateY(-2px);
-    }
+    .reserv-card:hover { border-color: var(--accent); transform: translateY(-2px); }
     .reserv-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
     }
     .reserv-card.pending::before { background: linear-gradient(90deg, var(--accent), transparent); }
     .reserv-card.ready::before { background: linear-gradient(90deg, var(--green), transparent); }
     .reserv-card.expired::before { background: linear-gradient(90deg, var(--red), transparent); }
-    .rc-hd {
-      display: flex;
-      align-items: flex-start;
-      gap: 14px;
-      margin-bottom: 14px;
+    .rc-hd { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px; }
+    .rc-icon {
+      width: 48px; height: 48px; border-radius: 10px;
+      background: var(--surface2); display: flex;
+      align-items: center; justify-content: center; flex-shrink: 0;
     }
-    .rc-icon { font-size: 32px; flex-shrink: 0; }
-    .rc-title {
-      font-size: 14px;
-      font-weight: 600;
-      line-height: 1.3;
-      margin-bottom: 3px;
-    }
-    .rc-author {
-      font-size: 12px;
-      color: var(--muted);
-    }
+    .rc-title { font-size: 14px; font-weight: 600; line-height: 1.3; margin-bottom: 3px; }
+    .rc-author { font-size: 12px; color: var(--muted); }
     .rc-badge { margin-left: auto; flex-shrink: 0; }
-    .rc-info {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      margin-bottom: 14px;
-    }
-    .rc-info-item {
-      background: var(--surface2);
-      border-radius: 7px;
-      padding: 8px 10px;
-    }
+    .rc-info { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+    .rc-info-item { background: var(--surface2); border-radius: 7px; padding: 8px 10px; }
     .rc-info-item .lbl {
-      font-size: 10px;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 2px;
+      font-size: 10px; color: var(--muted);
+      text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px;
     }
-    .rc-info-item .val {
-      font-size: 13px;
-      font-weight: 600;
-    }
-    .rc-actions {
-      display: flex;
-      gap: 8px;
-    }
-    .sm-btn.approve {
-      color: var(--green);
-      border-color: rgba(62, 207, 142, 0.3);
-    }
-    .sm-btn.approve:hover { background: rgba(62, 207, 142, 0.1); }
-    .sm-btn.cancel {
-      color: var(--red);
-      border-color: rgba(224, 92, 92, 0.2);
-    }
-    .sm-btn.cancel:hover { background: rgba(224, 92, 92, 0.08); }
-    
-    /* TRANSACTIONS & FINES */
+    .rc-info-item .val { font-size: 13px; font-weight: 600; }
+    .rc-actions { display: flex; gap: 8px; }
+    .sm-btn.approve { color: var(--green); border-color: rgba(62,207,142,.3); }
+    .sm-btn.approve:hover { background: rgba(62,207,142,.1); }
+    .sm-btn.cancel { color: var(--red); border-color: rgba(224,92,92,.2); }
+    .sm-btn.cancel:hover { background: rgba(224,92,92,.08); }
+
+    /* FINES */
     .overdue-alert {
-      background: rgba(224, 92, 92, 0.06);
-      border: 1px solid rgba(224, 92, 92, 0.2);
-      border-radius: 12px;
-      padding: 14px 18px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 22px;
-      font-size: 13px;
+      background: rgba(224,92,92,.06); border: 1px solid rgba(224,92,92,.2);
+      border-radius: 12px; padding: 14px 18px;
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 22px; font-size: 13px;
     }
     .icon-btn {
-      width: 28px;
-      height: 28px;
-      border-radius: 6px;
-      border: 1px solid var(--border);
-      background: none;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 13px;
-      transition: 0.2s;
+      width: 28px; height: 28px; border-radius: 6px;
+      border: 1px solid var(--border); background: none;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      color: var(--muted); transition: 0.2s;
     }
-    .icon-btn:hover { border-color: var(--accent); }
-    .icon-btn.del:hover { border-color: var(--red); }
+    .icon-btn:hover { border-color: var(--accent); color: var(--accent); }
     .td-btn {
-      padding: 5px 12px;
-      border-radius: 6px;
-      border: 1px solid;
-      background: none;
-      cursor: pointer;
-      font-size: 12px;
-      font-weight: 600;
-      font-family: 'DM Sans', sans-serif;
-      transition: 0.2s;
+      padding: 5px 12px; border-radius: 6px; border: 1px solid;
+      background: none; cursor: pointer;
+      font-size: 12px; font-weight: 600;
+      font-family: 'DM Sans', sans-serif; transition: 0.2s;
     }
-    .td-btn.pay {
-      border-color: rgba(62, 207, 142, 0.3);
-      color: var(--green);
-    }
-    .td-btn.pay:hover { background: rgba(62, 207, 142, 0.1); }
-    .td-btn.waive {
-      border-color: rgba(201, 168, 76, 0.3);
-      color: var(--accent);
-    }
-    .td-btn.waive:hover { background: rgba(201, 168, 76, 0.1); }
-    
+    .td-btn.pay { border-color: rgba(62,207,142,.3); color: var(--green); }
+    .td-btn.pay:hover { background: rgba(62,207,142,.1); }
+    .td-btn.waive { border-color: rgba(201,168,76,.3); color: var(--accent); }
+    .td-btn.waive:hover { background: rgba(201,168,76,.1); }
+
     /* MODALS */
     .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(4px);
-      z-index: 200;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      pointer-events: none;
-      transition: 0.25s;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,.6); backdrop-filter: blur(4px);
+      z-index: 200; display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none; transition: 0.25s;
     }
-    .modal-overlay.open {
-      opacity: 1;
-      pointer-events: all;
-    }
+    .modal-overlay.open { opacity: 1; pointer-events: all; }
     .modal {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 28px;
-      width: 480px;
-      max-width: 95vw;
-      transform: translateY(20px);
-      transition: 0.25s;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 16px; padding: 28px; width: 480px; max-width: 95vw;
+      transform: translateY(20px); transition: 0.25s;
     }
     .modal-overlay.open .modal { transform: translateY(0); }
     .modal-hd {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 22px;
+      display: flex; align-items: center; justify-content: space-between; margin-bottom: 22px;
     }
-    .modal-hd h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 18px;
-    }
+    .modal-hd h2 { font-family: 'Playfair Display', serif; font-size: 18px; }
     .modal-close {
-      width: 30px;
-      height: 30px;
-      border-radius: 6px;
-      border: 1px solid var(--border);
-      background: none;
-      cursor: pointer;
-      font-size: 16px;
-      color: var(--muted);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: 0.2s;
+      width: 30px; height: 30px; border-radius: 6px;
+      border: 1px solid var(--border); background: none;
+      cursor: pointer; color: var(--muted);
+      display: flex; align-items: center; justify-content: center; transition: 0.2s;
     }
-    .modal-close:hover {
-      border-color: var(--red);
-      color: var(--red);
-    }
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
+    .modal-close:hover { border-color: var(--red); color: var(--red); }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
     .form-group.full { grid-column: 1 / -1; }
     .form-group label {
-      font-size: 12px;
-      color: var(--muted);
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
+      font-size: 12px; color: var(--muted);
+      letter-spacing: 0.5px; text-transform: uppercase;
     }
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 10px 12px;
-      font-size: 13px;
-      color: var(--text);
-      font-family: 'DM Sans', sans-serif;
-      outline: none;
-      transition: 0.2s;
+    .form-group input, .form-group select, .form-group textarea {
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 8px; padding: 10px 12px;
+      font-size: 13px; color: var(--text);
+      font-family: 'DM Sans', sans-serif; outline: none; transition: 0.2s;
     }
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus { border-color: var(--accent); }
-    .form-group textarea {
-      resize: vertical;
-      min-height: 70px;
-    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--accent); }
+    .form-group textarea { resize: vertical; min-height: 70px; }
     .modal-footer {
-      display: flex;
-      justify-content: flex-end;
-      gap: 10px;
-      margin-top: 22px;
-      padding-top: 18px;
-      border-top: 1px solid var(--border);
+      display: flex; justify-content: flex-end; gap: 10px;
+      margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--border);
     }
-    
+
     /* REPORTS */
-    .reports-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 16px;
-    }
+    .reports-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr)); gap: 16px; }
     .report-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 20px;
-      transition: 0.25s;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 14px; padding: 20px; transition: 0.25s;
     }
-    .report-card:hover {
-      border-color: var(--accent);
-      transform: translateY(-2px);
+    .report-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .report-icon {
+      width: 48px; height: 48px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(201,168,76,.1); color: var(--accent);
+      margin-bottom: 14px;
     }
-    .report-icon { font-size: 28px; margin-bottom: 12px; }
-    .report-title {
-      font-size: 15px;
-      font-weight: 600;
-      margin-bottom: 6px;
-    }
-    .report-desc {
-      font-size: 12px;
-      color: var(--muted);
-      margin-bottom: 16px;
-      line-height: 1.4;
-    }
+    .report-title { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+    .report-desc { font-size: 12px; color: var(--muted); margin-bottom: 16px; line-height: 1.4; }
     .report-btn {
-      width: 100%;
-      padding: 8px;
-      border-radius: 7px;
-      font-size: 12px;
-      font-weight: 600;
-      cursor: pointer;
-      border: 1px solid var(--border);
-      background: transparent;
-      color: var(--accent);
-      font-family: 'DM Sans', sans-serif;
-      transition: 0.2s;
+      width: 100%; padding: 8px; border-radius: 7px;
+      font-size: 12px; font-weight: 600; cursor: pointer;
+      border: 1px solid var(--border); background: transparent; color: var(--accent);
+      font-family: 'DM Sans', sans-serif; transition: 0.2s;
     }
-    .report-btn:hover {
-      background: var(--surface2);
-      border-color: var(--accent);
+    .report-btn:hover { background: var(--surface2); border-color: var(--accent); }
+
+    /* SETTINGS */
+    .settings-input {
+      width: 100%; background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 8px; padding: 10px 12px;
+      font-size: 13px; color: var(--text);
+      font-family: 'DM Sans', sans-serif; outline: none;
     }
-    
+    .settings-label {
+      font-size: 13px; font-weight: 600; color: var(--text);
+      display: block; margin-bottom: 8px;
+    }
+
     /* RESPONSIVE */
     @media (max-width: 1024px) {
-      .stats-grid { grid-template-columns: repeat(2, 1fr); }
-      .qa-grid { grid-template-columns: repeat(2, 1fr); }
+      .stats-grid { grid-template-columns: repeat(2,1fr); }
+      .qa-grid { grid-template-columns: repeat(2,1fr); }
       .row-grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 768px) {
       .sidebar { width: 200px; }
-      .sidebar-logo h1 { font-size: 18px; }
       .main { margin-left: 0; }
       .topbar { padding: 0 16px; }
       .content { padding: 16px; }
       .search-box { width: auto; }
-      .stats-grid, .qa-grid, .authors-grid, .books-grid, .members-grid {
-        grid-template-columns: 1fr;
-      }
+      .stats-grid, .qa-grid, .authors-grid, .books-grid, .members-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
+<!-- SVG ICON DEFS (hidden) -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <symbol id="ic-book" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></symbol>
+  <symbol id="ic-home" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></symbol>
+  <symbol id="ic-books" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></symbol>
+  <symbol id="ic-users" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+  <symbol id="ic-pen" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></symbol>
+  <symbol id="ic-refresh" viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></symbol>
+  <symbol id="ic-money" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></symbol>
+  <symbol id="ic-bookmark" viewBox="0 0 24 24"><path d="m19 21-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></symbol>
+  <symbol id="ic-chart" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></symbol>
+  <symbol id="ic-bell" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></symbol>
+  <symbol id="ic-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></symbol>
+  <symbol id="ic-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></symbol>
+  <symbol id="ic-plus" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></symbol>
+  <symbol id="ic-upload" viewBox="0 0 24 24"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></symbol>
+  <symbol id="ic-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></symbol>
+  <symbol id="ic-user-plus" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></symbol>
+  <symbol id="ic-edit" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></symbol>
+  <symbol id="ic-alert" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></symbol>
+  <symbol id="ic-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></symbol>
+  <symbol id="ic-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></symbol>
+  <symbol id="ic-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></symbol>
+  <symbol id="ic-return" viewBox="0 0 24 24"><polyline points="9 14 4 9 9 4"/><path d="M20 20v-7a4 4 0 0 0-4-4H4"/></symbol>
+  <symbol id="ic-tag" viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></symbol>
+  <symbol id="ic-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></symbol>
+  <symbol id="ic-close" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></symbol>
+  <symbol id="ic-database" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></symbol>
+  <symbol id="ic-cpu" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></symbol>
+  <symbol id="ic-star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></symbol>
+  <symbol id="ic-astronomy" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></symbol>
+  <symbol id="ic-layer" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></symbol>
+  <symbol id="ic-package" viewBox="0 0 24 24"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"/><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></symbol>
+  <symbol id="ic-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></symbol>
+  <symbol id="ic-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></symbol>
+</svg>
+
 <!-- SIDEBAR -->
 <aside class="sidebar">
   <div class="sidebar-logo" onclick="showPage('dashboard', this)">
-    <h1>📚 LibraryOS</h1>
-    <span>Management System</span>
+    <div class="sidebar-logo-icon">📚</div>
+    <div class="sidebar-logo-text">
+      <h1>LibraryOS</h1>
+      <span>Management System</span>
+    </div>
   </div>
   <nav class="nav">
     <div class="nav-section">Main</div>
@@ -1095,12 +729,16 @@
     <button class="nav-item" onclick="showPage('settings', this)"><span class="icon">⚙️</span> Settings</button>
   </nav>
   <div class="sidebar-footer">
-    <div class="admin-card"><div class="admin-avatar">A</div><div class="admin-info"><p>Admin</p><span>Librarian</span></div></div>
+    <div class="admin-card">
+      <div class="admin-avatar">A</div>
+      <div class="admin-info"><p>Admin</p><span>Librarian</span></div>
+    </div>
   </div>
 </aside>
 
 <main class="main">
-  <!-- DASHBOARD PAGE -->
+
+  <!-- DASHBOARD -->
   <div id="dashboard" class="page active">
     <div class="topbar">
       <span class="topbar-title">Dashboard</span>
@@ -1113,33 +751,43 @@
           <div class="stat-icon">📚</div>
           <div class="stat-val">0</div>
           <div class="stat-label">Total Books</div>
-          <div class="stat-change up">▲ 12 this month</div>
+          <div class="stat-change up">
+            <svg class="icon-svg sm" viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg> 12 this month
+          </div>
         </div>
         <div class="stat-card blue">
           <div class="stat-icon">👥</div>
           <div class="stat-val">0</div>
           <div class="stat-label">Active Members</div>
-          <div class="stat-change up">▲ 34 new members</div>
+          <div class="stat-change up">
+            <svg class="icon-svg sm" viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg> 34 new members
+          </div>
         </div>
         <div class="stat-card green">
           <div class="stat-icon">📤</div>
           <div class="stat-val">0</div>
           <div class="stat-label">Books Issued</div>
-          <div class="stat-change down">▼ 5 pending return</div>
+          <div class="stat-change down">
+            <svg class="icon-svg sm" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg> 5 pending return
+          </div>
         </div>
         <div class="stat-card red">
           <div class="stat-icon">💰</div>
           <div class="stat-val">$0.00</div>
           <div class="stat-label">Total Fines</div>
-          <div class="stat-change up">▲ 5 overdue today</div>
+          <div class="stat-change up">
+            <svg class="icon-svg sm" viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg> 5 overdue today
+          </div>
         </div>
       </div>
+
       <div class="qa-grid">
         <button class="qa-btn" onclick="showPage('transactions', this)"><span class="qa-icon">📤</span><span>Issue Book</span></button>
         <button class="qa-btn" onclick="showPage('transactions', this)"><span class="qa-icon">📥</span><span>Return Book</span></button>
         <button class="qa-btn" onclick="showPage('members', this)"><span class="qa-icon">➕</span><span>Add Member</span></button>
         <button class="qa-btn" onclick="showPage('books', this)"><span class="qa-icon">📝</span><span>Add Book</span></button>
       </div>
+
       <div class="row-grid">
         <div class="panel">
           <div class="panel-hd">
@@ -1161,53 +809,74 @@
           <div class="panel-hd"><h2>🔔 Notifications</h2><a onclick="showPage('notifications', document.querySelector('.nav-item[onclick*=\"notifications\"]'))">See all</a></div>
           <div class="notif-list">
             <div class="notif-item">
-              <div class="notif-dot2" style="background:var(--red)"></div>
+              <div class="notif-icon" style="background:rgba(224,92,92,.12);color:var(--red)">
+                <svg class="icon-svg sm" viewBox="0 0 24 24"><use href="#ic-alert"/></svg>
+              </div>
               <div><div class="ni-title">Karim Uddin – Overdue</div><div class="ni-sub">The Great Gatsby – 3 days late</div><div class="ni-time">2 hours ago</div></div>
             </div>
             <div class="notif-item">
-              <div class="notif-dot2" style="background:var(--red)"></div>
+              <div class="notif-icon" style="background:rgba(224,92,92,.12);color:var(--red)">
+                <svg class="icon-svg sm" viewBox="0 0 24 24"><use href="#ic-alert"/></svg>
+              </div>
               <div><div class="ni-title">Samir Roy – Overdue</div><div class="ni-sub">Database Systems – 1 day late</div><div class="ni-time">4 hours ago</div></div>
             </div>
             <div class="notif-item">
-              <div class="notif-dot2" style="background:var(--accent)"></div>
+              <div class="notif-icon" style="background:rgba(201,168,76,.12);color:var(--accent)">
+                <svg class="icon-svg sm" viewBox="0 0 24 24"><use href="#ic-clock"/></svg>
+              </div>
               <div><div class="ni-title">Due Tomorrow</div><div class="ni-sub">3 books due December 8</div><div class="ni-time">Today</div></div>
             </div>
             <div class="notif-item">
-              <div class="notif-dot2" style="background:var(--green)"></div>
+              <div class="notif-icon" style="background:rgba(62,207,142,.12);color:var(--green)">
+                <svg class="icon-svg sm" viewBox="0 0 24 24"><use href="#ic-user-plus"/></svg>
+              </div>
               <div><div class="ni-title">New Member Registered</div><div class="ni-sub">Tania Ahmed joined the library</div><div class="ni-time">Yesterday</div></div>
             </div>
           </div>
         </div>
       </div>
+
       <div class="row-grid">
         <div class="panel">
           <div class="panel-hd"><h2>Monthly Borrowing Overview</h2></div>
           <div class="chart-bars" id="chart"></div>
           <div style="display:flex;gap:16px;margin-top:12px">
-            <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)"><div style="width:10px;height:10px;border-radius:2px;background:var(--accent)"></div>Issued</div>
-            <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)"><div style="width:10px;height:10px;border-radius:2px;background:var(--blue)"></div>Returned</div>
+            <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)">
+              <div style="width:10px;height:10px;border-radius:2px;background:var(--accent)"></div>Issued
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)">
+              <div style="width:10px;height:10px;border-radius:2px;background:var(--blue)"></div>Returned
+            </div>
           </div>
         </div>
         <div class="panel">
           <div class="panel-hd"><h2>Recent Activity</h2></div>
           <div class="activity-list">
             <div class="act-item">
-              <div class="act-icon" style="background:rgba(62,207,142,.12)">📥</div>
+              <div class="act-icon" style="background:rgba(62,207,142,.12);color:var(--green)">
+                <svg class="icon-svg" viewBox="0 0 24 24"><use href="#ic-return"/></svg>
+              </div>
               <div class="act-info"><p>Book returned by Rahul Islam</p><span>Clean Code · Robert Martin</span></div>
               <div class="act-time">10:24 AM</div>
             </div>
             <div class="act-item">
-              <div class="act-icon" style="background:rgba(92,157,224,.12)">📤</div>
+              <div class="act-icon" style="background:rgba(92,157,224,.12);color:var(--blue)">
+                <svg class="icon-svg" viewBox="0 0 24 24"><use href="#ic-upload"/></svg>
+              </div>
               <div class="act-info"><p>Book issued to Nadia Haque</p><span>Introduction to Algorithms</span></div>
               <div class="act-time">09:15 AM</div>
             </div>
             <div class="act-item">
-              <div class="act-icon" style="background:rgba(155,114,230,.12)">👤</div>
+              <div class="act-icon" style="background:rgba(155,114,230,.12);color:var(--purple)">
+                <svg class="icon-svg" viewBox="0 0 24 24"><use href="#ic-users"/></svg>
+              </div>
               <div class="act-info"><p>New member registered</p><span>Tania Ahmed · Student</span></div>
               <div class="act-time">Yesterday</div>
             </div>
             <div class="act-item">
-              <div class="act-icon" style="background:rgba(224,92,92,.12)">💰</div>
+              <div class="act-icon" style="background:rgba(224,92,92,.12);color:var(--red)">
+                <svg class="icon-svg" viewBox="0 0 24 24"><use href="#ic-money"/></svg>
+              </div>
               <div class="act-info"><p>Fine collected</p><span>Karim Uddin · ৳40</span></div>
               <div class="act-time">Yesterday</div>
             </div>
@@ -1217,7 +886,7 @@
     </div>
   </div>
 
-  <!-- BOOKS PAGE -->
+  <!-- BOOKS -->
   <div id="books" class="page">
     <div class="topbar">
       <span class="topbar-title">Books Management</span>
@@ -1226,7 +895,9 @@
     </div>
     <div class="content">
       <div class="toolbar">
-        <button class="btn btn-primary" onclick="openModal('bookModal')">➕ Add Book</button>
+        <button class="btn btn-primary" onclick="openModal('bookModal')">
+          <svg class="icon-svg sm" viewBox="0 0 24 24"><use href="#ic-plus"/></svg> Add Book
+        </button>
         <select class="filter-select"><option>All Books</option><option>Available</option><option>Issued</option><option>Reserved</option></select>
         <div class="spacer"></div>
         <span style="font-size:13px;color:var(--muted)">427 books</span>
@@ -1235,7 +906,7 @@
     </div>
   </div>
 
-  <!-- MEMBERS PAGE -->
+  <!-- MEMBERS -->
   <div id="members" class="page">
     <div class="topbar">
       <span class="topbar-title">Members Management</span>
@@ -1244,7 +915,9 @@
     </div>
     <div class="content">
       <div class="toolbar">
-        <button class="btn btn-primary" onclick="openModal('memberModal')">➕ Add Member</button>
+        <button class="btn btn-primary" onclick="openModal('memberModal')">
+          <svg class="icon-svg sm" viewBox="0 0 24 24"><use href="#ic-plus"/></svg> Add Member
+        </button>
         <select class="filter-select"><option>All Members</option><option>Students</option><option>Faculty</option><option>Staff</option></select>
         <div class="spacer"></div>
         <span style="font-size:13px;color:var(--muted)">1,248 members</span>
@@ -1253,7 +926,7 @@
     </div>
   </div>
 
-  <!-- AUTHORS PAGE -->
+  <!-- AUTHORS -->
   <div id="authors" class="page">
     <div class="topbar">
       <span class="topbar-title">Author Management</span>
@@ -1262,7 +935,9 @@
     </div>
     <div class="content">
       <div class="toolbar">
-        <button class="btn btn-primary" onclick="openModal('authorModal')">➕ Add Author</button>
+        <button class="btn btn-primary" onclick="openModal('authorModal')">
+          <svg class="icon-svg sm" viewBox="0 0 24 24"><use href="#ic-plus"/></svg> Add Author
+        </button>
         <div class="spacer"></div>
         <span id="authorsCountLabel" style="font-size:13px;color:var(--muted)">0 authors</span>
       </div>
@@ -1270,7 +945,7 @@
     </div>
   </div>
 
-  <!-- TRANSACTIONS PAGE -->
+  <!-- TRANSACTIONS -->
   <div id="transactions" class="page">
     <div class="topbar">
       <span class="topbar-title">Issue / Return Books</span>
@@ -1279,10 +954,14 @@
     </div>
     <div class="content">
       <div class="toolbar">
-        <button class="btn btn-primary" onclick="openModal('transactionModal')">➕ New Transaction</button>
+        <button class="btn btn-primary" onclick="openModal('transactionModal')">
+          <svg class="icon-svg sm" viewBox="0 0 24 24"><use href="#ic-plus"/></svg> New Transaction
+        </button>
         <select class="filter-select"><option>All Transactions</option><option>Issued</option><option>Returned</option><option>Overdue</option></select>
         <div class="spacer"></div>
-        <button class="btn btn-outline">📥 Export</button>
+        <button class="btn btn-outline">
+          <svg class="icon-svg sm" viewBox="0 0 24 24"><use href="#ic-download"/></svg> Export
+        </button>
       </div>
       <div class="panel">
         <div class="panel-hd"><h2>Transaction Records</h2></div>
@@ -1293,31 +972,31 @@
               <td><div style="font-weight:600">Rahul Islam</div><div style="font-size:11px;color:var(--muted)">STU-1001</div></td>
               <td>Clean Code</td><td>Dec 1, 2024</td><td>Dec 15, 2024</td><td>Dec 12, 2024</td>
               <td><span class="badge badge-green">Returned</span></td>
-              <td><button class="icon-btn">✎</button></td>
+              <td><button class="icon-btn"><svg class="icon-svg sm" viewBox="0 0 24 24"><use href="#ic-edit"/></svg></button></td>
             </tr>
             <tr>
               <td><div style="font-weight:600">Nadia Haque</div><div style="font-size:11px;color:var(--muted)">STU-1002</div></td>
               <td>Introduction to Algorithms</td><td>Dec 3, 2024</td><td>Dec 17, 2024</td><td>—</td>
               <td><span class="badge badge-blue">Issued</span></td>
-              <td><button class="icon-btn">✎</button></td>
+              <td><button class="icon-btn"><svg class="icon-svg sm" viewBox="0 0 24 24"><use href="#ic-edit"/></svg></button></td>
             </tr>
             <tr>
               <td><div style="font-weight:600">Karim Uddin</div><div style="font-size:11px;color:var(--muted)">STU-1003</div></td>
               <td>The Great Gatsby</td><td>Nov 28, 2024</td><td>Dec 12, 2024</td><td>—</td>
               <td><span class="badge badge-red">Overdue</span></td>
-              <td><button class="icon-btn">✎</button></td>
+              <td><button class="icon-btn"><svg class="icon-svg sm" viewBox="0 0 24 24"><use href="#ic-edit"/></svg></button></td>
             </tr>
             <tr>
               <td><div style="font-weight:600">Fatema Begum</div><div style="font-size:11px;color:var(--muted)">STU-1004</div></td>
               <td>Python Crash Course</td><td>Dec 5, 2024</td><td>Dec 19, 2024</td><td>—</td>
               <td><span class="badge badge-blue">Issued</span></td>
-              <td><button class="icon-btn">✎</button></td>
+              <td><button class="icon-btn"><svg class="icon-svg sm" viewBox="0 0 24 24"><use href="#ic-edit"/></svg></button></td>
             </tr>
             <tr>
               <td><div style="font-weight:600">Samir Roy</div><div style="font-size:11px;color:var(--muted)">STU-1005</div></td>
               <td>Database Systems</td><td>Nov 25, 2024</td><td>Dec 9, 2024</td><td>—</td>
               <td><span class="badge badge-red">Overdue</span></td>
-              <td><button class="icon-btn">✎</button></td>
+              <td><button class="icon-btn"><svg class="icon-svg sm" viewBox="0 0 24 24"><use href="#ic-edit"/></svg></button></td>
             </tr>
           </tbody>
         </table>
@@ -1325,7 +1004,7 @@
     </div>
   </div>
 
-  <!-- FINES PAGE -->
+  <!-- FINES -->
   <div id="fines" class="page">
     <div class="topbar">
       <span class="topbar-title">Fine Management</span>
@@ -1347,7 +1026,9 @@
         <select class="filter-select"><option>All Fines</option><option>Unpaid</option><option>Paid</option><option>Waived</option></select>
         <select class="filter-select"><option>All Members</option><option>Students</option><option>Faculty</option></select>
         <div class="spacer"></div>
-        <button class="btn btn-outline">📥 Export</button>
+        <button class="btn btn-outline">
+          <svg class="icon-svg sm" viewBox="0 0 24 24"><use href="#ic-download"/></svg> Export
+        </button>
       </div>
       <div class="panel">
         <div class="panel-hd"><h2>Fine Records</h2></div>
@@ -1359,7 +1040,7 @@
     </div>
   </div>
 
-  <!-- RESERVATIONS PAGE -->
+  <!-- RESERVATIONS -->
   <div id="reservations" class="page">
     <div class="topbar">
       <span class="topbar-title">Reservations</span>
@@ -1374,7 +1055,11 @@
       </div>
       <div class="reserv-grid">
         <div class="reserv-card pending">
-          <div class="rc-hd"><div class="rc-icon">🏗️</div><div><div class="rc-title">Design Patterns</div><div class="rc-author">Gang of Four</div></div><div class="rc-badge"><span class="badge badge-gold">Pending</span></div></div>
+          <div class="rc-hd">
+            <div class="rc-icon" style="color:var(--accent)"><svg class="icon-svg lg" viewBox="0 0 24 24"><use href="#ic-layer"/></svg></div>
+            <div><div class="rc-title">Design Patterns</div><div class="rc-author">Gang of Four</div></div>
+            <div class="rc-badge"><span class="badge badge-gold">Pending</span></div>
+          </div>
           <div class="rc-info">
             <div class="rc-info-item"><div class="lbl">Reserved By</div><div class="val">Tania Ahmed</div></div>
             <div class="rc-info-item"><div class="lbl">Member ID</div><div class="val">STU-1005</div></div>
@@ -1384,7 +1069,11 @@
           <div class="rc-actions"><button class="sm-btn approve">Approve & Issue</button><button class="sm-btn cancel">Cancel</button></div>
         </div>
         <div class="reserv-card ready">
-          <div class="rc-hd"><div class="rc-icon">📗</div><div><div class="rc-title">The Pragmatic Programmer</div><div class="rc-author">Andrew Hunt</div></div><div class="rc-badge"><span class="badge badge-green">Ready</span></div></div>
+          <div class="rc-hd">
+            <div class="rc-icon" style="color:var(--green)"><svg class="icon-svg lg" viewBox="0 0 24 24"><use href="#ic-book"/></svg></div>
+            <div><div class="rc-title">The Pragmatic Programmer</div><div class="rc-author">Andrew Hunt</div></div>
+            <div class="rc-badge"><span class="badge badge-green">Ready</span></div>
+          </div>
           <div class="rc-info">
             <div class="rc-info-item"><div class="lbl">Reserved By</div><div class="val">Nadia Haque</div></div>
             <div class="rc-info-item"><div class="lbl">Member ID</div><div class="val">STU-1002</div></div>
@@ -1394,7 +1083,11 @@
           <div class="rc-actions"><button class="sm-btn approve">Issue Now</button><button class="sm-btn cancel">Cancel</button></div>
         </div>
         <div class="reserv-card pending">
-          <div class="rc-hd"><div class="rc-icon">🌌</div><div><div class="rc-title">A Brief History of Time</div><div class="rc-author">Stephen Hawking</div></div><div class="rc-badge"><span class="badge badge-gold">Pending</span></div></div>
+          <div class="rc-hd">
+            <div class="rc-icon" style="color:var(--blue)"><svg class="icon-svg lg" viewBox="0 0 24 24"><use href="#ic-astronomy"/></svg></div>
+            <div><div class="rc-title">A Brief History of Time</div><div class="rc-author">Stephen Hawking</div></div>
+            <div class="rc-badge"><span class="badge badge-gold">Pending</span></div>
+          </div>
           <div class="rc-info">
             <div class="rc-info-item"><div class="lbl">Reserved By</div><div class="val">Rahul Islam</div></div>
             <div class="rc-info-item"><div class="lbl">Member ID</div><div class="val">STU-1001</div></div>
@@ -1407,7 +1100,7 @@
     </div>
   </div>
 
-  <!-- REPORTS PAGE -->
+  <!-- REPORTS -->
   <div id="reports" class="page">
     <div class="topbar">
       <span class="topbar-title">Reports</span>
@@ -1417,37 +1110,37 @@
     <div class="content">
       <div class="reports-grid">
         <div class="report-card">
-          <div class="report-icon">📚</div>
+          <div class="report-icon"><svg class="icon-svg xl" viewBox="0 0 24 24"><use href="#ic-package"/></svg></div>
           <div class="report-title">Inventory Report</div>
           <div class="report-desc">View detailed inventory status, availability, and book conditions across the library.</div>
           <button class="report-btn">Generate Report</button>
         </div>
         <div class="report-card">
-          <div class="report-icon">👥</div>
+          <div class="report-icon"><svg class="icon-svg xl" viewBox="0 0 24 24"><use href="#ic-users"/></svg></div>
           <div class="report-title">Member Report</div>
           <div class="report-desc">Analyze member activity, registration trends, and membership statistics.</div>
           <button class="report-btn">Generate Report</button>
         </div>
         <div class="report-card">
-          <div class="report-icon">📤</div>
+          <div class="report-icon"><svg class="icon-svg xl" viewBox="0 0 24 24"><use href="#ic-refresh"/></svg></div>
           <div class="report-title">Circulation Report</div>
           <div class="report-desc">Track book issuances, returns, and circulation patterns over time.</div>
           <button class="report-btn">Generate Report</button>
         </div>
         <div class="report-card">
-          <div class="report-icon">💰</div>
+          <div class="report-icon"><svg class="icon-svg xl" viewBox="0 0 24 24"><use href="#ic-money"/></svg></div>
           <div class="report-title">Fine Report</div>
           <div class="report-desc">Monitor fine collection, outstanding fines, and payment history.</div>
           <button class="report-btn">Generate Report</button>
         </div>
         <div class="report-card">
-          <div class="report-icon">📊</div>
+          <div class="report-icon"><svg class="icon-svg xl" viewBox="0 0 24 24"><use href="#ic-chart"/></svg></div>
           <div class="report-title">Statistics Report</div>
           <div class="report-desc">View comprehensive statistics and analytics of library operations.</div>
           <button class="report-btn">Generate Report</button>
         </div>
         <div class="report-card">
-          <div class="report-icon">⚠️</div>
+          <div class="report-icon"><svg class="icon-svg xl" viewBox="0 0 24 24"><use href="#ic-alert"/></svg></div>
           <div class="report-title">Overdue Report</div>
           <div class="report-desc">Identify overdue books and members with pending returns.</div>
           <button class="report-btn">Generate Report</button>
@@ -1456,7 +1149,7 @@
     </div>
   </div>
 
-  <!-- NOTIFICATIONS PAGE -->
+  <!-- NOTIFICATIONS -->
   <div id="notifications" class="page">
     <div class="topbar">
       <span class="topbar-title">Notifications</span>
@@ -1473,27 +1166,39 @@
       <div class="panel">
         <div class="notif-list">
           <div class="notif-item">
-            <div class="notif-dot2" style="background:var(--red)"></div>
+            <div class="notif-icon" style="background:rgba(224,92,92,.12);color:var(--red)">
+              <svg class="icon-svg sm" viewBox="0 0 24 24"><use href="#ic-alert"/></svg>
+            </div>
             <div><div class="ni-title"><strong>Karim Uddin – Overdue</strong></div><div class="ni-sub">The Great Gatsby – 3 days late. Fine: ৳30</div><div class="ni-time">2 hours ago</div></div>
           </div>
           <div class="notif-item">
-            <div class="notif-dot2" style="background:var(--red)"></div>
+            <div class="notif-icon" style="background:rgba(224,92,92,.12);color:var(--red)">
+              <svg class="icon-svg sm" viewBox="0 0 24 24"><use href="#ic-alert"/></svg>
+            </div>
             <div><div class="ni-title"><strong>Samir Roy – Overdue</strong></div><div class="ni-sub">Database Systems – 1 day late. Fine: ৳80</div><div class="ni-time">4 hours ago</div></div>
           </div>
           <div class="notif-item">
-            <div class="notif-dot2" style="background:var(--accent)"></div>
+            <div class="notif-icon" style="background:rgba(201,168,76,.12);color:var(--accent)">
+              <svg class="icon-svg sm" viewBox="0 0 24 24"><use href="#ic-clock"/></svg>
+            </div>
             <div><div class="ni-title"><strong>Due Tomorrow</strong></div><div class="ni-sub">3 books are due December 8</div><div class="ni-time">Today</div></div>
           </div>
           <div class="notif-item">
-            <div class="notif-dot2" style="background:var(--green)"></div>
+            <div class="notif-icon" style="background:rgba(62,207,142,.12);color:var(--green)">
+              <svg class="icon-svg sm" viewBox="0 0 24 24"><use href="#ic-user-plus"/></svg>
+            </div>
             <div><div class="ni-title"><strong>New Member Registered</strong></div><div class="ni-sub">Tania Ahmed joined the library as a Student</div><div class="ni-time">Yesterday</div></div>
           </div>
           <div class="notif-item">
-            <div class="notif-dot2" style="background:var(--blue)"></div>
+            <div class="notif-icon" style="background:rgba(92,157,224,.12);color:var(--blue)">
+              <svg class="icon-svg sm" viewBox="0 0 24 24"><use href="#ic-return"/></svg>
+            </div>
             <div><div class="ni-title"><strong>Book Returned</strong></div><div class="ni-sub">Rahul Islam returned Clean Code</div><div class="ni-time">Dec 1</div></div>
           </div>
           <div class="notif-item">
-            <div class="notif-dot2" style="background:var(--purple)"></div>
+            <div class="notif-icon" style="background:rgba(155,114,230,.12);color:var(--purple)">
+              <svg class="icon-svg sm" viewBox="0 0 24 24"><use href="#ic-plus"/></svg>
+            </div>
             <div><div class="ni-title"><strong>New Book Added</strong></div><div class="ni-sub">Atomic Habits by James Clear added to catalog</div><div class="ni-time">Nov 28</div></div>
           </div>
         </div>
@@ -1501,7 +1206,7 @@
     </div>
   </div>
 
-  <!-- SETTINGS PAGE -->
+  <!-- SETTINGS -->
   <div id="settings" class="page">
     <div class="topbar">
       <span class="topbar-title">Settings</span>
@@ -1509,24 +1214,26 @@
       <div class="topbar-btn notify-btn">🔔<span class="notif-dot"></span></div>
     </div>
     <div class="content">
-      <div class="panel" style="max-width:600px;">
+      <div class="panel" style="max-width:600px">
         <div class="panel-hd"><h2>Library Settings</h2></div>
         <div style="padding:20px;border-bottom:1px solid var(--border)">
           <div style="margin-bottom:16px">
-            <label style="font-size:13px;font-weight:600;color:var(--text);display:block;margin-bottom:8px">Library Name</label>
-            <input type="text" value="LibraryOS" style="width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-size:13px;color:var(--text);font-family:'DM Sans',sans-serif;outline:none">
+            <label class="settings-label">Library Name</label>
+            <input type="text" class="settings-input" value="LibraryOS">
           </div>
           <div style="margin-bottom:16px">
-            <label style="font-size:13px;font-weight:600;color:var(--text);display:block;margin-bottom:8px">Book Borrowing Duration (Days)</label>
-            <input type="number" value="14" style="width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-size:13px;color:var(--text);font-family:'DM Sans',sans-serif;outline:none">
+            <label class="settings-label">Book Borrowing Duration (Days)</label>
+            <input type="number" class="settings-input" value="14">
           </div>
           <div style="margin-bottom:16px">
-            <label style="font-size:13px;font-weight:600;color:var(--text);display:block;margin-bottom:8px">Fine Per Day (৳)</label>
-            <input type="number" value="10" style="width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-size:13px;color:var(--text);font-family:'DM Sans',sans-serif;outline:none">
+            <label class="settings-label">Fine Per Day (৳)</label>
+            <input type="number" class="settings-input" value="10">
           </div>
         </div>
         <div style="padding:20px;text-align:right">
-          <button class="btn btn-primary">Save Settings</button>
+          <button class="btn btn-primary">
+            <svg class="icon-svg sm" viewBox="0 0 24 24"><use href="#ic-check"/></svg> Save Settings
+          </button>
         </div>
       </div>
     </div>
@@ -1574,7 +1281,12 @@
 
 <div class="modal-overlay" id="authorModal">
   <div class="modal">
-    <div class="modal-hd"><h2>Add New Author</h2><button class="modal-close" onclick="closeModal('authorModal')">✕</button></div>
+    <div class="modal-hd">
+      <h2>Add New Author</h2>
+      <button class="modal-close" onclick="closeModal('authorModal')">
+        <svg class="icon-svg sm" viewBox="0 0 24 24"><use href="#ic-close"/></svg>
+      </button>
+    </div>
     <div class="form-grid">
       <div class="form-group"><label>First Name</label><input id="memberFirstName" type="text" placeholder="First name"></div>
       <div class="form-group"><label>Last Name</label><input id="memberLastName" type="text" placeholder="Last name"></div>
@@ -1593,7 +1305,12 @@
 
 <div class="modal-overlay" id="transactionModal">
   <div class="modal">
-    <div class="modal-hd"><h2>New Transaction</h2><button class="modal-close" onclick="closeModal('transactionModal')">✕</button></div>
+    <div class="modal-hd">
+      <h2>New Transaction</h2>
+      <button class="modal-close" onclick="closeModal('transactionModal')">
+        <svg class="icon-svg sm" viewBox="0 0 24 24"><use href="#ic-close"/></svg>
+      </button>
+    </div>
     <div class="form-grid">
       <div class="form-group"><label>Member</label><input type="text" placeholder="Select member"></div>
       <div class="form-group"><label>Book</label><input type="text" placeholder="Select book"></div>
@@ -1695,10 +1412,10 @@ async function loadUserProfile() {
 
 function updateUserInfo() {
   if (currentUser) {
-    const userName = document.querySelector('.sidebar-logo span');
-    if (userName) {
-      userName.textContent = `${currentUser.first_name} ${currentUser.last_name} • ${currentUser.role.toUpperCase()}`;
-    }
+    const adminName = document.querySelector('.admin-info p');
+    const adminRole = document.querySelector('.admin-info span');
+    if (adminName) adminName.textContent = `${currentUser.first_name} ${currentUser.last_name}`.trim();
+    if (adminRole) adminRole.textContent = (currentUser.role || 'librarian').toUpperCase();
   }
 }
 
@@ -2612,6 +2329,5 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 </script>
-
 </body>
 </html>

@@ -1,35 +1,30 @@
 #!/bin/bash
 
+set -e
+
 echo "🚀 Starting Library Management System Backend..."
 echo ""
 
-# Check if .env exists
-if [ ! -f .env ]; then
-    echo "⚠️  .env file not found. Copying from .env.example..."
-    cp .env.example .env
-    echo "✓ Created .env file. Please update it with your settings if needed."
-    echo ""
-fi
+PROJECT_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+cd "$PROJECT_ROOT"
 
 # Build and start services
 echo "📦 Building Docker containers..."
-docker-compose build
+docker compose build
 
 echo ""
 echo "🔧 Starting services..."
-docker-compose up -d
+docker compose up -d
 
 echo ""
 echo "⏳ Waiting for database to be ready..."
 sleep 5
 
 echo ""
-echo "📊 Running migrations..."
-docker-compose exec backend python manage.py migrate
+echo "📊 Backend handles migrations automatically on startup."
 
 echo ""
-echo "🎲 Initializing sample data..."
-docker-compose exec backend python manage.py init_data
+echo "ℹ️  Sample data initialization skipped (to avoid dummy data)."
 
 echo ""
 echo "✅ Library Management System is ready!"
@@ -43,7 +38,7 @@ echo "   - Admin: admin@lms.com / admin123"
 echo "   - Librarian: librarian@lms.com / librarian123"
 echo ""
 echo "📝 Useful commands:"
-echo "   - View logs: docker-compose logs -f"
-echo "   - Stop services: docker-compose down"
-echo "   - Restart: docker-compose restart"
+echo "   - View logs: docker compose logs -f"
+echo "   - Stop services: docker compose down"
+echo "   - Restart: docker compose restart"
 echo ""

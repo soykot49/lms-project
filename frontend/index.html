@@ -21,26 +21,7 @@
       --muted: #7a8099;
       --sidebar-w: 240px;
     }
-    [data-theme="light"] {
-      --bg: #f6f8fc;
-      --surface: #ffffff;
-      --surface2: #f1f4fa;
-      --border: #d8deeb;
-      --accent: #b2862f;
-      --accent2: #c89d45;
-      --green: #1ea266;
-      --red: #c33d3d;
-      --blue: #2f6ebd;
-      --purple: #7a56c2;
-      --text: #1b2538;
-      --muted: #5d6b83;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     html, body {
       height: 100%;
       font-family: 'DM Sans', sans-serif;
@@ -118,12 +99,7 @@
       background: linear-gradient(135deg, rgba(201,168,76,.15), rgba(201,168,76,.05));
       color: var(--accent); border: 1px solid rgba(201,168,76,.2);
     }
-    .icon, .qa-icon, .topbar-btn {
-      font-family: "Segoe UI Symbol", "Apple Color Emoji", "Noto Color Emoji", sans-serif;
-      font-variant-emoji: emoji;
-      line-height: 1;
-    }
-
+    .nav-item .nav-icon { width: 18px; height: 18px; flex-shrink: 0; }
     .nav-badge {
       margin-left: auto;
       background: var(--red); color: #fff;
@@ -138,29 +114,8 @@
     .admin-avatar {
       width: 34px; height: 34px; border-radius: 50%;
       background: linear-gradient(135deg, var(--accent), var(--purple));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
-      font-weight: 700;
-      color: #fff;
-    }
-    .admin-info p {
-      font-size: 13px;
-      font-weight: 600;
-    }
-    .admin-info span {
-      font-size: 11px;
-      color: var(--muted);
-    }
-    
-    /* MAIN CONTENT */
-    .main {
-      margin-left: var(--sidebar-w);
-      background: var(--bg);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 700; color: #fff;
     }
     .admin-info p { font-size: 13px; font-weight: 600; }
     .admin-info span { font-size: 11px; color: var(--muted); }
@@ -193,70 +148,6 @@
       color: var(--muted); position: relative; transition: 0.2s;
     }
     .topbar-btn:hover { border-color: var(--accent); color: var(--accent); }
-
-    .theme-toggle-btn {
-      width: 40px;
-      height: 40px;
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      background: var(--surface2);
-      color: var(--accent);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      transition: all .2s ease;
-    }
-    .theme-toggle-btn:hover {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(201,168,76,.15);
-      transform: translateY(-1px);
-    }
-    .theme-toggle-btn svg {
-      display:block;
-      color: currentColor;
-    }
-
-    [data-theme="dark"] .theme-toggle-btn {
-      background: #1f2a44;
-      border-color: #2e3b5d;
-      color: #fbbf24;
-      box-shadow: none;
-    }
-    [data-theme="dark"] .theme-toggle-btn:hover {
-      border-color: #3f4d73;
-      box-shadow: 0 0 0 3px rgba(59,130,246,.16);
-    }
-    [data-theme="light"] .theme-toggle-btn {
-      background: #e5e7eb;
-      border-color: #d1d5db;
-      color: #374151;
-      box-shadow: none;
-    }
-    [data-theme="light"] .theme-toggle-btn:hover {
-      border-color: #9ca3af;
-      box-shadow: 0 0 0 3px rgba(156,163,175,.2);
-    }
-
-
-
-    .topbar-notif-count {
-      position: absolute;
-      top: -6px;
-      right: -6px;
-      min-width: 18px;
-      height: 18px;
-      padding: 0 5px;
-      border-radius: 999px;
-      background: var(--red);
-      color: #fff;
-      font-size: 10px;
-      font-weight: 700;
-      line-height: 18px;
-      text-align: center;
-      border: 2px solid var(--surface);
-    }
-
     .notif-dot {
       position: absolute; top: 6px; right: 6px;
       width: 7px; height: 7px; background: var(--red);
@@ -706,7 +597,9 @@
 <!-- SIDEBAR -->
 <aside class="sidebar">
   <div class="sidebar-logo" onclick="showPage('dashboard', this)">
-    <div class="sidebar-logo-icon">📚</div>
+    <div class="sidebar-logo-icon">
+      <svg class="icon-svg" viewBox="0 0 24 24"><use href="#ic-book"/></svg>
+    </div>
     <div class="sidebar-logo-text">
       <h1>LibraryOS</h1>
       <span>Management System</span>
@@ -714,19 +607,42 @@
   </div>
   <nav class="nav">
     <div class="nav-section">Main</div>
-    <button class="nav-item active" onclick="showPage('dashboard', this)"><span class="icon">🏠</span> Dashboard</button>
-    <button class="nav-item" onclick="showPage('books', this)"><span class="icon">📖</span> Books <span id="booksCountBadge" class="nav-badge">0</span></button>
-    <button class="nav-item" onclick="showPage('members', this)"><span class="icon">👥</span> Members</button>
-    <button class="nav-item" onclick="showPage('authors', this)"><span class="icon">✍️</span> Authors</button>
+    <button class="nav-item active" onclick="showPage('dashboard', this)">
+      <svg class="icon-svg nav-icon" viewBox="0 0 24 24"><use href="#ic-home"/></svg> Dashboard
+    </button>
+    <button class="nav-item" onclick="showPage('books', this)">
+      <svg class="icon-svg nav-icon" viewBox="0 0 24 24"><use href="#ic-books"/></svg> Books
+      <span class="nav-badge">142</span>
+    </button>
+    <button class="nav-item" onclick="showPage('members', this)">
+      <svg class="icon-svg nav-icon" viewBox="0 0 24 24"><use href="#ic-users"/></svg> Members
+    </button>
+    <button class="nav-item" onclick="showPage('authors', this)">
+      <svg class="icon-svg nav-icon" viewBox="0 0 24 24"><use href="#ic-pen"/></svg> Authors
+    </button>
     <div class="nav-section">Transactions</div>
-    <button class="nav-item" onclick="showPage('transactions', this)"><span class="icon">🔄</span> Issue / Return</button>
-    <button class="nav-item" onclick="showPage('fines', this)"><span class="icon">💰</span> Fines <span id="finesCountBadge" class="nav-badge">0</span></button>
-    <button class="nav-item" onclick="showPage('reservations', this)"><span class="icon">🔖</span> Reservations</button>
+    <button class="nav-item" onclick="showPage('transactions', this)">
+      <svg class="icon-svg nav-icon" viewBox="0 0 24 24"><use href="#ic-refresh"/></svg> Issue / Return
+    </button>
+    <button class="nav-item" onclick="showPage('fines', this)">
+      <svg class="icon-svg nav-icon" viewBox="0 0 24 24"><use href="#ic-money"/></svg> Fines
+      <span class="nav-badge">5</span>
+    </button>
+    <button class="nav-item" onclick="showPage('reservations', this)">
+      <svg class="icon-svg nav-icon" viewBox="0 0 24 24"><use href="#ic-bookmark"/></svg> Reservations
+    </button>
     <div class="nav-section">Reports</div>
-    <button class="nav-item" onclick="showPage('reports', this)"><span class="icon">📊</span> Reports</button>
-    <button class="nav-item" onclick="showPage('notifications', this)"><span class="icon">🔔</span> Notifications <span id="notificationsCountBadge" class="nav-badge">0</span></button>
+    <button class="nav-item" onclick="showPage('reports', this)">
+      <svg class="icon-svg nav-icon" viewBox="0 0 24 24"><use href="#ic-chart"/></svg> Reports
+    </button>
+    <button class="nav-item" onclick="showPage('notifications', this)">
+      <svg class="icon-svg nav-icon" viewBox="0 0 24 24"><use href="#ic-bell"/></svg> Notifications
+      <span class="nav-badge">8</span>
+    </button>
     <div class="nav-section">Settings</div>
-    <button class="nav-item" onclick="showPage('settings', this)"><span class="icon">⚙️</span> Settings</button>
+    <button class="nav-item" onclick="showPage('settings', this)">
+      <svg class="icon-svg nav-icon" viewBox="0 0 24 24"><use href="#ic-settings"/></svg> Settings
+    </button>
   </nav>
   <div class="sidebar-footer">
     <div class="admin-card">
@@ -742,38 +658,44 @@
   <div id="dashboard" class="page active">
     <div class="topbar">
       <span class="topbar-title">Dashboard</span>
-      <div class="search-box"><span>🔍</span><input type="text" placeholder="Search..."></div>
-      <div class="topbar-btn notify-btn">🔔<span class="notif-dot"></span></div>
+      <div class="search-box">
+        <svg class="icon-svg sm" viewBox="0 0 24 24"><use href="#ic-search"/></svg>
+        <input type="text" placeholder="Search...">
+      </div>
+      <button class="topbar-btn">
+        <svg class="icon-svg sm" viewBox="0 0 24 24"><use href="#ic-bell"/></svg>
+        <span class="notif-dot"></span>
+      </button>
     </div>
     <div class="content">
       <div class="stats-grid">
         <div class="stat-card gold">
-          <div class="stat-icon">📚</div>
-          <div class="stat-val">0</div>
+          <div class="stat-icon gold"><svg class="icon-svg lg" viewBox="0 0 24 24"><use href="#ic-books"/></svg></div>
+          <div class="stat-val">427</div>
           <div class="stat-label">Total Books</div>
           <div class="stat-change up">
             <svg class="icon-svg sm" viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg> 12 this month
           </div>
         </div>
         <div class="stat-card blue">
-          <div class="stat-icon">👥</div>
-          <div class="stat-val">0</div>
+          <div class="stat-icon blue"><svg class="icon-svg lg" viewBox="0 0 24 24"><use href="#ic-users"/></svg></div>
+          <div class="stat-val">1,248</div>
           <div class="stat-label">Active Members</div>
           <div class="stat-change up">
             <svg class="icon-svg sm" viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg> 34 new members
           </div>
         </div>
         <div class="stat-card green">
-          <div class="stat-icon">📤</div>
-          <div class="stat-val">0</div>
+          <div class="stat-icon green"><svg class="icon-svg lg" viewBox="0 0 24 24"><use href="#ic-upload"/></svg></div>
+          <div class="stat-val">189</div>
           <div class="stat-label">Books Issued</div>
           <div class="stat-change down">
             <svg class="icon-svg sm" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg> 5 pending return
           </div>
         </div>
         <div class="stat-card red">
-          <div class="stat-icon">💰</div>
-          <div class="stat-val">$0.00</div>
+          <div class="stat-icon red"><svg class="icon-svg lg" viewBox="0 0 24 24"><use href="#ic-money"/></svg></div>
+          <div class="stat-val">৳2,340</div>
           <div class="stat-label">Total Fines</div>
           <div class="stat-change up">
             <svg class="icon-svg sm" viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg> 5 overdue today
@@ -782,17 +704,37 @@
       </div>
 
       <div class="qa-grid">
-        <button class="qa-btn" onclick="showPage('transactions', this)"><span class="qa-icon">📤</span><span>Issue Book</span></button>
-        <button class="qa-btn" onclick="showPage('transactions', this)"><span class="qa-icon">📥</span><span>Return Book</span></button>
-        <button class="qa-btn" onclick="showPage('members', this)"><span class="qa-icon">➕</span><span>Add Member</span></button>
-        <button class="qa-btn" onclick="showPage('books', this)"><span class="qa-icon">📝</span><span>Add Book</span></button>
+        <button class="qa-btn" onclick="showPage('transactions', document.querySelector('[onclick*=transactions]'))">
+          <div class="qa-icon" style="background:rgba(201,168,76,.1);color:var(--accent)">
+            <svg class="icon-svg lg" viewBox="0 0 24 24"><use href="#ic-upload"/></svg>
+          </div>
+          <span>Issue Book</span>
+        </button>
+        <button class="qa-btn" onclick="showPage('transactions', document.querySelector('[onclick*=transactions]'))">
+          <div class="qa-icon" style="background:rgba(62,207,142,.1);color:var(--green)">
+            <svg class="icon-svg lg" viewBox="0 0 24 24"><use href="#ic-return"/></svg>
+          </div>
+          <span>Return Book</span>
+        </button>
+        <button class="qa-btn" onclick="showPage('members', document.querySelector('[onclick*=members]'))">
+          <div class="qa-icon" style="background:rgba(92,157,224,.1);color:var(--blue)">
+            <svg class="icon-svg lg" viewBox="0 0 24 24"><use href="#ic-user-plus"/></svg>
+          </div>
+          <span>Add Member</span>
+        </button>
+        <button class="qa-btn" onclick="showPage('books', document.querySelector('[onclick*=books]'))">
+          <div class="qa-icon" style="background:rgba(155,114,230,.1);color:var(--purple)">
+            <svg class="icon-svg lg" viewBox="0 0 24 24"><use href="#ic-plus"/></svg>
+          </div>
+          <span>Add Book</span>
+        </button>
       </div>
 
       <div class="row-grid">
         <div class="panel">
           <div class="panel-hd">
             <h2>Recent Transactions</h2>
-            <a onclick="showPage('transactions', this)">View All →</a>
+            <a onclick="showPage('transactions', document.querySelector('[onclick*=transactions]'))">View All →</a>
           </div>
           <table>
             <thead><tr><th>Member</th><th>Book</th><th>Issued</th><th>Due Date</th><th>Status</th></tr></thead>
@@ -806,7 +748,10 @@
           </table>
         </div>
         <div class="panel">
-          <div class="panel-hd"><h2>🔔 Notifications</h2><a onclick="showPage('notifications', document.querySelector('.nav-item[onclick*=\"notifications\"]'))">See all</a></div>
+          <div class="panel-hd">
+            <h2><svg class="icon-svg" viewBox="0 0 24 24"><use href="#ic-bell"/></svg> Notifications</h2>
+            <a onclick="showPage('notifications', document.querySelector('[onclick*=notifications]'))">See all</a>
+          </div>
           <div class="notif-list">
             <div class="notif-item">
               <div class="notif-icon" style="background:rgba(224,92,92,.12);color:var(--red)">
@@ -890,8 +835,11 @@
   <div id="books" class="page">
     <div class="topbar">
       <span class="topbar-title">Books Management</span>
-      <div class="search-box"><span>🔍</span><input type="text" placeholder="Search books…"></div>
-      <div class="topbar-btn notify-btn">🔔<span class="notif-dot"></span></div>
+      <div class="search-box">
+        <svg class="icon-svg sm" viewBox="0 0 24 24"><use href="#ic-search"/></svg>
+        <input type="text" placeholder="Search books…">
+      </div>
+      <button class="topbar-btn"><svg class="icon-svg sm" viewBox="0 0 24 24"><use href="#ic-bell"/></svg><span class="notif-dot"></span></button>
     </div>
     <div class="content">
       <div class="toolbar">
@@ -902,7 +850,56 @@
         <div class="spacer"></div>
         <span style="font-size:13px;color:var(--muted)">427 books</span>
       </div>
-      <div class="books-grid"><div style="color:var(--muted)">Loading books...</div></div>
+      <div class="books-grid">
+        <div class="book-card">
+          <div class="book-cover">
+            <div class="book-cover-icon" style="background:rgba(62,207,142,.15);color:var(--green)">
+              <svg class="icon-svg lg" viewBox="0 0 24 24"><use href="#ic-book"/></svg>
+            </div>
+          </div>
+          <div class="book-card-body"><h3>Clean Code</h3><div class="author">Robert C. Martin</div><div class="meta"><span class="isbn">ISBN: 0136083161</span><span class="badge badge-green">Available</span></div></div>
+        </div>
+        <div class="book-card">
+          <div class="book-cover">
+            <div class="book-cover-icon" style="background:rgba(92,157,224,.15);color:var(--blue)">
+              <svg class="icon-svg lg" viewBox="0 0 24 24"><use href="#ic-cpu"/></svg>
+            </div>
+          </div>
+          <div class="book-card-body"><h3>Introduction to Algorithms</h3><div class="author">Cormen & Others</div><div class="meta"><span class="isbn">ISBN: 0262033844</span><span class="badge badge-blue">Issued</span></div></div>
+        </div>
+        <div class="book-card">
+          <div class="book-cover">
+            <div class="book-cover-icon" style="background:rgba(155,114,230,.15);color:var(--purple)">
+              <svg class="icon-svg lg" viewBox="0 0 24 24"><use href="#ic-layer"/></svg>
+            </div>
+          </div>
+          <div class="book-card-body"><h3>Python Crash Course</h3><div class="author">Eric Matthes</div><div class="meta"><span class="isbn">ISBN: 1593275528</span><span class="badge badge-green">Available</span></div></div>
+        </div>
+        <div class="book-card">
+          <div class="book-cover">
+            <div class="book-cover-icon" style="background:rgba(201,168,76,.15);color:var(--accent)">
+              <svg class="icon-svg lg" viewBox="0 0 24 24"><use href="#ic-database"/></svg>
+            </div>
+          </div>
+          <div class="book-card-body"><h3>Database Systems</h3><div class="author">Thomas M. Connolly</div><div class="meta"><span class="isbn">ISBN: 0321523067</span><span class="badge badge-red">Overdue</span></div></div>
+        </div>
+        <div class="book-card">
+          <div class="book-cover">
+            <div class="book-cover-icon" style="background:rgba(232,150,109,.15);color:#e8966d">
+              <svg class="icon-svg lg" viewBox="0 0 24 24"><use href="#ic-star"/></svg>
+            </div>
+          </div>
+          <div class="book-card-body"><h3>The Great Gatsby</h3><div class="author">F. Scott Fitzgerald</div><div class="meta"><span class="isbn">ISBN: 9780743273565</span><span class="badge badge-red">Overdue</span></div></div>
+        </div>
+        <div class="book-card">
+          <div class="book-cover">
+            <div class="book-cover-icon" style="background:rgba(62,207,142,.15);color:var(--green)">
+              <svg class="icon-svg lg" viewBox="0 0 24 24"><use href="#ic-grid"/></svg>
+            </div>
+          </div>
+          <div class="book-card-body"><h3>Design Patterns</h3><div class="author">Gang of Four</div><div class="meta"><span class="isbn">ISBN: 0201633612</span><span class="badge badge-gold">Reserved</span></div></div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -910,8 +907,11 @@
   <div id="members" class="page">
     <div class="topbar">
       <span class="topbar-title">Members Management</span>
-      <div class="search-box"><span>🔍</span><input type="text" placeholder="Search members…"></div>
-      <div class="topbar-btn notify-btn">🔔<span class="notif-dot"></span></div>
+      <div class="search-box">
+        <svg class="icon-svg sm" viewBox="0 0 24 24"><use href="#ic-search"/></svg>
+        <input type="text" placeholder="Search members…">
+      </div>
+      <button class="topbar-btn"><svg class="icon-svg sm" viewBox="0 0 24 24"><use href="#ic-bell"/></svg><span class="notif-dot"></span></button>
     </div>
     <div class="content">
       <div class="toolbar">
@@ -922,7 +922,68 @@
         <div class="spacer"></div>
         <span style="font-size:13px;color:var(--muted)">1,248 members</span>
       </div>
-      <div class="members-grid"><div style="color:var(--muted)">Loading members...</div></div>
+      <div class="members-grid">
+        <div class="member-card">
+          <div class="member-hd">
+            <div class="member-avatar" style="background:#9b72e6">R</div>
+            <div><div class="member-name">Rahul Islam</div><div class="member-role">Student</div></div>
+          </div>
+          <div class="member-stats">
+            <div class="mstat"><div class="val" style="color:var(--blue)">2</div><div class="lbl">Books Issued</div></div>
+            <div class="mstat"><div class="val" style="color:var(--accent)">0</div><div class="lbl">Outstanding Fines</div></div>
+          </div>
+          <div style="font-size:11px;color:var(--muted);margin-bottom:12px;display:flex;align-items:center;gap:5px">
+            <svg class="icon-svg sm" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            rahul@example.com
+          </div>
+          <div class="member-actions"><button class="sm-btn" onclick="openModal('memberModal')">Edit</button><button class="sm-btn">View History</button></div>
+        </div>
+        <div class="member-card">
+          <div class="member-hd">
+            <div class="member-avatar" style="background:#5c9de0">N</div>
+            <div><div class="member-name">Nadia Haque</div><div class="member-role">Faculty</div></div>
+          </div>
+          <div class="member-stats">
+            <div class="mstat"><div class="val" style="color:var(--blue)">1</div><div class="lbl">Books Issued</div></div>
+            <div class="mstat"><div class="val" style="color:var(--accent)">0</div><div class="lbl">Outstanding Fines</div></div>
+          </div>
+          <div style="font-size:11px;color:var(--muted);margin-bottom:12px;display:flex;align-items:center;gap:5px">
+            <svg class="icon-svg sm" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            nadia@example.com
+          </div>
+          <div class="member-actions"><button class="sm-btn" onclick="openModal('memberModal')">Edit</button><button class="sm-btn">View History</button></div>
+        </div>
+        <div class="member-card">
+          <div class="member-hd">
+            <div class="member-avatar" style="background:#3ecf8e">K</div>
+            <div><div class="member-name">Karim Uddin</div><div class="member-role">Student</div></div>
+          </div>
+          <div class="member-stats">
+            <div class="mstat"><div class="val" style="color:var(--blue)">1</div><div class="lbl">Books Issued</div></div>
+            <div class="mstat"><div class="val" style="color:var(--red)">৳30</div><div class="lbl">Outstanding Fines</div></div>
+          </div>
+          <div style="font-size:11px;color:var(--muted);margin-bottom:12px;display:flex;align-items:center;gap:5px">
+            <svg class="icon-svg sm" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            karim@example.com
+          </div>
+          <div class="member-actions"><button class="sm-btn" onclick="openModal('memberModal')">Edit</button><button class="sm-btn">View History</button></div>
+        </div>
+        <div class="member-card">
+          <div class="member-hd">
+            <div class="member-avatar" style="background:#e8956d">F</div>
+            <div><div class="member-name">Fatema Begum</div><div class="member-role">Student</div></div>
+          </div>
+          <div class="member-stats">
+            <div class="mstat"><div class="val" style="color:var(--blue)">1</div><div class="lbl">Books Issued</div></div>
+            <div class="mstat"><div class="val" style="color:var(--accent)">0</div><div class="lbl">Outstanding Fines</div></div>
+          </div>
+          <div style="font-size:11px;color:var(--muted);margin-bottom:12px;display:flex;align-items:center;gap:5px">
+            <svg class="icon-svg sm" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            fatema@example.com
+          </div>
+          <div class="member-actions"><button class="sm-btn" onclick="openModal('memberModal')">Edit</button><button class="sm-btn">View History</button></div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -930,8 +991,11 @@
   <div id="authors" class="page">
     <div class="topbar">
       <span class="topbar-title">Author Management</span>
-      <div class="search-box"><span>🔍</span><input type="text" placeholder="Search authors…"></div>
-      <div class="topbar-btn notify-btn">🔔<span class="notif-dot"></span></div>
+      <div class="search-box">
+        <svg class="icon-svg sm" viewBox="0 0 24 24"><use href="#ic-search"/></svg>
+        <input type="text" placeholder="Search authors…">
+      </div>
+      <button class="topbar-btn"><svg class="icon-svg sm" viewBox="0 0 24 24"><use href="#ic-bell"/></svg><span class="notif-dot"></span></button>
     </div>
     <div class="content">
       <div class="toolbar">
@@ -939,9 +1003,102 @@
           <svg class="icon-svg sm" viewBox="0 0 24 24"><use href="#ic-plus"/></svg> Add Author
         </button>
         <div class="spacer"></div>
-        <span id="authorsCountLabel" style="font-size:13px;color:var(--muted)">0 authors</span>
+        <span style="font-size:13px;color:var(--muted)">48 authors</span>
       </div>
-      <div class="authors-grid"><div style="color:var(--muted)">Loading authors...</div></div>
+      <div class="authors-grid">
+        <div class="author-card">
+          <div class="author-hd">
+            <div class="author-avatar" style="background:#9b72e6">R</div>
+            <div>
+              <div class="author-name">Robert C. Martin</div>
+              <div class="author-nationality">
+                <svg class="icon-svg sm" viewBox="0 0 24 24"><use href="#ic-globe"/></svg> American
+              </div>
+            </div>
+          </div>
+          <div class="author-stats">
+            <div class="astat"><div class="val" style="color:var(--blue)">6</div><div class="lbl">Books</div></div>
+            <div class="astat"><div class="val" style="color:var(--accent)">48</div><div class="lbl">Times Borrowed</div></div>
+          </div>
+          <div class="author-genre">
+            <svg class="icon-svg sm" viewBox="0 0 24 24"><use href="#ic-books"/></svg> Computer Science
+          </div>
+          <div class="author-actions">
+            <button class="sm-btn" onclick="openModal('authorModal')">Edit</button>
+            <button class="sm-btn">View Books</button>
+            <button class="sm-btn del">Delete</button>
+          </div>
+        </div>
+        <div class="author-card">
+          <div class="author-hd">
+            <div class="author-avatar" style="background:#5c9de0">T</div>
+            <div>
+              <div class="author-name">Thomas H. Cormen</div>
+              <div class="author-nationality">
+                <svg class="icon-svg sm" viewBox="0 0 24 24"><use href="#ic-globe"/></svg> American
+              </div>
+            </div>
+          </div>
+          <div class="author-stats">
+            <div class="astat"><div class="val" style="color:var(--blue)">4</div><div class="lbl">Books</div></div>
+            <div class="astat"><div class="val" style="color:var(--accent)">32</div><div class="lbl">Times Borrowed</div></div>
+          </div>
+          <div class="author-genre">
+            <svg class="icon-svg sm" viewBox="0 0 24 24"><use href="#ic-books"/></svg> Mathematics / CS
+          </div>
+          <div class="author-actions">
+            <button class="sm-btn" onclick="openModal('authorModal')">Edit</button>
+            <button class="sm-btn">View Books</button>
+            <button class="sm-btn del">Delete</button>
+          </div>
+        </div>
+        <div class="author-card">
+          <div class="author-hd">
+            <div class="author-avatar" style="background:#c9a84c">F</div>
+            <div>
+              <div class="author-name">F. Scott Fitzgerald</div>
+              <div class="author-nationality">
+                <svg class="icon-svg sm" viewBox="0 0 24 24"><use href="#ic-globe"/></svg> American
+              </div>
+            </div>
+          </div>
+          <div class="author-stats">
+            <div class="astat"><div class="val" style="color:var(--blue)">8</div><div class="lbl">Books</div></div>
+            <div class="astat"><div class="val" style="color:var(--accent)">25</div><div class="lbl">Times Borrowed</div></div>
+          </div>
+          <div class="author-genre">
+            <svg class="icon-svg sm" viewBox="0 0 24 24"><use href="#ic-star"/></svg> Fiction
+          </div>
+          <div class="author-actions">
+            <button class="sm-btn" onclick="openModal('authorModal')">Edit</button>
+            <button class="sm-btn">View Books</button>
+            <button class="sm-btn del">Delete</button>
+          </div>
+        </div>
+        <div class="author-card">
+          <div class="author-hd">
+            <div class="author-avatar" style="background:#3ecf8e">E</div>
+            <div>
+              <div class="author-name">Eric Matthes</div>
+              <div class="author-nationality">
+                <svg class="icon-svg sm" viewBox="0 0 24 24"><use href="#ic-globe"/></svg> American
+              </div>
+            </div>
+          </div>
+          <div class="author-stats">
+            <div class="astat"><div class="val" style="color:var(--blue)">3</div><div class="lbl">Books</div></div>
+            <div class="astat"><div class="val" style="color:var(--accent)">41</div><div class="lbl">Times Borrowed</div></div>
+          </div>
+          <div class="author-genre">
+            <svg class="icon-svg sm" viewBox="0 0 24 24"><use href="#ic-books"/></svg> Computer Science
+          </div>
+          <div class="author-actions">
+            <button class="sm-btn" onclick="openModal('authorModal')">Edit</button>
+            <button class="sm-btn">View Books</button>
+            <button class="sm-btn del">Delete</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -949,8 +1106,11 @@
   <div id="transactions" class="page">
     <div class="topbar">
       <span class="topbar-title">Issue / Return Books</span>
-      <div class="search-box"><span>🔍</span><input type="text" placeholder="Search transactions…"></div>
-      <div class="topbar-btn notify-btn">🔔<span class="notif-dot"></span></div>
+      <div class="search-box">
+        <svg class="icon-svg sm" viewBox="0 0 24 24"><use href="#ic-search"/></svg>
+        <input type="text" placeholder="Search transactions…">
+      </div>
+      <button class="topbar-btn"><svg class="icon-svg sm" viewBox="0 0 24 24"><use href="#ic-bell"/></svg><span class="notif-dot"></span></button>
     </div>
     <div class="content">
       <div class="toolbar">
@@ -1009,18 +1169,38 @@
     <div class="topbar">
       <span class="topbar-title">Fine Management</span>
       <div class="spacer"></div>
-      <div class="topbar-btn notify-btn">🔔<span class="notif-dot"></span></div>
+      <button class="topbar-btn"><svg class="icon-svg sm" viewBox="0 0 24 24"><use href="#ic-bell"/></svg><span class="notif-dot"></span></button>
     </div>
     <div class="content">
-      <div class="stats-grid" style="grid-template-columns: repeat(4, 1fr);">
-        <div class="stat-card"><div class="stat-icon">💰</div><div id="finesStatUnpaid" class="stat-val" style="color:var(--red)">$0.00</div><div class="stat-label">Unpaid Fines</div></div>
-        <div class="stat-card"><div class="stat-icon">✅</div><div id="finesStatCollected" class="stat-val" style="color:var(--green)">$0.00</div><div class="stat-label">Collected This Year</div></div>
-        <div class="stat-card"><div class="stat-icon">⚠️</div><div id="finesStatMembers" class="stat-val" style="color:var(--accent)">0</div><div class="stat-label">Members with Unpaid Fines</div></div>
-        <div class="stat-card"><div class="stat-icon">📋</div><div id="finesStatRate" class="stat-val">$0.00</div><div class="stat-label">Fine Rate / Day</div></div>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon red"><svg class="icon-svg lg" viewBox="0 0 24 24"><use href="#ic-money"/></svg></div>
+          <div class="stat-val" style="color:var(--red)">৳110</div>
+          <div class="stat-label">Unpaid Fines</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon green"><svg class="icon-svg lg" viewBox="0 0 24 24"><use href="#ic-check"/></svg></div>
+          <div class="stat-val" style="color:var(--green)">৳4,710</div>
+          <div class="stat-label">Collected This Year</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background:rgba(201,168,76,.1);color:var(--accent)">
+            <svg class="icon-svg lg" viewBox="0 0 24 24"><use href="#ic-alert"/></svg>
+          </div>
+          <div class="stat-val" style="color:var(--accent)">5</div>
+          <div class="stat-label">Overdue Members</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background:rgba(92,157,224,.1);color:var(--blue)">
+            <svg class="icon-svg lg" viewBox="0 0 24 24"><use href="#ic-file"/></svg>
+          </div>
+          <div class="stat-val">৳10</div>
+          <div class="stat-label">Fine Rate / Day</div>
+        </div>
       </div>
       <div class="overdue-alert">
-        <span style="font-size:20px">⚠️</span>
-        <div id="finesAlertText"><strong style="color:var(--red)">0 members</strong> have unpaid fines.</div>
+        <svg class="icon-svg" viewBox="0 0 24 24" style="color:var(--red);flex-shrink:0"><use href="#ic-alert"/></svg>
+        <div><strong style="color:var(--red)">5 members</strong> have overdue books with accumulating fines.</div>
       </div>
       <div class="toolbar">
         <select class="filter-select"><option>All Fines</option><option>Unpaid</option><option>Paid</option><option>Waived</option></select>
@@ -1034,7 +1214,31 @@
         <div class="panel-hd"><h2>Fine Records</h2></div>
         <table>
           <thead><tr><th>Member</th><th>Book</th><th>Due Date</th><th>Days Overdue</th><th>Fine Amount</th><th>Status</th><th>Actions</th></tr></thead>
-          <tbody><tr><td colspan="7" style="color:var(--muted)">Loading fines...</td></tr></tbody>
+          <tbody>
+            <tr>
+              <td><div style="font-weight:600">Karim Uddin</div><div style="font-size:11px;color:var(--muted)">STU-1003</div></td>
+              <td>The Great Gatsby</td><td>Dec 4, 2024</td>
+              <td style="color:var(--red);font-weight:700">3 days</td>
+              <td style="color:var(--red);font-weight:700;font-size:15px">৳30</td>
+              <td><span class="badge badge-red">Unpaid</span></td>
+              <td><div style="display:flex;gap:6px"><button class="td-btn pay">Collect</button><button class="td-btn waive">Waive</button></div></td>
+            </tr>
+            <tr>
+              <td><div style="font-weight:600">Samir Roy</div><div style="font-size:11px;color:var(--muted)">STU-1005</div></td>
+              <td>Database Systems</td><td>Nov 29, 2024</td>
+              <td style="color:var(--red);font-weight:700">8 days</td>
+              <td style="color:var(--red);font-weight:700;font-size:15px">৳80</td>
+              <td><span class="badge badge-red">Unpaid</span></td>
+              <td><div style="display:flex;gap:6px"><button class="td-btn pay">Collect</button><button class="td-btn waive">Waive</button></div></td>
+            </tr>
+            <tr>
+              <td><div style="font-weight:600">Rahul Islam</div><div style="font-size:11px;color:var(--muted)">STU-1001</div></td>
+              <td>Operating Systems</td><td>Nov 28, 2024</td>
+              <td>2 days</td><td>৳20</td>
+              <td><span class="badge badge-green">Paid</span></td>
+              <td><span style="font-size:12px;color:var(--muted)">Dec 1, 2024</span></td>
+            </tr>
+          </tbody>
         </table>
       </div>
     </div>
@@ -1045,7 +1249,7 @@
     <div class="topbar">
       <span class="topbar-title">Reservations</span>
       <div class="spacer"></div>
-      <div class="topbar-btn notify-btn">🔔<span class="notif-dot"></span></div>
+      <button class="topbar-btn"><svg class="icon-svg sm" viewBox="0 0 24 24"><use href="#ic-bell"/></svg><span class="notif-dot"></span></button>
     </div>
     <div class="content">
       <div class="toolbar">
@@ -1105,7 +1309,7 @@
     <div class="topbar">
       <span class="topbar-title">Reports</span>
       <div class="spacer"></div>
-      <div class="topbar-btn notify-btn">🔔<span class="notif-dot"></span></div>
+      <button class="topbar-btn"><svg class="icon-svg sm" viewBox="0 0 24 24"><use href="#ic-bell"/></svg><span class="notif-dot"></span></button>
     </div>
     <div class="content">
       <div class="reports-grid">
@@ -1154,14 +1358,16 @@
     <div class="topbar">
       <span class="topbar-title">Notifications</span>
       <div class="spacer"></div>
-      <div class="topbar-btn notify-btn">🔔<span class="notif-dot"></span></div>
+      <button class="topbar-btn"><svg class="icon-svg sm" viewBox="0 0 24 24"><use href="#ic-bell"/></svg><span class="notif-dot"></span></button>
     </div>
     <div class="content">
       <div class="toolbar">
         <select class="filter-select"><option>All Notifications</option><option>Unread</option><option>Read</option></select>
         <select class="filter-select"><option>All Types</option><option>Overdue</option><option>Member</option><option>Book</option><option>Fine</option></select>
         <div class="spacer"></div>
-        <button class="btn btn-outline" onclick="markAllNotificationsRead()">Mark All Read</button>
+        <button class="btn btn-outline">
+          <svg class="icon-svg sm" viewBox="0 0 24 24"><use href="#ic-check"/></svg> Mark All Read
+        </button>
       </div>
       <div class="panel">
         <div class="notif-list">
@@ -1211,7 +1417,7 @@
     <div class="topbar">
       <span class="topbar-title">Settings</span>
       <div class="spacer"></div>
-      <div class="topbar-btn notify-btn">🔔<span class="notif-dot"></span></div>
+      <button class="topbar-btn"><svg class="icon-svg sm" viewBox="0 0 24 24"><use href="#ic-bell"/></svg><span class="notif-dot"></span></button>
     </div>
     <div class="content">
       <div class="panel" style="max-width:600px">
@@ -1244,37 +1450,47 @@
 <!-- MODALS -->
 <div class="modal-overlay" id="bookModal">
   <div class="modal">
-    <div class="modal-hd"><h2 id="bookModalTitle">Add New Book</h2><button class="modal-close" onclick="closeModal('bookModal')">✕</button></div>
+    <div class="modal-hd">
+      <h2>Add New Book</h2>
+      <button class="modal-close" onclick="closeModal('bookModal')">
+        <svg class="icon-svg sm" viewBox="0 0 24 24"><use href="#ic-close"/></svg>
+      </button>
+    </div>
     <div class="form-grid">
-      <div class="form-group"><label>Title</label><input id="bookTitle" type="text" placeholder="Book title"></div>
-      <div class="form-group"><label>Author</label><select id="bookAuthor"></select></div>
-      <div class="form-group"><label>ISBN</label><input id="bookIsbn" type="text" placeholder="ISBN"></div>
-      <div class="form-group"><label>Category</label><select id="bookCategory"></select></div>
-      <div class="form-group full"><label>Description</label><textarea id="bookDescription" placeholder="Book description…"></textarea></div>
-      <div class="form-group"><label>Quantity</label><input id="bookQuantity" type="number" placeholder="1" min="1"></div>
-      <div class="form-group"><label>Published Year</label><input id="bookPublishedYear" type="number" placeholder="2024"></div>
+      <div class="form-group"><label>Title</label><input type="text" placeholder="Book title"></div>
+      <div class="form-group"><label>Author</label><input type="text" placeholder="Author name"></div>
+      <div class="form-group"><label>ISBN</label><input type="text" placeholder="ISBN"></div>
+      <div class="form-group"><label>Category</label><select><option>Fiction</option><option>Science</option><option>Technology</option><option>History</option></select></div>
+      <div class="form-group full"><label>Description</label><textarea placeholder="Book description…"></textarea></div>
+      <div class="form-group"><label>Quantity</label><input type="number" placeholder="1" min="1"></div>
+      <div class="form-group"><label>Published Year</label><input type="number" placeholder="2024"></div>
     </div>
     <div class="modal-footer">
       <button class="btn btn-outline" onclick="closeModal('bookModal')">Cancel</button>
-      <button class="btn btn-primary" onclick="submitBookForm()">Save Book</button>
+      <button class="btn btn-primary">Save Book</button>
     </div>
   </div>
 </div>
 
 <div class="modal-overlay" id="memberModal">
   <div class="modal">
-    <div class="modal-hd"><h2 id="memberModalTitle">Add New Member</h2><button class="modal-close" onclick="closeModal('memberModal')">✕</button></div>
+    <div class="modal-hd">
+      <h2>Add New Member</h2>
+      <button class="modal-close" onclick="closeModal('memberModal')">
+        <svg class="icon-svg sm" viewBox="0 0 24 24"><use href="#ic-close"/></svg>
+      </button>
+    </div>
     <div class="form-grid">
-      <div class="form-group"><label>First Name</label><input id="memberFirstName" type="text" placeholder="First name"></div>
-      <div class="form-group"><label>Last Name</label><input id="memberLastName" type="text" placeholder="Last name"></div>
-      <div class="form-group"><label>Email</label><input id="memberEmail" type="email" placeholder="email@example.com"></div>
-      <div class="form-group"><label>Phone</label><input id="memberPhone" type="text" placeholder="+880..."></div>
-      <div class="form-group"><label>Member Type</label><select id="memberType"><option value="student">Student</option><option value="faculty">Faculty</option><option value="staff">Staff</option></select></div>
-      <div class="form-group"><label>ID Number</label><input id="memberIdNumber" type="text" placeholder="STU-1001"></div>
+      <div class="form-group"><label>First Name</label><input type="text" placeholder="First name"></div>
+      <div class="form-group"><label>Last Name</label><input type="text" placeholder="Last name"></div>
+      <div class="form-group"><label>Email</label><input type="email" placeholder="email@example.com"></div>
+      <div class="form-group"><label>Phone</label><input type="text" placeholder="+880..."></div>
+      <div class="form-group"><label>Member Type</label><select><option>Student</option><option>Faculty</option><option>Staff</option></select></div>
+      <div class="form-group"><label>ID Number</label><input type="text" placeholder="STU-1001"></div>
     </div>
     <div class="modal-footer">
       <button class="btn btn-outline" onclick="closeModal('memberModal')">Cancel</button>
-      <button class="btn btn-primary" onclick="submitMemberForm()">Save Member</button>
+      <button class="btn btn-primary">Save Member</button>
     </div>
   </div>
 </div>
@@ -1288,8 +1504,8 @@
       </button>
     </div>
     <div class="form-grid">
-      <div class="form-group"><label>First Name</label><input id="memberFirstName" type="text" placeholder="First name"></div>
-      <div class="form-group"><label>Last Name</label><input id="memberLastName" type="text" placeholder="Last name"></div>
+      <div class="form-group"><label>First Name</label><input type="text" placeholder="First name"></div>
+      <div class="form-group"><label>Last Name</label><input type="text" placeholder="Last name"></div>
       <div class="form-group"><label>Nationality</label><input type="text" placeholder="e.g. American"></div>
       <div class="form-group"><label>Genre</label><select><option>Computer Science</option><option>Fiction</option><option>Science</option><option>Mathematics</option></select></div>
       <div class="form-group full"><label>Biography</label><textarea placeholder="Brief author bio…"></textarea></div>
@@ -1326,1008 +1542,44 @@
 </div>
 
 <script>
-// ==========================
-// API CONFIGURATION
-// ==========================
-const API_BASE_URL = 'http://localhost:8000/api';
-let authToken = localStorage.getItem('token') || null;
-let currentUser = null;
-let editingBookId = null;
-let editingMemberId = null;
-let notificationsSocket = null;
-let notificationsPollingTimer = null;
-
-// ==========================
-// API HELPER FUNCTIONS
-// ==========================
-async function apiRequest(endpoint, method = 'GET', body = null) {
-  const headers = {
-    'Content-Type': 'application/json',
-  };
-  
-  if (authToken) {
-    headers['Authorization'] = `Bearer ${authToken}`;
-  }
-  
-  const options = { method, headers };
-  
-  if (body && method !== 'GET') {
-    options.body = JSON.stringify(body);
-  }
-  
-  try {
-    const response = await fetch(`${API_BASE_URL}${endpoint}`, options);
-    const data = await response.json();
-    
-    // Normalize backend response shape: { success: true/false, data: ... }
-    if (typeof data.success === 'boolean' && !data.status) {
-      data.status = data.success ? 'success' : 'error';
-    }
-    
-    if (response.status === 401) {
-      logout();
-      return null;
-    }
-    
-    return data;
-  } catch (error) {
-    console.error('API Error:', error);
-    showNotification('Network error. Please check your connection.', 'error');
-    return { status: 'error', message: 'Network error' };
-  }
-}
-
-// ==========================
-// AUTHENTICATION
-// ==========================
-async function login(email, password) {
-  const result = await apiRequest('/auth/login/', 'POST', { email, password });
-  if (result && result.status === 'success') {
-    const tokenData = result.data?.tokens || result.data;
-    authToken = tokenData?.access;
-    if (!authToken) return false;
-    localStorage.setItem('token', authToken);
-    localStorage.setItem('refreshToken', tokenData.refresh);
-    await loadUserProfile();
-    return true;
-  }
-  return false;
-}
-
-function logout() {
-  authToken = null;
-  currentUser = null;
-  localStorage.removeItem('token');
-  localStorage.removeItem('refreshToken');
-  window.location.reload();
-}
-
-async function loadUserProfile() {
-  const result = await apiRequest('/auth/profile/');
-  if (result && result.status === 'success') {
-    currentUser = result.data;
-    updateUserInfo();
-  }
-}
-
-function updateUserInfo() {
-  if (currentUser) {
-    const adminName = document.querySelector('.admin-info p');
-    const adminRole = document.querySelector('.admin-info span');
-    if (adminName) adminName.textContent = `${currentUser.first_name} ${currentUser.last_name}`.trim();
-    if (adminRole) adminRole.textContent = (currentUser.role || 'librarian').toUpperCase();
-  }
-}
-
-// ==========================
-// NOTIFICATION SYSTEM
-// ==========================
-function showNotification(message, type = 'success') {
-  const notification = document.createElement('div');
-  notification.style.cssText = `
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    padding: 16px 24px;
-    background: ${type === 'success' ? 'var(--green)' : 'var(--red)'};
-    color: white;
-    border-radius: 8px;
-    z-index: 10000;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    animation: slideIn 0.3s ease;
-  `;
-  notification.textContent = message;
-  document.body.appendChild(notification);
-  
-  setTimeout(() => {
-    notification.style.animation = 'slideOut 0.3s ease';
-    setTimeout(() => notification.remove(), 300);
-  }, 3000);
-}
-
-// ==========================
-// PAGE NAVIGATION
-// ==========================
-function showPage(pageId, el = null) {
-  const pages = document.querySelectorAll('.page');
-  pages.forEach(page => page.classList.remove('active'));
+function showPage(pageId, triggerEl) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById(pageId).classList.add('active');
-
-  const navItems = document.querySelectorAll('.nav-item');
-  navItems.forEach(item => item.classList.remove('active'));
-  (el || document.querySelector(`.nav-item[onclick*="${pageId}"]`))?.classList.add('active');
-  
-  // Load data when switching pages
-  loadPageData(pageId);
-}
-
-async function loadPageData(pageId) {
-  switch(pageId) {
-    case 'dashboard':
-      await loadDashboard();
-      break;
-    case 'books':
-      await loadBooks();
-      break;
-    case 'members':
-      await loadMembers();
-      break;
-    case 'authors':
-      await loadAuthors();
-      break;
-    case 'transactions':
-      await loadTransactions();
-      break;
-    case 'fines':
-      await loadFines();
-      break;
-    case 'reservations':
-      await loadReservations();
-      break;
-    case 'notifications':
-      await loadNotifications();
-      break;
-    case 'reports':
-      await loadReports();
-      break;
-  }
-}
-
-// ==========================
-// DASHBOARD
-// ==========================
-async function loadDashboard() {
-  const [statsResult, transactionsResult, notificationsResult] = await Promise.all([
-    apiRequest('/books/dashboard/stats/'),
-    apiRequest('/transactions/'),
-    apiRequest('/notifications/'),
-  ]);
-
-  if (!(statsResult && statsResult.status === 'success')) return;
-
-  const stats = statsResult.data.stats;
-  const monthlyData = statsResult.data.monthly_borrowing || [];
-
-  // Update top stat cards (dashboard only)
-  const dashboardCards = document.querySelectorAll('#dashboard .stats-grid .stat-card');
-  if (dashboardCards[0]) dashboardCards[0].querySelector('.stat-val').textContent = stats.total_books;
-  if (dashboardCards[1]) dashboardCards[1].querySelector('.stat-val').textContent = stats.total_members;
-  if (dashboardCards[2]) dashboardCards[2].querySelector('.stat-val').textContent = stats.active_transactions;
-  if (dashboardCards[3]) dashboardCards[3].querySelector('.stat-val').textContent = `$${Number(stats.total_fines || 0).toFixed(2)}`;
-
-  if (dashboardCards[0]) dashboardCards[0].querySelector('.stat-change').textContent = `${stats.available_books} currently available`;
-  if (dashboardCards[1]) dashboardCards[1].querySelector('.stat-change').textContent = `${stats.total_members} active members`;
-  if (dashboardCards[2]) dashboardCards[2].querySelector('.stat-change').textContent = `${stats.overdue_books} overdue currently`;
-  if (dashboardCards[3]) dashboardCards[3].querySelector('.stat-change').textContent = `${stats.overdue_books} overdue today`;
-
-  // Monthly chart
-  updateChart(monthlyData);
-
-  // Recent transactions table
-  const txs = transactionsResult && transactionsResult.status === 'success'
-    ? (Array.isArray(transactionsResult.data) ? transactionsResult.data : (transactionsResult.data.results || []))
-    : [];
-  const txBody = document.querySelector('#dashboard .row-grid .panel table tbody');
-  if (txBody) {
-    txBody.innerHTML = txs.slice(0, 5).map(t => {
-      const badge = t.status === 'returned' ? 'green' : (t.status === 'overdue' ? 'red' : 'blue');
-      return `<tr><td>${t.member_name}</td><td>${t.book_title}</td><td>${t.issue_date}</td><td>${t.due_date}</td><td><span class="badge badge-${badge}">${t.status}</span></td></tr>`;
-    }).join('') || '<tr><td colspan="5" style="color:var(--muted)">No transactions yet</td></tr>';
-  }
-
-  // Dashboard notifications card
-  const notifications = notificationsResult && notificationsResult.status === 'success'
-    ? (Array.isArray(notificationsResult.data) ? notificationsResult.data : (notificationsResult.data.results || []))
-    : [];
-  updateNotificationBadges(notifications);
-  const notifList = document.querySelector('#dashboard .notif-list');
-  if (notifList) {
-    notifList.innerHTML = notifications.slice(0, 4).map(n => {
-      const color = n.notification_type === 'overdue' ? 'var(--red)' : (n.notification_type === 'fine' ? 'var(--accent)' : 'var(--green)');
-      return `<div class="notif-item"><div class="notif-dot2" style="background:${color}"></div><div><div class="ni-title">${n.title}</div><div class="ni-sub">${n.message}</div><div class="ni-time">${new Date(n.created_at).toLocaleString()}</div></div></div>`;
-    }).join('') || '<div style="color:var(--muted)">No notifications</div>';
-  }
-
-  // Recent activity from latest 4 transactions
-  const activity = document.querySelector('#dashboard .activity-list');
-  if (activity) {
-    activity.innerHTML = txs.slice(0, 4).map(t => {
-      const icon = t.status === 'returned' ? '📥' : '📤';
-      const bg = t.status === 'returned' ? 'rgba(62,207,142,.12)' : 'rgba(92,157,224,.12)';
-      return `<div class="act-item"><div class="act-icon" style="background:${bg}">${icon}</div><div class="act-info"><p>${t.status === 'returned' ? 'Book returned' : 'Book issued'} by ${t.member_name}</p><span>${t.book_title}</span></div><div class="act-time">${t.issue_date}</div></div>`;
-    }).join('') || '<div style="color:var(--muted)">No recent activity</div>';
-  }
-}
-
-function updateChart(monthlyData) {
-  const chart = document.getElementById('chart');
-  if (!chart) return;
-  
-  chart.innerHTML = '';
-  const issued = monthlyData.map(d => d.issued);
-  const returned = monthlyData.map(d => d.returned);
-  const maxVal = Math.max(...issued, ...returned, 1);
-  
-  monthlyData.forEach((data, i) => {
-    const wrap = document.createElement('div');
-    wrap.className = 'bar-wrap';
-    wrap.style.flexDirection = 'column-reverse';
-    wrap.innerHTML = `
-      <span class="bar-lbl">${data.month}</span>
-      <div style="display:flex;align-items:flex-end;gap:2px;width:100%">
-        <div class="bar fill-gold" style="height:${(data.issued/maxVal)*72}px;flex:1;transition:height .8s ${i*.08}s ease"></div>
-        <div class="bar fill-blue" style="height:${(data.returned/maxVal)*72}px;flex:1;transition:height .8s ${i*.08+.04}s ease"></div>
-      </div>`;
-    chart.appendChild(wrap);
-  });
-}
-
-// ==========================
-// BOOKS MANAGEMENT
-// ==========================
-async function loadBooks(searchTerm = '') {
-  const result = await apiRequest(`/books/?search=${searchTerm}`);
-  if (result && result.status === 'success') {
-    const books = Array.isArray(result.data) ? result.data : (result.data.results || []);
-    displayBooks(books);
-    
-    // Update count
-    const countSpan = document.querySelector('#books .toolbar span');
-    if (countSpan) countSpan.textContent = `${books.length} books`;
-    const booksBadge = document.getElementById('booksCountBadge');
-    if (booksBadge) booksBadge.textContent = String(books.length);
-  }
-}
-
-function displayBooks(books) {
-  const grid = document.querySelector('#books .books-grid');
-  if (!grid) return;
-  
-  grid.innerHTML = books.map(book => {
-    const statusBadge = book.available_quantity > 0 ? 
-      '<span class="badge badge-green">Available</span>' :
-      '<span class="badge badge-red">Not Available</span>';
-    
-    return `
-      <div class="book-card">
-        <div class="book-cover">📖</div>
-        <div class="book-card-body">
-          <h3>${book.title}</h3>
-          <div class="author">${book.author_name}</div>
-          <div class="meta">
-            <span class="isbn">ISBN: ${book.isbn}</span>
-            ${statusBadge}
-          </div>
-          <div style="font-size:12px;color:var(--muted);margin-top:4px">
-            ${book.available_quantity}/${book.quantity} available
-          </div>
-          <div class="member-actions" style="margin-top:10px">
-            <button class="sm-btn" onclick="viewBookDetails(${book.id})">View</button>
-            <button class="sm-btn" onclick="editBook(${book.id})">Edit</button>
-          </div>
-        </div>
-      </div>
-    `;
-  }).join('');
-}
-
-async function viewBookDetails(bookId) {
-  const result = await apiRequest(`/books/${bookId}/`);
-  if (result && result.status === 'success') {
-    const book = result.data;
-    const authorName = book.author_name || book.author?.full_name || [book.author?.first_name, book.author?.last_name].filter(Boolean).join(' ') || '-';
-    alert(`Book: ${book.title}\nAuthor: ${authorName}\nISBN: ${book.isbn}\nAvailable: ${book.available_quantity}/${book.quantity}\n\nDescription: ${book.description || 'No description'}`);
-  }
-}
-
-// ==========================
-// MEMBERS MANAGEMENT
-// ==========================
-async function loadMembers() {
-  const result = await apiRequest('/members/');
-  if (result && result.status === 'success') {
-    const members = Array.isArray(result.data) ? result.data : (result.data.results || []);
-    displayMembers(members);
-    const membersLabel = document.querySelector('#members .toolbar span');
-    if (membersLabel) membersLabel.textContent = `${members.length} members`;
-  }
-}
-
-function displayMembers(members) {
-  const grid = document.querySelector('#members .members-grid');
-  if (!grid) return;
-
-  grid.innerHTML = members.map(member => `
-    <div class="member-card">
-      <div class="member-hd">
-        <div class="member-avatar" style="background:#5c9de0">${(member.first_name || member.full_name || 'M').charAt(0)}</div>
-        <div><div class="member-name">${member.full_name}</div><div class="member-role">${member.member_type}</div></div>
-      </div>
-      <div class="member-stats">
-        <div class="mstat"><div class="val" style="color:var(--blue)">${member.active_borrowings || 0}</div><div class="lbl">Books Issued</div></div>
-        <div class="mstat"><div class="val" style="color:${member.unpaid_fines_amount > 0 ? 'var(--red)' : 'var(--accent)'}">$${(member.unpaid_fines_amount || 0).toFixed(2)}</div><div class="lbl">Outstanding Fines</div></div>
-      </div>
-      <div style="font-size:11px;color:var(--muted);margin-bottom:12px">📧 ${member.email}</div>
-      <div class="member-actions">
-        <button class="sm-btn" onclick="editMember(${member.id})">Edit</button>
-        <button class="sm-btn" onclick="viewMemberHistory(${member.id})">History</button>
-        ${member.is_blocked ? `<button class="sm-btn" onclick="unblockMember(${member.id})">Unblock</button>` : `<button class="sm-btn" onclick="blockMember(${member.id})">Block</button>`}
-      </div>
-    </div>
-  `).join('');
-}
-
-
-async function blockMember(memberId) {
-  if (!confirm('Are you sure you want to block this member?')) return;
-  
-  const result = await apiRequest(`/members/${memberId}/block/`, 'POST');
-  if (result && result.status === 'success') {
-    showNotification('Member blocked successfully');
-    loadMembers();
-  }
-}
-
-async function unblockMember(memberId) {
-  const result = await apiRequest(`/members/${memberId}/unblock/`, 'POST');
-  if (result && result.status === 'success') {
-    showNotification('Member unblocked successfully');
-    loadMembers();
-  }
-}
-
-async function viewMemberHistory(memberId) {
-  const result = await apiRequest(`/members/${memberId}/history/`);
-  if (result && result.status === 'success') {
-    const history = result.data;
-    const details = history.map(t => 
-      `${t.book_title} - Issued: ${t.issue_date}, ${t.status === 'returned' ? 'Returned: ' + t.return_date : 'Status: ' + t.status}`
-    ).join('\n');
-    alert(`Member History:\n\n${details || 'No history'}`);
-  }
-}
-
-
-
-// ==========================
-// AUTHORS MANAGEMENT
-// ==========================
-async function loadAuthors() {
-  const result = await apiRequest('/books/authors/');
-  if (result && result.status === 'success') {
-    const authors = Array.isArray(result.data) ? result.data : (result.data.results || []);
-    displayAuthors(authors);
-    const count = document.getElementById('authorsCountLabel');
-    if (count) count.textContent = `${authors.length} authors`;
-  }
-}
-
-function displayAuthors(authors) {
-  const grid = document.querySelector('#authors .authors-grid');
-  if (!grid) return;
-
-  grid.innerHTML = authors.map(a => `
-    <div class="author-card">
-      <div class="author-hd">
-        <div class="author-avatar" style="background:#5c9de0">${(a.first_name || 'A').charAt(0)}</div>
-        <div><div class="author-name">${a.full_name || `${a.first_name || ''} ${a.last_name || ''}`.trim()}</div><div class="author-nationality">🌍 ${a.nationality || 'Unknown'}</div></div>
-      </div>
-      <div class="author-stats">
-        <div class="astat"><div class="val" style="color:var(--blue)">${a.books_count || 0}</div><div class="lbl">Books</div></div>
-        <div class="astat"><div class="val" style="color:var(--accent)">${a.birth_year || '-'}</div><div class="lbl">Birth Year</div></div>
-      </div>
-      <div class="author-genre">📚 ${a.genre || 'General'}</div>
-      <div class="author-actions"><button class="sm-btn" onclick="openModal('authorModal')">Edit</button></div>
-    </div>
-  `).join('') || '<div style="color:var(--muted)">No authors found</div>';
-}
-
-// ==========================
-// TRANSACTIONS
-// ==========================
-async function loadTransactions() {
-  const result = await apiRequest('/transactions/');
-  if (result && result.status === 'success') {
-    const transactions = Array.isArray(result.data) ? result.data : (result.data.results || []);
-    displayTransactions(transactions);
-  }
-}
-
-function displayTransactions(transactions) {
-  const tbody = document.querySelector('#transactions tbody');
-  if (!tbody) return;
-  
-  tbody.innerHTML = transactions.map(trans => {
-    const statusColor = trans.status === 'returned' ? 'green' : 
-                       trans.status === 'overdue' ? 'red' : 'blue';
-    return `
-      <tr>
-        <td>${trans.id}</td>
-        <td>${trans.member_name}</td>
-        <td>${trans.book_title}</td>
-        <td>${trans.issue_date}</td>
-        <td>${trans.due_date}</td>
-        <td>${trans.return_date || '-'}</td>
-        <td><span class="badge badge-${statusColor}">${trans.status}</span></td>
-        <td>
-          ${trans.status === 'issued' || trans.status === 'overdue' ? 
-            `<button class="btn btn-sm" onclick="returnBook(${trans.id})">Return</button>` : 
-            '-'
-          }
-        </td>
-      </tr>
-    `;
-  }).join('');
-}
-
-async function returnBook(transactionId) {
-  if (!confirm('Return this book?')) return;
-  
-  const result = await apiRequest(`/transactions/${transactionId}/return/`, 'POST');
-  if (result && result.status === 'success') {
-    showNotification('Book returned successfully');
-    if (result.data.fine_created) {
-      showNotification(`Fine created: $${result.data.fine_amount}`, 'error');
+  document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+  // find matching nav button
+  const navBtns = document.querySelectorAll('.nav-item');
+  navBtns.forEach(btn => {
+    if (btn.getAttribute('onclick') && btn.getAttribute('onclick').includes(`'${pageId}'`)) {
+      btn.classList.add('active');
     }
-    loadTransactions();
-  }
-}
-
-// ==========================
-// FINES MANAGEMENT
-// ==========================
-async function loadFines() {
-  const result = await apiRequest('/fines/');
-  if (result && result.status === 'success') {
-    const fines = Array.isArray(result.data) ? result.data : (result.data.results || []);
-    displayFines(fines);
-    const fineSettings = await apiRequest('/fines/settings/');
-    if (fineSettings?.status === 'success') {
-      setText('#finesStatRate', `$${Number(fineSettings.data.fine_per_day || 0).toFixed(2)}`);
-    }
-  }
-}
-
-function displayFines(fines) {
-  const tbody = document.querySelector('#fines tbody');
-  if (!tbody) return;
-
-  const unpaid = fines.filter(f => f.status === 'unpaid');
-  const paid = fines.filter(f => f.status === 'paid');
-  const unpaidTotal = unpaid.reduce((sum, f) => sum + Number(f.amount || 0), 0);
-  const paidTotal = paid.reduce((sum, f) => sum + Number(f.amount || 0), 0);
-  const membersWithUnpaid = new Set(unpaid.map(f => f.member)).size;
-
-  setText('#finesStatUnpaid', `$${unpaidTotal.toFixed(2)}`);
-  setText('#finesStatCollected', `$${paidTotal.toFixed(2)}`);
-  setText('#finesStatMembers', String(membersWithUnpaid));
-  const alertEl = document.getElementById('finesAlertText');
-  if (alertEl) {
-    alertEl.innerHTML = `<strong style="color:var(--red)">${membersWithUnpaid} members</strong> have unpaid fines.`;
-  }
-  const finesBadge = document.getElementById('finesCountBadge');
-  if (finesBadge) finesBadge.textContent = String(unpaid.length);
-
-  tbody.innerHTML = fines.map(fine => `
-    <tr>
-      <td><div style="font-weight:600">${fine.member_name}</div></td>
-      <td>${fine.book_title || '-'}</td>
-      <td>${new Date(fine.created_at).toLocaleDateString()}</td>
-      <td style="color:${fine.days_overdue > 0 ? 'var(--red)' : 'var(--muted)'};font-weight:600">${Math.max(0, fine.days_overdue || 0)} day(s)</td>
-      <td style="font-weight:700">$${Number(fine.amount || 0).toFixed(2)}</td>
-      <td><span class="badge badge-${fine.status === 'paid' ? 'green' : fine.status === 'waived' ? 'blue' : 'red'}">${fine.status}</span></td>
-      <td>
-        ${fine.status === 'unpaid'
-          ? `<button class="btn btn-sm" onclick="collectFine(${fine.id})">Collect</button><button class="btn btn-sm" onclick="waiveFine(${fine.id})">Waive</button>`
-          : '-'}
-      </td>
-    </tr>
-  `).join('') || '<tr><td colspan="7" style="color:var(--muted)">No fine records</td></tr>';
-}
-
-async function collectFine(fineId) {
-  if (!confirm('Collect this fine?')) return;
-  
-  const result = await apiRequest(`/fines/${fineId}/collect/`, 'POST');
-  if (result && result.status === 'success') {
-    showNotification('Fine collected successfully');
-    loadFines();
-  }
-}
-
-async function waiveFine(fineId) {
-  if (!confirm('Waive this fine?')) return;
-  
-  const result = await apiRequest(`/fines/${fineId}/waive/`, 'POST');
-  if (result && result.status === 'success') {
-    showNotification('Fine waived');
-    loadFines();
-  }
-}
-
-// ==========================
-// RESERVATIONS
-// ==========================
-async function loadReservations() {
-  const result = await apiRequest('/transactions/reservations/');
-  if (result && result.status === 'success') {
-    const reservations = Array.isArray(result.data) ? result.data : (result.data.results || []);
-    displayReservations(reservations);
-  }
-}
-
-function displayReservations(reservations) {
-  const grid = document.querySelector('#reservations .reserv-grid');
-  if (!grid) return;
-
-  grid.innerHTML = reservations.map(res => {
-    const badgeClass = res.status === 'ready' ? 'green' : res.status === 'cancelled' ? 'red' : res.status === 'expired' ? 'red' : 'gold';
-    return `
-      <div class="reserv-card ${res.status}">
-        <div class="rc-hd"><div class="rc-icon">📚</div><div><div class="rc-title">${res.book_title}</div><div class="rc-author">Reservation</div></div><div class="rc-badge"><span class="badge badge-${badgeClass}">${res.status}</span></div></div>
-        <div class="rc-info">
-          <div class="rc-info-item"><div class="lbl">Reserved By</div><div class="val">${res.member_name}</div></div>
-          <div class="rc-info-item"><div class="lbl">Reserved On</div><div class="val">${res.reserved_on}</div></div>
-          <div class="rc-info-item"><div class="lbl">Expires</div><div class="val" style="color:var(--accent)">${res.expires_on}</div></div>
-        </div>
-        <div class="rc-actions">
-          ${res.status === 'pending' ? `<button class="sm-btn approve" onclick="approveReservation(${res.id})">Approve</button><button class="sm-btn cancel" onclick="cancelReservation(${res.id})">Cancel</button>` : ''}
-        </div>
-      </div>
-    `;
-  }).join('');
-}
-
-
-async function approveReservation(reservationId) {
-  const result = await apiRequest(`/transactions/reservations/${reservationId}/approve/`, 'POST');
-  if (result && result.status === 'success') {
-    showNotification('Reservation approved');
-    loadReservations();
-  }
-}
-
-async function cancelReservation(reservationId) {
-  const result = await apiRequest(`/transactions/reservations/${reservationId}/cancel/`, 'POST');
-  if (result && result.status === 'success') {
-    showNotification('Reservation cancelled');
-    loadReservations();
-  }
-}
-
-// ==========================
-// NOTIFICATIONS
-// ==========================
-async function loadNotifications() {
-  const result = await apiRequest('/notifications/');
-  if (result && result.status === 'success') {
-    const notifications = Array.isArray(result.data) ? result.data : (result.data.results || []);
-    displayNotifications(notifications);
-    updateNotificationBadges(notifications);
-  }
-}
-
-function displayNotifications(notifications) {
-  const container = document.querySelector('#notifications .panel .notif-list');
-  if (!container) return;
-  
-  container.innerHTML = notifications.map(notif => `
-    <div class="notif-item" style="border-left:3px solid ${notif.is_read ? 'var(--border)' : 'var(--accent)'}">
-      <div class="notif-dot2" style="background:${notif.notification_type === 'overdue' ? 'var(--red)' : 'var(--accent)'}"></div>
-      <div style="flex:1">
-        <div class="ni-title"><strong>${notif.title}</strong></div>
-        <div class="ni-sub">${notif.message}</div>
-        <div class="ni-time">${new Date(notif.created_at).toLocaleString()}</div>
-      </div>
-      ${!notif.is_read ? `<button class="btn btn-sm" onclick="markNotificationRead(${notif.id})">Mark Read</button>` : ''}
-    </div>
-  `).join('') || '<div style="color:var(--muted)">No notifications</div>';
-}
-
-async function markNotificationRead(notificationId) {
-  const result = await apiRequest(`/notifications/${notificationId}/read/`, 'POST');
-  if (result && result.status === 'success') {
-    loadNotifications();
-  }
-}
-
-async function markAllNotificationsRead() {
-  const result = await apiRequest('/notifications/mark-all-read/', 'POST');
-  if (result && result.status === 'success') {
-    showNotification('All notifications marked as read');
-    loadNotifications();
-  }
-}
-
-async function loadReports() {
-  const [inventory, circulation, fines, overdue] = await Promise.all([
-    apiRequest('/books/reports/inventory/'),
-    apiRequest('/books/reports/circulation/'),
-    apiRequest('/books/reports/fines/'),
-    apiRequest('/books/reports/overdue/'),
-  ]);
-
-  const grid = document.querySelector('#reports .reports-grid');
-  if (!grid) return;
-
-  grid.innerHTML = `
-    <div class="report-card"><div class="report-icon">📚</div><div class="report-title">Inventory</div><div class="report-desc">Total books: ${inventory?.data?.total_books ?? 0}, Available qty: ${inventory?.data?.available_quantity ?? 0}</div></div>
-    <div class="report-card"><div class="report-icon">📤</div><div class="report-title">Circulation</div><div class="report-desc">Issued (30d): ${circulation?.data?.total_issued ?? 0}, Returned: ${circulation?.data?.total_returned ?? 0}</div></div>
-    <div class="report-card"><div class="report-icon">💰</div><div class="report-title">Fines</div><div class="report-desc">Unpaid: $${(fines?.data?.total_unpaid ?? 0).toFixed(2)}, Members with fines: ${fines?.data?.members_with_fines ?? 0}</div></div>
-    <div class="report-card"><div class="report-icon">⚠️</div><div class="report-title">Overdue</div><div class="report-desc">Total overdue items: ${overdue?.data?.total_overdue ?? 0}</div></div>
-  `;
-}
-
-function themeIconSvg(theme) {
-  if (theme === 'dark') {
-    return `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>`;
-  }
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg>`;
-}
-
-function ensureThemeToggle() {
-  const topbars = document.querySelectorAll('.topbar');
-  const savedTheme = localStorage.getItem('theme') || 'dark';
-  document.documentElement.setAttribute('data-theme', savedTheme);
-
-  topbars.forEach(tb => {
-    if (tb.querySelector('.theme-toggle-btn')) return;
-    const btn = document.createElement('button');
-    btn.className = 'topbar-btn theme-toggle-btn';
-    btn.title = 'Toggle theme';
-    btn.innerHTML = themeIconSvg(savedTheme);
-    btn.onclick = () => {
-      const current = document.documentElement.getAttribute('data-theme') || 'dark';
-      const next = current === 'dark' ? 'light' : 'dark';
-      document.documentElement.setAttribute('data-theme', next);
-      localStorage.setItem('theme', next);
-      document.querySelectorAll('.theme-toggle-btn').forEach(b => b.innerHTML = themeIconSvg(next));
-    };
-    tb.appendChild(btn);
   });
 }
 
+function openModal(id) { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
 
-
-function renderTopbarNotificationCount(count) {
-  document.querySelectorAll('.topbar .notify-btn').forEach(btn => {
-    let badge = btn.querySelector('.topbar-notif-count');
-    if (!badge) {
-      badge = document.createElement('span');
-      badge.className = 'topbar-notif-count';
-      btn.appendChild(badge);
-    }
-    badge.textContent = String(count);
-    badge.style.display = count > 0 ? 'inline-block' : 'none';
-  });
-}
-
-function connectNotificationsSocket() {
-  try {
-    const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
-    const wsUrl = `${protocol}://localhost:8000/ws/notifications/`;
-    notificationsSocket = new WebSocket(wsUrl);
-
-    notificationsSocket.onmessage = (event) => {
-      const payload = JSON.parse(event.data || '{}');
-      if (payload.type === 'notification_snapshot') {
-        updateNotificationBadges(payload.notifications || []);
-        renderTopbarNotificationCount(payload.unread_count || 0);
-        if (document.getElementById('notifications')?.classList.contains('active')) {
-          displayNotifications(payload.notifications || []);
-        }
-      }
-    };
-
-    notificationsSocket.onclose = () => {
-      if (!notificationsPollingTimer) {
-        notificationsPollingTimer = setInterval(loadNotifications, 15000);
-      }
-      setTimeout(connectNotificationsSocket, 3000);
-    };
-  } catch (e) {
-    if (!notificationsPollingTimer) {
-      notificationsPollingTimer = setInterval(loadNotifications, 15000);
-    }
-  }
-}
-
-function wireTopbarButtons() {
-  document.querySelectorAll('.topbar .topbar-btn.notify-btn').forEach(btn => {
-    btn.onclick = () => showPage('notifications', document.querySelector('.nav-item[onclick*="notifications"]'));
-    btn.style.fontFamily = 'Segoe UI Symbol, Apple Color Emoji, Noto Color Emoji, sans-serif';
-  });
-}
-
-
-
-function setText(selector, value) {
-  const el = document.querySelector(selector);
-  if (el) el.textContent = value;
-}
-
-function updateNotificationBadges(notifications) {
-  const unread = notifications.filter(n => !n.is_read).length;
-  const countText = String(unread);
-  ['#notificationsCountBadge', '.nav-item[onclick*="notifications"] .nav-badge'].forEach(sel => {
-    const el = document.querySelector(sel);
-    if (el) el.textContent = countText;
-  });
-  document.querySelectorAll('.notif-dot').forEach(dot => {
-    dot.style.display = unread > 0 ? 'block' : 'none';
-  });
-  renderTopbarNotificationCount(unread);
-}
-
-async function hydrateBookFormOptions() {
-  const [authorsRes, categoriesRes] = await Promise.all([
-    apiRequest('/books/authors/'),
-    apiRequest('/books/categories/'),
-  ]);
-
-  const authorSelect = document.getElementById('bookAuthor');
-  const categorySelect = document.getElementById('bookCategory');
-  if (!authorSelect || !categorySelect) return;
-
-  const authors = authorsRes?.status === 'success' ? (Array.isArray(authorsRes.data) ? authorsRes.data : (authorsRes.data.results || [])) : [];
-  const categories = categoriesRes?.status === 'success' ? (Array.isArray(categoriesRes.data) ? categoriesRes.data : (categoriesRes.data.results || [])) : [];
-
-  authorSelect.innerHTML = authors.map(a => `<option value="${a.id}">${a.full_name || `${a.first_name} ${a.last_name}`}</option>`).join('');
-  categorySelect.innerHTML = categories.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
-}
-
-function resetBookForm() {
-  editingBookId = null;
-  document.getElementById('bookModalTitle').textContent = 'Add New Book';
-  document.getElementById('bookTitle').value = '';
-  document.getElementById('bookIsbn').value = '';
-  document.getElementById('bookDescription').value = '';
-  document.getElementById('bookQuantity').value = '1';
-  document.getElementById('bookPublishedYear').value = '';
-}
-
-function resetMemberForm() {
-  editingMemberId = null;
-  document.getElementById('memberModalTitle').textContent = 'Add New Member';
-  document.getElementById('memberFirstName').value = '';
-  document.getElementById('memberLastName').value = '';
-  document.getElementById('memberEmail').value = '';
-  document.getElementById('memberPhone').value = '';
-  document.getElementById('memberType').value = 'student';
-  document.getElementById('memberIdNumber').value = '';
-}
-
-const _originalOpenModal = openModal;
-openModal = function(modalId) {
-  if (modalId === 'bookModal' && editingBookId === null) {
-    resetBookForm();
-    hydrateBookFormOptions();
-  }
-  if (modalId === 'memberModal' && editingMemberId === null) {
-    resetMemberForm();
-  }
-  _originalOpenModal(modalId);
-};
-
-async function editBook(bookId) {
-  const [bookResult] = await Promise.all([apiRequest(`/books/${bookId}/`), hydrateBookFormOptions()]);
-  if (!(bookResult && bookResult.status === 'success')) return;
-
-  const book = bookResult.data;
-  editingBookId = book.id;
-  document.getElementById('bookModalTitle').textContent = 'Edit Book';
-  document.getElementById('bookTitle').value = book.title || '';
-  document.getElementById('bookIsbn').value = book.isbn || '';
-  document.getElementById('bookDescription').value = book.description || '';
-  document.getElementById('bookQuantity').value = book.quantity || 1;
-  document.getElementById('bookPublishedYear').value = book.published_year || '';
-  document.getElementById('bookAuthor').value = book.author?.id || '';
-  document.getElementById('bookCategory').value = book.category?.id || '';
-  _originalOpenModal('bookModal');
-}
-
-async function submitBookForm() {
-  const quantity = Number(document.getElementById('bookQuantity').value || 1);
-  const payload = {
-    title: document.getElementById('bookTitle').value.trim(),
-    isbn: document.getElementById('bookIsbn').value.trim(),
-    author: Number(document.getElementById('bookAuthor').value),
-    category: Number(document.getElementById('bookCategory').value),
-    description: document.getElementById('bookDescription').value.trim(),
-    quantity,
-    available_quantity: quantity,
-    published_year: document.getElementById('bookPublishedYear').value ? Number(document.getElementById('bookPublishedYear').value) : null,
-  };
-
-  if (!payload.title || !payload.isbn || !payload.author) {
-    showNotification('Title, ISBN and author are required', 'error');
-    return;
-  }
-
-  const endpoint = editingBookId ? `/books/${editingBookId}/` : '/books/';
-  const method = editingBookId ? 'PUT' : 'POST';
-  const result = await apiRequest(endpoint, method, payload);
-
-  if (result && result.status === 'success') {
-    showNotification(editingBookId ? 'Book updated successfully' : 'Book created successfully');
-    closeModal('bookModal');
-    await loadBooks();
-  } else {
-    showNotification(result?.message || 'Could not save book', 'error');
-  }
-}
-
-async function editMember(memberId) {
-  const result = await apiRequest(`/members/${memberId}/`);
-  if (!(result && result.status === 'success')) return;
-
-  const m = result.data;
-  editingMemberId = m.id;
-  document.getElementById('memberModalTitle').textContent = 'Edit Member';
-  document.getElementById('memberFirstName').value = m.first_name || '';
-  document.getElementById('memberLastName').value = m.last_name || '';
-  document.getElementById('memberEmail').value = m.email || '';
-  document.getElementById('memberPhone').value = m.phone || '';
-  document.getElementById('memberType').value = m.member_type || 'student';
-  document.getElementById('memberIdNumber').value = m.member_id || '';
-  _originalOpenModal('memberModal');
-}
-
-async function submitMemberForm() {
-  const payload = {
-    first_name: document.getElementById('memberFirstName').value.trim(),
-    last_name: document.getElementById('memberLastName').value.trim(),
-    email: document.getElementById('memberEmail').value.trim(),
-    phone: document.getElementById('memberPhone').value.trim(),
-    member_type: document.getElementById('memberType').value,
-    member_id: document.getElementById('memberIdNumber').value.trim(),
-  };
-
-  if (!payload.first_name || !payload.last_name || !payload.email || !payload.member_id) {
-    showNotification('First name, last name, email and ID are required', 'error');
-    return;
-  }
-
-  const endpoint = editingMemberId ? `/members/${editingMemberId}/` : '/members/';
-  const method = editingMemberId ? 'PUT' : 'POST';
-  const result = await apiRequest(endpoint, method, payload);
-
-  if (result && result.status === 'success') {
-    showNotification(editingMemberId ? 'Member updated successfully' : 'Member created successfully');
-    closeModal('memberModal');
-    await loadMembers();
-  } else {
-    showNotification(result?.message || 'Could not save member', 'error');
-  }
-}
-
-
-function wireNavigationFallbacks() {
-  document.querySelectorAll('.nav-item').forEach(btn => {
-    const onclickAttr = btn.getAttribute('onclick') || '';
-    const match = onclickAttr.match(/showPage\('([^']+)'/);
-    if (!match) return;
-    const pageId = match[1];
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      showPage(pageId, btn);
-    });
-  });
-
-  document.querySelectorAll('.qa-btn').forEach(btn => {
-    const onclickAttr = btn.getAttribute('onclick') || '';
-    const match = onclickAttr.match(/showPage\('([^']+)'/);
-    if (!match) return;
-    const pageId = match[1];
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      showPage(pageId, document.querySelector(`.nav-item[onclick*="${pageId}"]`) || null);
-    });
-  });
-}
-
-// ==========================
-// SEARCH FUNCTIONALITY
-// ==========================
-document.addEventListener('DOMContentLoaded', () => {
-  // Books search
-  const booksSearch = document.querySelector('#books .search-box input');
-  if (booksSearch) {
-    booksSearch.addEventListener('input', (e) => {
-      loadBooks(e.target.value);
-    });
-  }
+document.querySelectorAll('.modal-overlay').forEach(o => {
+  o.addEventListener('click', e => { if (e.target === o) o.classList.remove('open'); });
 });
 
-// ==========================
-// MODAL MANAGEMENT
-// ==========================
-function openModal(modalId) {
-  document.getElementById(modalId).classList.add('open');
-}
-
-function closeModal(modalId) {
-  document.getElementById(modalId).classList.remove('open');
-}
-
-document.querySelectorAll('.modal-overlay').forEach(overlay => {
-  overlay.addEventListener('click', e => {
-    if (e.target === overlay) {
-      overlay.classList.remove('open');
-    }
-  });
+// CHART
+const months = ['Jul','Aug','Sep','Oct','Nov','Dec'];
+const issued = [42,55,38,67,71,67];
+const returned = [38,50,35,61,68,60];
+const maxVal = Math.max(...issued, ...returned);
+const chart = document.getElementById('chart');
+months.forEach((m, i) => {
+  const wrap = document.createElement('div');
+  wrap.className = 'bar-wrap';
+  wrap.style.flexDirection = 'column-reverse';
+  wrap.innerHTML = `
+    <span class="bar-lbl">${m}</span>
+    <div style="display:flex;align-items:flex-end;gap:2px;width:100%">
+      <div class="bar fill-gold" style="height:${(issued[i]/maxVal)*72}px;flex:1;transition:height .8s ${i*.08}s ease"></div>
+      <div class="bar fill-blue" style="height:${(returned[i]/maxVal)*72}px;flex:1;transition:height .8s ${i*.08+.04}s ease"></div>
+    </div>`;
+  chart.appendChild(wrap);
 });
-
-// ==========================
-// INITIALIZATION
-// ==========================
-async function init() {
-  // Check if logged in
-  if (!authToken) {
-    // Show login prompt
-    const email = prompt('Email:', 'admin@lms.com');
-    const password = prompt('Password:', 'admin123');
-    if (email && password) {
-      const success = await login(email, password);
-      if (!success) {
-        alert('Login failed!');
-        return;
-      }
-    } else {
-      return;
-    }
-  }
-  
-  // Load user profile
-  await loadUserProfile();
-  
-  // Initialize theme controls
-  ensureThemeToggle();
-  wireTopbarButtons();
-  wireNavigationFallbacks();
-  connectNotificationsSocket();
-
-  // Load initial page (dashboard)
-  await loadDashboard();
-  await loadNotifications();
-}
-
-// Start app when page loads
-window.addEventListener('DOMContentLoaded', init);
-
-// Add CSS animation keyframes
-const style = document.createElement('style');
-style.textContent = `
-  @keyframes slideIn {
-    from { transform: translateX(400px); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }
-  }
-  @keyframes slideOut {
-    from { transform: translateX(0); opacity: 1; }
-    to { transform: translateX(400px); opacity: 0; }
-  }
-`;
-document.head.appendChild(style);
 </script>
 </body>
 </html>

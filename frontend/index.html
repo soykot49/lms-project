@@ -2285,10 +2285,10 @@ async function init() {
   // Check if logged in
   if (!authToken) {
     // Show login prompt
-    const email = prompt('Email:', 'admin@lms.com');
-    const password = prompt('Password:', 'admin123');
+    const email = prompt('Email:');
+    const password = prompt('Password:');
     if (email && password) {
-      const success = await login(email, password);
+      const success = await login(email.trim(), password);
       if (!success) {
         alert('Login failed!');
         return;

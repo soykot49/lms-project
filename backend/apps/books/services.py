@@ -33,10 +33,21 @@ class BookService(BaseService):
     def increase_availability(self, book_id: int):
         '''Increase available quantity when book is returned'''
         book = self.get_object(book_id)
-        if book.available_quantity >= book.quantity:
-            raise BusinessLogicException("Cannot increase beyond total quantity")
-        book.available_quantity += 1
-        book.save()
+        if book.available_quantity < book.quantity:
+            book.available_quantity += 1
+            book.save(update_fields=['available_quantity', 'updated_at'])
+        return book
+
+    def sync_availability_from_loans(self, book_id: int):
+        '''Set available copies from active loans (issued/overdue).'''
+        from apps.transactions.models import Transaction
+        book = self.get_object(book_id)
+        on_loan = Transaction.objects.filter(
+            book_id=book_id,
+            status__in=('issued', 'overdue'),
+        ).count()
+        book.available_quantity = max(0, book.quantity - on_loan)
+        book.save(update_fields=['available_quantity', 'updated_at'])
         return book
 
     def delete(self, instance):

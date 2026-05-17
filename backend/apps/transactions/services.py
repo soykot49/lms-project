@@ -1,5 +1,6 @@
 from datetime import date, timedelta
 from django.conf import settings
+from django.db import transaction as db_transaction
 from apps.core.services.base import BaseService
 from apps.core.exceptions import BusinessLogicException, ValidationException
 from .models import Transaction, Reservation
@@ -23,6 +24,7 @@ class TransactionService(BaseService):
     def list(self, filters=None):
         return super().list(filters)
     
+    @db_transaction.atomic
     def issue_book(self, member_id: int, book_id: int, issued_by, days: int = None, due_date=None, notes: str = ''):
         '''Issue a book to a member'''
         member_service = MemberService()
@@ -32,7 +34,7 @@ class TransactionService(BaseService):
         if not member_service.can_borrow(member_id):
             raise BusinessLogicException("Member cannot borrow books (blocked or has fines)")
         
-        # Check book availability
+        book_service.sync_availability_from_loans(book_id)
         if not book_service.check_availability(book_id):
             raise BusinessLogicException("Book is not available")
         
@@ -52,8 +54,7 @@ class TransactionService(BaseService):
             notes=notes or '',
         )
         
-        # Decrease book availability
-        book_service.decrease_availability(book_id)
+        book_service.sync_availability_from_loans(book_id)
         
         # Create notification
         from apps.notifications.services import NotificationService
@@ -67,6 +68,7 @@ class TransactionService(BaseService):
         
         return transaction
     
+    @db_transaction.atomic
     def return_book(self, transaction_id: int):
         '''Return a borrowed book'''
         transaction = self.get_object(transaction_id)
@@ -80,9 +82,8 @@ class TransactionService(BaseService):
         transaction.status = 'returned'
         transaction.save()
         
-        # Increase book availability
         book_service = BookService()
-        book_service.increase_availability(transaction.book.id)
+        book_service.sync_availability_from_loans(transaction.book.id)
         
         # Finalize fine if overdue (may already exist from daily Celery sync)
         if transaction.return_date > transaction.due_date:

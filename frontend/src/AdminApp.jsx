@@ -1148,6 +1148,7 @@ const TransactionsPage = ({ unreadCount, onNotifClick, theme, onToggleTheme }) =
   const [books, setBooks] = useState([]);
   const [statusFilter, setStatusFilter] = useState("all");
   const [form, setForm] = useState({ member: "", book: "", due_date: "", notes: "" });
+  const [returningId, setReturningId] = useState(null);
 
   const load = useCallback(async () => {
     const res = await request("/transactions/");
@@ -1182,14 +1183,25 @@ const TransactionsPage = ({ unreadCount, onNotifClick, theme, onToggleTheme }) =
   };
 
   const returnBook = async (id) => {
+    if (!id || returningId) return;
     if (!confirm("Return this book?")) return;
-    const res = await request(`/transactions/${id}/return/`, "POST", {});
-    if (res?.status === "success") {
-      show("Book returned successfully");
-      const row = res.data;
-      if (row?.fine_created) show(`Fine created: $${row.fine_amount}`, "error");
-      load();
-    } else show(apiErrorMessage(res, "Return failed"), "error");
+    setReturningId(id);
+    try {
+      const res = await request(`/transactions/${id}/return/`, "POST", {});
+      if (res?.status === "success") {
+        show("Book returned successfully");
+        const row = res.data;
+        if (row?.fine_created) show(`Fine created: $${row.fine_amount}`, "error");
+        await load();
+      } else if (res) {
+        show(apiErrorMessage(res, "Return failed"), "error");
+        await load();
+      } else {
+        show("Session expired — please sign in again", "error");
+      }
+    } finally {
+      setReturningId(null);
+    }
   };
 
   const filtered = statusFilter === "all"
@@ -1228,8 +1240,18 @@ const TransactionsPage = ({ unreadCount, onNotifClick, theme, onToggleTheme }) =
                     <td><span className={`badge badge-${t.status === "returned" ? "green" : t.status === "overdue" ? "red" : "blue"}`}>{t.status}</span></td>
                     <td>
                       {(t.status === "issued" || t.status === "overdue")
-                        ? <button type="button" className="btn btn-outline" style={{ padding: "4px 10px", fontSize: 12 }} onClick={() => returnBook(t.id)}>Return</button>
-                        : <button type="button" className="icon-btn"><Icon id="ic-edit" size="sm" /></button>
+                        ? (
+                          <button
+                            type="button"
+                            className="btn btn-outline"
+                            style={{ padding: "4px 10px", fontSize: 12 }}
+                            disabled={returningId === t.id}
+                            onClick={(e) => { e.stopPropagation(); returnBook(t.id); }}
+                          >
+                            {returningId === t.id ? "Returning…" : "Return"}
+                          </button>
+                        )
+                        : <span style={{ color: "var(--muted)", fontSize: 12 }}>—</span>
                       }
                     </td>
                   </tr>

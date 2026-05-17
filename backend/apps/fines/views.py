@@ -60,14 +60,13 @@ class FineSettingsView(BaseAPIView):
         return self.success_response(serializer.data)
     
     def put(self, request):
-        serializer = FineSettingsSerializer(data=request.data, partial=True)
+        service = FineSettingsService()
+        settings_obj = service.get_settings()
+        serializer = FineSettingsSerializer(settings_obj, data=request.data, partial=True)
         if serializer.is_valid():
-            service = FineSettingsService()
-            settings = service.update_settings(
-                fine_per_day=serializer.validated_data['fine_per_day']
-            )
+            serializer.save()
             return self.success_response(
-                FineSettingsSerializer(settings).data,
+                FineSettingsSerializer(settings_obj).data,
                 message="Settings updated successfully"
             )
         return self.error_response("Validation failed", errors=serializer.errors)

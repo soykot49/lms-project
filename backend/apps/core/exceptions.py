@@ -36,18 +36,33 @@ class BusinessLogicException(ServiceException):
     default_code = 'business_logic_error'
 
 
+def _extract_message(data, exc):
+    detail = data.get('detail', str(exc)) if isinstance(data, dict) else str(exc)
+    if isinstance(detail, list):
+        return str(detail[0]) if detail else str(exc)
+    if isinstance(detail, dict):
+        for val in detail.values():
+            if isinstance(val, list) and val:
+                return str(val[0])
+            if val:
+                return str(val)
+        return str(exc)
+    return str(detail)
+
+
 def custom_exception_handler(exc, context):
     """Custom exception handler for DRF"""
     response = exception_handler(exc, context)
-    
+
     if response is not None:
-        custom_response_data = {
+        message = _extract_message(response.data, exc)
+        response.data = {
             'success': False,
+            'message': message,
             'error': {
-                'message': response.data.get('detail', str(exc)),
-                'code': getattr(exc, 'default_code', 'error')
-            }
+                'message': message,
+                'code': getattr(exc, 'default_code', 'error'),
+            },
         }
-        response.data = custom_response_data
-    
+
     return response

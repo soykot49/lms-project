@@ -68,3 +68,13 @@ class ProfileView(BaseAPIView):
     def get(self, request):
         serializer = UserSerializer(request.user)
         return self.success_response(serializer.data)
+
+    def put(self, request):
+        serializer = UserSerializer(request.user, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return self.success_response(
+                serializer.data,
+                message="Profile updated successfully",
+            )
+        return self.error_response("Validation failed", errors=serializer.errors)

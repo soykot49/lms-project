@@ -8,6 +8,11 @@ from .models import Fine, FineSettings
 
 class FineService(BaseService):
     model = Fine
+
+    def get_queryset(self):
+        return self.model.objects.select_related(
+            'member', 'transaction', 'transaction__book'
+        )
     
     def calculate_fine(self, transaction) -> Decimal:
         '''Calculate fine for an overdue transaction'''

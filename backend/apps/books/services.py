@@ -39,9 +39,25 @@ class BookService(BaseService):
         book.save()
         return book
 
+    def delete(self, instance):
+        from apps.transactions.models import Transaction
+        if Transaction.objects.filter(book=instance, status__in=['issued', 'overdue']).exists():
+            raise BusinessLogicException(
+                'Cannot delete this book while copies are on loan. Return all copies first.'
+            )
+        instance.delete()
+
 
 class AuthorService(BaseService):
     model = Author
+
+    def delete(self, instance):
+        book_count = instance.books.count()
+        if book_count:
+            raise BusinessLogicException(
+                f'Cannot delete author with {book_count} linked book(s). Delete those books first.'
+            )
+        instance.delete()
     
     def get_author_books(self, author_id: int):
         '''Get all books by an author'''

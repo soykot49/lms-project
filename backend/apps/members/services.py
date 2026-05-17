@@ -42,3 +42,21 @@ class MemberService(BaseService):
             return False
         
         return True
+
+    def delete(self, instance):
+        from apps.transactions.models import Transaction, Reservation
+        from apps.fines.models import Fine
+
+        if Transaction.objects.filter(member=instance, status__in=['issued', 'overdue']).exists():
+            raise BusinessLogicException(
+                'Cannot delete member with active borrowings. Return all books first.'
+            )
+        if Reservation.objects.filter(member=instance, status='pending').exists():
+            raise BusinessLogicException(
+                'Cannot delete member with pending reservations.'
+            )
+        if Fine.objects.filter(member=instance, status='unpaid').exists():
+            raise BusinessLogicException(
+                'Cannot delete member with unpaid fines.'
+            )
+        instance.delete()

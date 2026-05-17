@@ -4,7 +4,7 @@ from .views import (
     AuthorListCreateView, AuthorDetailView, AuthorBooksView,
     CategoryListCreateView,
     DashboardStatsView, InventoryReportView, CirculationReportView,
-    FinesReportView, OverdueReportView
+    FinesReportView, OverdueReportView, MemberReportView
 )
 
 urlpatterns = [
@@ -23,4 +23,5 @@ urlpatterns += [
     path('reports/circulation/', CirculationReportView.as_view(), name='report-circulation'),
     path('reports/fines/', FinesReportView.as_view(), name='report-fines'),
     path('reports/overdue/', OverdueReportView.as_view(), name='report-overdue'),
+    path('reports/members/', MemberReportView.as_view(), name='report-members'),
 ]

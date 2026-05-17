@@ -376,3 +376,35 @@ class OverdueReportView(BaseAPIView):
             })
         
         return self.success_response(report)
+
+
+class MemberReportView(BaseAPIView):
+    """Generate member statistics report"""
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        from apps.members.models import Member
+        from django.db.models import Count
+
+        members = Member.objects.all()
+        report = {
+            'total_members': members.count(),
+            'active_members': members.filter(is_blocked=False).count(),
+            'blocked_members': members.filter(is_blocked=True).count(),
+            'by_type': {
+                'student': members.filter(member_type='student').count(),
+                'faculty': members.filter(member_type='faculty').count(),
+                'staff': members.filter(member_type='staff').count(),
+            },
+            'top_borrowers': [
+                {
+                    'name': m.full_name,
+                    'member_id': m.member_id,
+                    'borrow_count': m.borrow_count,
+                }
+                for m in Member.objects.annotate(
+                    borrow_count=Count('transactions')
+                ).order_by('-borrow_count')[:10]
+            ],
+        }
+        return self.success_response(report)

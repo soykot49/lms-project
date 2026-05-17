@@ -1,5 +1,5 @@
 from rest_framework import status
-from rest_framework.permissions import IsAuthenticated
+from apps.accounts.permissions import IsStaffUser
 from apps.core.views.base import BaseAPIView
 from .models import Fine, FineSettings
 from .serializers import FineSerializer, FineSettingsSerializer
@@ -7,7 +7,7 @@ from .services import FineService, FineSettingsService
 
 
 class FineListView(BaseAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsStaffUser]
     
     def get(self, request):
         service = FineService()
@@ -17,7 +17,7 @@ class FineListView(BaseAPIView):
 
 
 class FineDetailView(BaseAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsStaffUser]
     
     def get(self, request, pk):
         service = FineService()
@@ -27,7 +27,7 @@ class FineDetailView(BaseAPIView):
 
 
 class FineCollectView(BaseAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsStaffUser]
     
     def post(self, request, pk):
         service = FineService()
@@ -39,7 +39,7 @@ class FineCollectView(BaseAPIView):
 
 
 class FineWaiveView(BaseAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsStaffUser]
     
     def post(self, request, pk):
         service = FineService()
@@ -51,7 +51,7 @@ class FineWaiveView(BaseAPIView):
 
 
 class FineSettingsView(BaseAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsStaffUser]
     
     def get(self, request):
         service = FineSettingsService()
@@ -60,14 +60,13 @@ class FineSettingsView(BaseAPIView):
         return self.success_response(serializer.data)
     
     def put(self, request):
-        serializer = FineSettingsSerializer(data=request.data, partial=True)
+        service = FineSettingsService()
+        settings_obj = service.get_settings()
+        serializer = FineSettingsSerializer(settings_obj, data=request.data, partial=True)
         if serializer.is_valid():
-            service = FineSettingsService()
-            settings = service.update_settings(
-                fine_per_day=serializer.validated_data['fine_per_day']
-            )
+            serializer.save()
             return self.success_response(
-                FineSettingsSerializer(settings).data,
+                FineSettingsSerializer(settings_obj).data,
                 message="Settings updated successfully"
             )
         return self.error_response("Validation failed", errors=serializer.errors)

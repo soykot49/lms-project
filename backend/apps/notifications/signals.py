@@ -14,7 +14,10 @@ def _broadcast_snapshot():
     notifications = Notification.objects.select_related('member').order_by('-created_at')[:5]
     payload = {
         'type': 'notification_snapshot',
-        'unread_count': Notification.objects.filter(is_read=False).count(),
+        'unread_count': Notification.objects.filter(
+            is_read=False,
+            audience='staff',
+        ).count(),
         'notifications': NotificationSerializer(notifications, many=True).data,
     }
 

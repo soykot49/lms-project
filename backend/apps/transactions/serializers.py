@@ -19,6 +19,16 @@ class TransactionCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Transaction
         fields = ['member', 'book', 'due_date', 'notes']
+        extra_kwargs = {
+            'due_date': {'required': False, 'allow_null': True},
+            'notes': {'required': False, 'allow_blank': True},
+        }
+
+
+class ReservationCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Reservation
+        fields = ['member', 'book']
 
 
 class ReservationSerializer(serializers.ModelSerializer):

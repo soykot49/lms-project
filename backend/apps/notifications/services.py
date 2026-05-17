@@ -5,15 +5,37 @@ from .models import Notification
 class NotificationService(BaseService):
     model = Notification
     
-    def create_notification(self, member_id: int, title: str, message: str, notification_type: str = 'general'):
-        '''Create a notification for a member'''
-        notification = self.model.objects.create(
+    def create_notification(
+        self,
+        member_id: int,
+        title: str,
+        message: str,
+        notification_type: str = 'general',
+        audience: str = 'member',
+    ):
+        '''Create a notification (member-facing or staff alert tied to a member).'''
+        return self.model.objects.create(
             member_id=member_id,
             title=title,
             message=message,
-            notification_type=notification_type
+            notification_type=notification_type,
+            audience=audience,
         )
-        return notification
+
+    def create_staff_alert(
+        self,
+        member_id: int,
+        title: str,
+        message: str,
+        notification_type: str = 'overdue',
+    ):
+        return self.create_notification(
+            member_id=member_id,
+            title=title,
+            message=message,
+            notification_type=notification_type,
+            audience='staff',
+        )
     
     def mark_as_read(self, notification_id: int):
         '''Mark a notification as read'''

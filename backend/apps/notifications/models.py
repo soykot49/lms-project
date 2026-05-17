@@ -3,6 +3,11 @@ from apps.members.models import Member
 
 
 class Notification(models.Model):
+    AUDIENCE_CHOICES = [
+        ('member', 'Member'),
+        ('staff', 'Staff'),
+    ]
+
     TYPE_CHOICES = [
         ('issue', 'Book Issue'),
         ('return', 'Book Return'),
@@ -13,6 +18,7 @@ class Notification(models.Model):
     ]
     
     member = models.ForeignKey(Member, on_delete=models.CASCADE, related_name='notifications')
+    audience = models.CharField(max_length=10, choices=AUDIENCE_CHOICES, default='member')
     title = models.CharField(max_length=255)
     message = models.TextField()
     notification_type = models.CharField(max_length=20, choices=TYPE_CHOICES, default='general')

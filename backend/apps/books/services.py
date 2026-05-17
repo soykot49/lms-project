@@ -33,15 +33,42 @@ class BookService(BaseService):
     def increase_availability(self, book_id: int):
         '''Increase available quantity when book is returned'''
         book = self.get_object(book_id)
-        if book.available_quantity >= book.quantity:
-            raise BusinessLogicException("Cannot increase beyond total quantity")
-        book.available_quantity += 1
-        book.save()
+        if book.available_quantity < book.quantity:
+            book.available_quantity += 1
+            book.save(update_fields=['available_quantity', 'updated_at'])
         return book
+
+    def sync_availability_from_loans(self, book_id: int):
+        '''Set available copies from active loans (issued/overdue).'''
+        from apps.transactions.models import Transaction
+        book = self.get_object(book_id)
+        on_loan = Transaction.objects.filter(
+            book_id=book_id,
+            status__in=('issued', 'overdue'),
+        ).count()
+        book.available_quantity = max(0, book.quantity - on_loan)
+        book.save(update_fields=['available_quantity', 'updated_at'])
+        return book
+
+    def delete(self, instance):
+        from apps.transactions.models import Transaction
+        if Transaction.objects.filter(book=instance, status__in=['issued', 'overdue']).exists():
+            raise BusinessLogicException(
+                'Cannot delete this book while copies are on loan. Return all copies first.'
+            )
+        instance.delete()
 
 
 class AuthorService(BaseService):
     model = Author
+
+    def delete(self, instance):
+        book_count = instance.books.count()
+        if book_count:
+            raise BusinessLogicException(
+                f'Cannot delete author with {book_count} linked book(s). Delete those books first.'
+            )
+        instance.delete()
     
     def get_author_books(self, author_id: int):
         '''Get all books by an author'''

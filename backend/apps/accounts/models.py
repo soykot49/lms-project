@@ -8,10 +8,18 @@ class User(AbstractUser):
     ROLE_CHOICES = [
         ('admin', 'Admin'),
         ('librarian', 'Librarian'),
+        ('student', 'Student'),
     ]
     
     email = models.EmailField(unique=True)
     role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='librarian')
+    member = models.OneToOneField(
+        'members.Member',
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name='user_account',
+    )
     
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username', 'first_name', 'last_name']

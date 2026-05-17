@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LibraryOS - Library Management System</title>
+  
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -704,9 +705,10 @@
 </svg>
 
 <!-- SIDEBAR -->
+
 <aside class="sidebar">
   <div class="sidebar-logo" onclick="showPage('dashboard', this)">
-    <div class="sidebar-logo-icon">📚</div>
+    <div class="sidebar-logo-icon" ><img width="40" height="40" src="https://img.icons8.com/bubbles/100/books.png" alt="books"/></div>
     <div class="sidebar-logo-text">
       <h1>LibraryOS</h1>
       <span>Management System</span>
@@ -714,17 +716,17 @@
   </div>
   <nav class="nav">
     <div class="nav-section">Main</div>
-    <button class="nav-item active" onclick="showPage('dashboard', this)"><span class="icon">🏠</span> Dashboard</button>
-    <button class="nav-item" onclick="showPage('books', this)"><span class="icon">📖</span> Books <span id="booksCountBadge" class="nav-badge">0</span></button>
-    <button class="nav-item" onclick="showPage('members', this)"><span class="icon">👥</span> Members</button>
-    <button class="nav-item" onclick="showPage('authors', this)"><span class="icon">✍️</span> Authors</button>
+    <button class="nav-item active" onclick="showPage('dashboard', this)"><span class="icon"><img width="20" height="20" src="https://img.icons8.com/cute-clipart/64/home.png" alt="home"/></span> Dashboard</button>
+    <button class="nav-item" onclick="showPage('books', this)"><span class="icon"><img width="20" height="20" src="https://img.icons8.com/stickers/100/book.png" alt="book"/></span> Books <span id="booksCountBadge" class="nav-badge">0</span></button>
+    <button class="nav-item" onclick="showPage('members', this)"><span class="icon"><img width="20" height="20" src="https://img.icons8.com/fluency/48/group-background-selected.png" alt="group-background-selected"/></span> Members</button>
+    <button class="nav-item" onclick="showPage('authors', this)"><span class="icon"><img width="20" height="25" src="https://img.icons8.com/fluency/48/writer-male.png" alt="writer-male"/></span> Authors</button>
     <div class="nav-section">Transactions</div>
-    <button class="nav-item" onclick="showPage('transactions', this)"><span class="icon">🔄</span> Issue / Return</button>
-    <button class="nav-item" onclick="showPage('fines', this)"><span class="icon">💰</span> Fines <span id="finesCountBadge" class="nav-badge">0</span></button>
-    <button class="nav-item" onclick="showPage('reservations', this)"><span class="icon">🔖</span> Reservations</button>
+    <button class="nav-item" onclick="showPage('transactions', this)"><span class="icon"><img width="20" height="20" src="https://img.icons8.com/external-goofy-color-kerismaker/96/external-Recycle-file-document-goofy-color-kerismaker.png" alt="external-Recycle-file-document-goofy-color-kerismaker"/></span> Issue / Return</button>
+    <button class="nav-item" onclick="showPage('fines', this)"><span class="icon"><img width="30" height="30" src="https://img.icons8.com/clouds/100/money-bag.png" alt="money-bag"/></span> Fines <span id="finesCountBadge" class="nav-badge">0</span></button>
+    <button class="nav-item" onclick="showPage('reservations', this)"><span class="icon"><img width="20" height="20" src="https://img.icons8.com/scribby/50/tag.png" alt="tag"/></span> Reservations</button>
     <div class="nav-section">Reports</div>
-    <button class="nav-item" onclick="showPage('reports', this)"><span class="icon">📊</span> Reports</button>
-    <button class="nav-item" onclick="showPage('notifications', this)"><span class="icon">🔔</span> Notifications <span id="notificationsCountBadge" class="nav-badge">0</span></button>
+    <button class="nav-item" onclick="showPage('reports', this)"><span class="icon"><img width="20" height="20" src="https://img.icons8.com/fluency/48/graph-report.png" alt="graph-report"/></span> Reports</button>
+    <button class="nav-item" onclick="showPage('notifications', this)"><span class="icon"><img width="20" height="20" src="https://img.icons8.com/fluency/48/alarm.png" alt="alarm"/></span> Notifications <span id="notificationsCountBadge" class="nav-badge">0</span></button>
     <div class="nav-section">Settings</div>
     <button class="nav-item" onclick="showPage('settings', this)"><span class="icon">⚙️</span> Settings</button>
   </nav>
@@ -742,13 +744,13 @@
   <div id="dashboard" class="page active">
     <div class="topbar">
       <span class="topbar-title">Dashboard</span>
-      <div class="search-box"><span>🔍</span><input type="text" placeholder="Search..."></div>
-      <div class="topbar-btn notify-btn">🔔<span class="notif-dot"></span></div>
+      <div class="search-box"><span><img width="20" height="20" src="https://img.icons8.com/color/48/search--v1.png" alt="search--v1"/></span><input type="text" placeholder="Search..."></div>
+      <div class="topbar-btn notify-btn"><img width="30" height="30" src="https://img.icons8.com/plasticine/100/bell--v1.png" alt="bell--v1"/><span class="notif-dot"></span></div>
     </div>
     <div class="content">
       <div class="stats-grid">
         <div class="stat-card gold">
-          <div class="stat-icon">📚</div>
+          <div class="stat-icon"><img width="20" height="20" src="https://img.icons8.com/office/40/books.png" alt="books"/></div>
           <div class="stat-val">0</div>
           <div class="stat-label">Total Books</div>
           <div class="stat-change up">
@@ -756,7 +758,7 @@
           </div>
         </div>
         <div class="stat-card blue">
-          <div class="stat-icon">👥</div>
+          <div class="stat-icon"><img width="20" height="20" src="https://img.icons8.com/fluency/48/group-background-selected.png" alt="group-background-selected"/></div>
           <div class="stat-val">0</div>
           <div class="stat-label">Active Members</div>
           <div class="stat-change up">
@@ -764,7 +766,7 @@
           </div>
         </div>
         <div class="stat-card green">
-          <div class="stat-icon">📤</div>
+          <div class="stat-icon"><img width="20" height="20" src="https://img.icons8.com/plasticine/100/return-of-product.png" alt="return-of-product"/></div>
           <div class="stat-val">0</div>
           <div class="stat-label">Books Issued</div>
           <div class="stat-change down">
@@ -782,7 +784,7 @@
       </div>
 
       <div class="qa-grid">
-        <button class="qa-btn" onclick="showPage('transactions', this)"><span class="qa-icon">📤</span><span>Issue Book</span></button>
+        <button class="qa-btn" onclick="showPage('transactions', this)"><span class="qa-icon"><img width="20" height="20" src="https://img.icons8.com/plasticine/100/return-of-product.png" alt="return-of-product"/></span><span>Issue Book</span></button>
         <button class="qa-btn" onclick="showPage('transactions', this)"><span class="qa-icon">📥</span><span>Return Book</span></button>
         <button class="qa-btn" onclick="showPage('members', this)"><span class="qa-icon">➕</span><span>Add Member</span></button>
         <button class="qa-btn" onclick="showPage('books', this)"><span class="qa-icon">📝</span><span>Add Book</span></button>

@@ -84,11 +84,10 @@ class TransactionService(BaseService):
         book_service = BookService()
         book_service.increase_availability(transaction.book.id)
         
-        # Calculate fine if overdue
+        # Finalize fine if overdue (may already exist from daily Celery sync)
         if transaction.return_date > transaction.due_date:
             from apps.fines.services import FineService
-            fine_service = FineService()
-            fine_service.create_fine_for_transaction(transaction)
+            FineService().create_fine_for_transaction(transaction)
         
         return transaction
     

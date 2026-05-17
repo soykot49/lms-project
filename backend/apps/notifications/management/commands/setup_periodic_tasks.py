@@ -1,38 +1,64 @@
-from django.core.management.base import BaseCommand
-from django_celery_beat.models import CrontabSchedule, PeriodicTask
+"""
+Optional: mirror CELERY_BEAT_SCHEDULE into django-celery-beat DB for Django admin UI.
+
+Beat itself uses CELERY_BEAT_SCHEDULE from config/beat_schedule.py (not the DB).
+"""
 import json
+
+from django.conf import settings
+from django.core.management.base import BaseCommand
+from django.utils import timezone
+from django_celery_beat.models import CrontabSchedule, PeriodicTask
+
+
+def _hour_minute_from_crontab(celery_crontab):
+    hour = min(celery_crontab.hour) if celery_crontab.hour else 0
+    minute = min(celery_crontab.minute) if celery_crontab.minute else 0
+    return int(hour), int(minute)
 
 
 class Command(BaseCommand):
-    help = 'Create/update periodic Celery tasks for notification automation.'
+    help = 'Mirror CELERY_BEAT_SCHEDULE into django-celery-beat (admin visibility only).'
 
     def handle(self, *args, **options):
-        nine_am, _ = CrontabSchedule.objects.get_or_create(minute='0', hour='9', day_of_week='*', day_of_month='*', month_of_year='*')
-        ten_am, _ = CrontabSchedule.objects.get_or_create(minute='0', hour='10', day_of_week='*', day_of_month='*', month_of_year='*')
-        eleven_am, _ = CrontabSchedule.objects.get_or_create(minute='0', hour='11', day_of_week='*', day_of_month='*', month_of_year='*')
+        tz = timezone.get_current_timezone()
+        beat_schedule = getattr(settings, 'CELERY_BEAT_SCHEDULE', {})
+        created = updated = 0
 
-        tasks = [
-            ('Send Due Date Reminders', 'apps.notifications.tasks.send_due_date_reminders', nine_am),
-            ('Send Overdue Notifications', 'apps.notifications.tasks.send_overdue_notifications', ten_am),
-            ('Check Expired Reservations', 'apps.notifications.tasks.check_expired_reservations', eleven_am),
-        ]
+        for key, entry in beat_schedule.items():
+            task_path = entry['task']
+            hour, minute = _hour_minute_from_crontab(entry['schedule'])
+            name = key.replace('-', ' ').title()
 
-        created = 0
-        updated = 0
-        for name, task_path, schedule in tasks:
-            obj, was_created = PeriodicTask.objects.update_or_create(
+            schedule, _ = CrontabSchedule.objects.get_or_create(
+                minute=str(minute),
+                hour=str(hour),
+                day_of_week='*',
+                day_of_month='*',
+                month_of_year='*',
+                timezone=tz,
+            )
+            _, was_created = PeriodicTask.objects.update_or_create(
                 name=name,
                 defaults={
                     'task': task_path,
                     'crontab': schedule,
                     'enabled': True,
-                    'args': json.dumps([]),
-                    'kwargs': json.dumps({}),
+                    'args': json.dumps(entry.get('args', [])),
+                    'kwargs': json.dumps(entry.get('kwargs', {})),
                 },
             )
             if was_created:
                 created += 1
             else:
                 updated += 1
+            self.stdout.write(f'  ✓ {name} — {hour:02d}:{minute:02d} → {task_path}')
 
-        self.stdout.write(self.style.SUCCESS(f'Periodic tasks ready (created={created}, updated={updated})'))
+        PeriodicTask.objects.filter(name='Send Overdue Notifications').update(enabled=False)
+
+        self.stdout.write(
+            self.style.SUCCESS(
+                f'Mirrored {len(beat_schedule)} task(s) to DB (created={created}, updated={updated}). '
+                'Beat uses CELERY_BEAT_SCHEDULE from config/beat_schedule.py.'
+            )
+        )

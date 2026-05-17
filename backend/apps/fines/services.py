@@ -27,32 +27,54 @@ class FineService(BaseService):
         
         return Decimal(days_overdue) * fine_per_day
     
-    def create_fine_for_transaction(self, transaction):
-        '''Create fine for an overdue transaction'''
-        if hasattr(transaction, 'fine'):
-            raise BusinessLogicException("Fine already exists for this transaction")
-        
+    def sync_running_fine(self, transaction):
+        '''Create or update unpaid fine for an open overdue loan (grows daily until return).'''
+        if transaction.status not in ('issued', 'overdue') or transaction.return_date:
+            return None
+
         amount = self.calculate_fine(transaction)
         if amount <= 0:
             return None
-        
-        fine = self.model.objects.create(
+
+        fine, created = self.model.objects.get_or_create(
             transaction=transaction,
-            member=transaction.member,
-            amount=amount,
-            status='unpaid'
+            defaults={
+                'member': transaction.member,
+                'amount': amount,
+                'status': 'unpaid',
+            },
         )
-        
-        # Create notification
-        from apps.notifications.services import NotificationService
-        notif_service = NotificationService()
-        notif_service.create_notification(
-            member_id=transaction.member.id,
-            title="Fine Applied",
-            message=f"A fine of ৳{amount} has been applied for late return",
-            notification_type="fine"
+        if not created and fine.status == 'unpaid' and fine.amount != amount:
+            fine.amount = amount
+            fine.save(update_fields=['amount', 'updated_at'])
+        return fine
+
+    def create_fine_for_transaction(self, transaction):
+        '''Create or finalize fine when a book is returned late.'''
+        amount = self.calculate_fine(transaction)
+        if amount <= 0:
+            return None
+
+        fine, created = self.model.objects.get_or_create(
+            transaction=transaction,
+            defaults={
+                'member': transaction.member,
+                'amount': amount,
+                'status': 'unpaid',
+            },
         )
-        
+        if not created and fine.status == 'unpaid':
+            fine.amount = amount
+            fine.save(update_fields=['amount', 'updated_at'])
+
+        if created:
+            from apps.notifications.services import NotificationService
+            NotificationService().create_notification(
+                member_id=transaction.member.id,
+                title='Fine Applied',
+                message=f'A fine of ৳{amount} has been applied for late return',
+                notification_type='fine',
+            )
         return fine
     
     def collect_fine(self, fine_id: int):

@@ -1,5 +1,5 @@
 from rest_framework import status
-from rest_framework.permissions import IsAuthenticated
+from apps.accounts.permissions import IsStaffUser
 from apps.core.views.base import BaseAPIView
 from .models import Book, Author, Category
 from .serializers import (
@@ -10,7 +10,7 @@ from .services import BookService, AuthorService, CategoryService
 
 
 class BookListCreateView(BaseAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsStaffUser]
     
     def get(self, request):
         service = BookService()
@@ -38,7 +38,7 @@ class BookListCreateView(BaseAPIView):
 
 
 class BookDetailView(BaseAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsStaffUser]
     
     def get(self, request, pk):
         service = BookService()
@@ -66,7 +66,7 @@ class BookDetailView(BaseAPIView):
 
 
 class AuthorListCreateView(BaseAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsStaffUser]
     
     def get(self, request):
         service = AuthorService()
@@ -88,7 +88,7 @@ class AuthorListCreateView(BaseAPIView):
 
 
 class AuthorDetailView(BaseAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsStaffUser]
     
     def get(self, request, pk):
         service = AuthorService()
@@ -116,7 +116,7 @@ class AuthorDetailView(BaseAPIView):
 
 
 class AuthorBooksView(BaseAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsStaffUser]
     
     def get(self, request, pk):
         service = AuthorService()
@@ -126,7 +126,7 @@ class AuthorBooksView(BaseAPIView):
 
 
 class CategoryListCreateView(BaseAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsStaffUser]
     
     def get(self, request):
         service = CategoryService()
@@ -149,7 +149,7 @@ class CategoryListCreateView(BaseAPIView):
 
 class DashboardStatsView(BaseAPIView):
     """Get dashboard statistics"""
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsStaffUser]
     
     def get(self, request):
         from apps.transactions.models import Transaction
@@ -231,7 +231,7 @@ class DashboardStatsView(BaseAPIView):
 
 class InventoryReportView(BaseAPIView):
     """Generate inventory report"""
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsStaffUser]
     
     def get(self, request):
         books = Book.objects.select_related('author', 'category').all()
@@ -265,7 +265,7 @@ class InventoryReportView(BaseAPIView):
 
 class CirculationReportView(BaseAPIView):
     """Generate circulation report"""
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsStaffUser]
     
     def get(self, request):
         from apps.transactions.models import Transaction
@@ -312,7 +312,7 @@ class CirculationReportView(BaseAPIView):
 
 class FinesReportView(BaseAPIView):
     """Generate fines report"""
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsStaffUser]
     
     def get(self, request):
         from apps.fines.models import Fine
@@ -348,7 +348,7 @@ class FinesReportView(BaseAPIView):
 
 class OverdueReportView(BaseAPIView):
     """Generate overdue report"""
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsStaffUser]
     
     def get(self, request):
         from apps.transactions.models import Transaction
@@ -380,7 +380,7 @@ class OverdueReportView(BaseAPIView):
 
 class MemberReportView(BaseAPIView):
     """Generate member statistics report"""
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsStaffUser]
 
     def get(self, request):
         from apps.members.models import Member

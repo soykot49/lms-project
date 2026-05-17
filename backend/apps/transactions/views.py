@@ -1,5 +1,5 @@
 from rest_framework import status
-from rest_framework.permissions import IsAuthenticated
+from apps.accounts.permissions import IsStaffUser
 from apps.core.views.base import BaseAPIView
 from .models import Transaction, Reservation
 from .serializers import (
@@ -10,7 +10,7 @@ from .services import TransactionService, ReservationService
 
 
 class TransactionListCreateView(BaseAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsStaffUser]
     
     def get(self, request):
         service = TransactionService()
@@ -39,7 +39,7 @@ class TransactionListCreateView(BaseAPIView):
 
 
 class TransactionDetailView(BaseAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsStaffUser]
     
     def get(self, request, pk):
         service = TransactionService()
@@ -49,7 +49,7 @@ class TransactionDetailView(BaseAPIView):
 
 
 class TransactionReturnView(BaseAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsStaffUser]
     
     def post(self, request, pk):
         service = TransactionService()
@@ -69,7 +69,7 @@ class TransactionReturnView(BaseAPIView):
 
 
 class ReservationListCreateView(BaseAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsStaffUser]
     
     def get(self, request):
         service = ReservationService()
@@ -94,7 +94,7 @@ class ReservationListCreateView(BaseAPIView):
 
 
 class ReservationDetailView(BaseAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsStaffUser]
     
     def get(self, request, pk):
         service = ReservationService()
@@ -104,7 +104,7 @@ class ReservationDetailView(BaseAPIView):
 
 
 class ReservationApproveView(BaseAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsStaffUser]
     
     def post(self, request, pk):
         service = ReservationService()
@@ -118,7 +118,7 @@ class ReservationApproveView(BaseAPIView):
 
 
 class ReservationCancelView(BaseAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsStaffUser]
     
     def post(self, request, pk):
         service = ReservationService()

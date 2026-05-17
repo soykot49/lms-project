@@ -1,14 +1,14 @@
 from rest_framework import status
-from rest_framework.permissions import IsAuthenticated
+from apps.accounts.permissions import IsStaffUser
 from apps.core.views.base import BaseAPIView
 from .models import Member
-from .serializers import MemberSerializer, MemberDetailSerializer
+from .serializers import MemberSerializer, MemberDetailSerializer, MemberCreateSerializer
 from .services import MemberService
 from apps.transactions.serializers import TransactionSerializer
 
 
 class MemberListCreateView(BaseAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsStaffUser]
     
     def get(self, request):
         service = MemberService()
@@ -17,10 +17,10 @@ class MemberListCreateView(BaseAPIView):
         return self.success_response(serializer.data)
     
     def post(self, request):
-        serializer = MemberSerializer(data=request.data)
+        serializer = MemberCreateSerializer(data=request.data)
         if serializer.is_valid():
             service = MemberService()
-            member = service.create(serializer.validated_data)
+            member = service.create_with_account(serializer.validated_data)
             return self.success_response(
                 MemberSerializer(member).data,
                 message="Member created successfully",
@@ -30,7 +30,7 @@ class MemberListCreateView(BaseAPIView):
 
 
 class MemberDetailView(BaseAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsStaffUser]
     
     def get(self, request, pk):
         service = MemberService()
@@ -57,8 +57,32 @@ class MemberDetailView(BaseAPIView):
         return self.success_response(message="Member deleted successfully")
 
 
+class MemberActivateView(BaseAPIView):
+    permission_classes = [IsStaffUser]
+
+    def post(self, request, pk):
+        service = MemberService()
+        member = service.activate_account(pk)
+        return self.success_response(
+            MemberSerializer(member).data,
+            message='Member account activated successfully',
+        )
+
+
+class MemberDeactivateView(BaseAPIView):
+    permission_classes = [IsStaffUser]
+
+    def post(self, request, pk):
+        service = MemberService()
+        member = service.deactivate_account(pk)
+        return self.success_response(
+            MemberSerializer(member).data,
+            message='Member account deactivated',
+        )
+
+
 class MemberBlockView(BaseAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsStaffUser]
     
     def post(self, request, pk):
         service = MemberService()
@@ -70,7 +94,7 @@ class MemberBlockView(BaseAPIView):
 
 
 class MemberUnblockView(BaseAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsStaffUser]
     
     def post(self, request, pk):
         service = MemberService()
@@ -82,7 +106,7 @@ class MemberUnblockView(BaseAPIView):
 
 
 class MemberHistoryView(BaseAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsStaffUser]
     
     def get(self, request, pk):
         service = MemberService()

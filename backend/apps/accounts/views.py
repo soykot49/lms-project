@@ -2,7 +2,10 @@ from rest_framework import status
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
 from apps.core.views.base import BaseAPIView
-from .serializers import UserSerializer, RegisterSerializer, LoginSerializer
+from .serializers import (
+    UserSerializer, RegisterSerializer, LoginSerializer,
+    StudentLoginSerializer, StudentRegisterSerializer,
+)
 from .services import AuthService
 
 
@@ -78,3 +81,49 @@ class ProfileView(BaseAPIView):
                 message="Profile updated successfully",
             )
         return self.error_response("Validation failed", errors=serializer.errors)
+
+
+class StudentLoginView(BaseAPIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        serializer = StudentLoginSerializer(data=request.data)
+        if not serializer.is_valid():
+            return self.error_response('Invalid data', errors=serializer.errors)
+
+        auth_service = AuthService()
+        user = auth_service.authenticate_student(
+            identifier=serializer.validated_data['identifier'],
+            password=serializer.validated_data['password'],
+        )
+        refresh = RefreshToken.for_user(user)
+        return self.success_response({
+            'user': UserSerializer(user).data,
+            'tokens': {
+                'access': str(refresh.access_token),
+                'refresh': str(refresh),
+            },
+        }, message='Login successful')
+
+
+class StudentRegisterView(BaseAPIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        serializer = StudentRegisterSerializer(data=request.data)
+        if not serializer.is_valid():
+            return self.error_response('Registration failed', errors=serializer.errors)
+
+        auth_service = AuthService()
+        user = auth_service.register_student(
+            member_data=serializer.validated_data,
+            password=serializer.validated_data['password'],
+        )
+        return self.success_response(
+            {
+                'user': UserSerializer(user).data,
+                'message': 'Registration submitted. Your account will be active after admin approval.',
+            },
+            message='Registration successful',
+            status_code=status.HTTP_201_CREATED,
+        )

@@ -49,39 +49,65 @@ services:
       - ./backend:/app
     command: daphne -b 0.0.0.0 -p 8000 config.asgi:application
 
-  # Celery Worker
+  # Celery Worker (executes tasks queued by Beat)
   celery:
     build: ./backend
-    command: celery -A config worker --loglevel=info
+    command: celery -A config worker --loglevel=info --concurrency=2
     environment:
       DEBUG: "True"
       SECRET_KEY: "django-insecure-your-secret-key-here-change-in-production"
       DATABASE_URL: "postgresql://lms_user:lms_password@db:5432/lms_db"
       CELERY_BROKER_URL: "redis://redis:6379/0"
       CELERY_RESULT_BACKEND: "redis://redis:6379/0"
+      REMINDER_TASK_HOUR: "9"
+      REMINDER_TASK_MINUTE: "0"
+      OVERDUE_TASK_HOUR: "10"
+      OVERDUE_TASK_MINUTE: "0"
+      RESERVATION_TASK_HOUR: "11"
+      RESERVATION_TASK_MINUTE: "0"
+      OVERDUE_EVENING_TASK_HOUR: "18"
+      OVERDUE_EVENING_TASK_MINUTE: "0"
     depends_on:
-      - db
-      - redis
-      - backend
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      backend:
+        condition: service_started
     volumes:
       - ./backend:/app
+    restart: unless-stopped
 
-  # Celery Beat Scheduler
+  # Celery Beat — crontab from config/beat_schedule.py (CELERY_BEAT_SCHEDULE)
   celery-beat:
     build: ./backend
-    command: celery -A config beat --loglevel=info --scheduler django_celery_beat.schedulers:DatabaseScheduler
+    command: celery -A config beat --loglevel=info
     environment:
       DEBUG: "True"
       SECRET_KEY: "django-insecure-your-secret-key-here-change-in-production"
       DATABASE_URL: "postgresql://lms_user:lms_password@db:5432/lms_db"
       CELERY_BROKER_URL: "redis://redis:6379/0"
       CELERY_RESULT_BACKEND: "redis://redis:6379/0"
+      REMINDER_TASK_HOUR: "9"
+      REMINDER_TASK_MINUTE: "0"
+      OVERDUE_TASK_HOUR: "10"
+      OVERDUE_TASK_MINUTE: "0"
+      RESERVATION_TASK_HOUR: "11"
+      RESERVATION_TASK_MINUTE: "0"
+      OVERDUE_EVENING_TASK_HOUR: "18"
+      OVERDUE_EVENING_TASK_MINUTE: "0"
     depends_on:
-      - db
-      - redis
-      - backend
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      backend:
+        condition: service_started
+      celery:
+        condition: service_started
     volumes:
       - ./backend:/app
+    restart: unless-stopped
 
   # Frontend (Vite build + Nginx — proxies /api and /ws to backend)
   frontend:

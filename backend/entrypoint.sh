@@ -8,14 +8,23 @@ while ! nc -z db 5432; do
 done
 echo "PostgreSQL started"
 
-# Run migrations only for web process to prevent concurrent migration races
-# when celery and celery-beat start at the same time.
+echo "Waiting for redis..."
+while ! nc -z redis 6379; do
+  sleep 0.1
+done
+echo "Redis started"
+
 if [[ "$*" == *"runserver"* ]] || [[ "$*" == *"daphne"* ]]; then
   echo "Running migrations..."
   python manage.py migrate --noinput
   python manage.py setup_periodic_tasks || true
-else
-  echo "Skipping migrations for non-web process"
+  echo "Collecting static files..."
+  python manage.py collectstatic --noinput
+fi
+
+if [[ "$*" == *"beat"* ]]; then
+  echo "Celery Beat schedule (from config/beat_schedule.py):"
+  python manage.py list_periodic_tasks || true
 fi
 
 echo "Starting command: $*"

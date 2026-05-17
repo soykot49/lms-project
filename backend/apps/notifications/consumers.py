@@ -36,7 +36,10 @@ class NotificationConsumer(AsyncWebsocketConsumer):
     @database_sync_to_async
     def _get_snapshot_payload(self):
         notifications = Notification.objects.select_related('member').order_by('-created_at')[:5]
-        unread_count = Notification.objects.filter(is_read=False).count()
+        unread_count = Notification.objects.filter(
+            is_read=False,
+            audience='staff',
+        ).count()
         data = NotificationSerializer(notifications, many=True).data
         return {
             'type': 'notification_snapshot',

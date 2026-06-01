@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-import { Routes, Route, Navigate, useNavigate, Link } from "react-router-dom";
 
 // ============================================================
 // GLOBAL STYLES (injected once)
@@ -450,22 +449,22 @@ const Topbar = ({ title, showSearch, onSearch, unreadCount, onNotifClick, theme,
 // ============================================================
 // SIDEBAR COMPONENT
 // ============================================================
-const Sidebar = ({ activePage, onNavigate, badges, currentUser, onProfileClick }) => {
+const Sidebar = ({ activePage, onNavigate, badges, currentUser }) => {
   const navItems = [
     { section: "Main" },
-    { id: "dashboard", label: "Dashboard", icon: "🏠" },
-    { id: "books", label: "Books", icon: "📖", badge: badges.books },
-    { id: "members", label: "Members", icon: "👥" },
-    { id: "authors", label: "Authors", icon: "✍️" },
+    { id: "dashboard", label: "Dashboard", badge: badges.books },
+    { id: "books", label: "Books", badge: badges.books },
+    { id: "members", label: "Members", badge: 0 },
+    { id: "authors", label: "Authors", badge: 0 },
     { section: "Transactions" },
-    { id: "transactions", label: "Issue / Return", icon: "🔄" },
-    { id: "fines", label: "Fines", icon: "💰", badge: badges.fines },
-    { id: "reservations", label: "Reservations", icon: "🏷️" },
+    { id: "transactions", label: "Issue / Return", badge: 0 },
+    { id: "fines", label: "Fines", badge: badges.fines },
+    { id: "reservations", label: "Reservations", badge: 0 },
     { section: "Reports" },
-    { id: "reports", label: "Reports", icon: "📊" },
-    { id: "notifications", label: "Notifications", icon: "🔔", badge: badges.notifications },
+    { id: "reports", label: "Reports", badge: 0 },
+    { id: "notifications", label: "Notifications", badge: badges.notifications },
     { section: "Settings" },
-    { id: "settings", label: "Settings", icon: "⚙️" },
+    { id: "settings", label: "Settings", badge: 0 },
   ];
 
   return (
@@ -489,7 +488,7 @@ const Sidebar = ({ activePage, onNavigate, badges, currentUser, onProfileClick }
                 className={`nav-item${activePage === item.id ? " active" : ""}`}
                 onClick={() => onNavigate(item.id)}
               >
-                <span>{item.icon}</span>
+                {iconMap[item.id] && createElement(iconMap[item.id], { size: 18, strokeWidth: 2 })}
                 {item.label}
                 {item.badge > 0 && <span className="nav-badge">{item.badge}</span>}
               </button>
@@ -565,19 +564,19 @@ const DashboardPage = ({ onNavigate, unreadCount, theme, onToggleTheme }) => {
         {/* Stat Cards */}
         <div className="stats-grid">
           {[
-            { color: "gold", icon: "📚", val: stats.total_books ?? 0, label: "Total Books", change: `${stats.available_books ?? 0} currently available`, dir: "up" },
-            { color: "blue", icon: "👥", val: stats.total_members ?? 0, label: "Active Members", change: `${stats.total_members ?? 0} active members`, dir: "up" },
-            { color: "green", icon: "🔄", val: stats.active_transactions ?? 0, label: "Books Issued", change: `${stats.overdue_books ?? 0} overdue currently`, dir: "down" },
-            { color: "red", icon: "💰", val: `$${Number(stats.total_fines || 0).toFixed(2)}`, label: "Total Fines", change: `${stats.overdue_books ?? 0} overdue today`, dir: "up" },
+            { color: "gold", icon: BookStack, val: stats.total_books ?? 0, label: "Total Books", change: `${stats.available_books ?? 0} currently available`, dir: "up" },
+            { color: "blue", icon: Users, val: stats.total_members ?? 0, label: "Active Members", change: `${stats.total_members ?? 0} active members`, dir: "up" },
+            { color: "green", icon: RotateCcw, val: stats.active_transactions ?? 0, label: "Books Issued", change: `${stats.overdue_books ?? 0} overdue currently`, dir: "down" },
+            { color: "red", icon: DollarSign, val: `$${Number(stats.total_fines || 0).toFixed(2)}`, label: "Total Fines", change: `${stats.overdue_books ?? 0} overdue today`, dir: "up" },
           ].map((s, i) => (
             <div key={i} className={`stat-card ${s.color}`}>
-              <div className={`stat-icon ${s.color}`}>{s.icon}</div>
+              <div className={`stat-icon ${s.color}`}><s.icon size={24} strokeWidth={2} /></div>
               <div className="stat-val">{s.val}</div>
               <div className="stat-label">{s.label}</div>
               <div className={`stat-change ${s.dir}`}>
                 {s.dir === "up"
-                  ? <svg className="icon-svg sm" viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
-                  : <svg className="icon-svg sm" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+                  ? <ChevronUp size={14} strokeWidth={2} />
+                  : <ChevronDown size={14} strokeWidth={2} />
                 }
                 {s.change}
               </div>
@@ -588,13 +587,13 @@ const DashboardPage = ({ onNavigate, unreadCount, theme, onToggleTheme }) => {
         {/* Quick Actions */}
         <div className="qa-grid">
           {[
-            { icon: "📤", label: "Issue Book", page: "transactions" },
-            { icon: "📥", label: "Return Book", page: "transactions" },
-            { icon: "➕", label: "Add Member", page: "members" },
-            { icon: "📝", label: "Add Book", page: "books" },
+            { icon: Upload, label: "Issue Book", page: "transactions" },
+            { icon: Download, label: "Return Book", page: "transactions" },
+            { icon: Plus, label: "Add Member", page: "members" },
+            { icon: Edit, label: "Add Book", page: "books" },
           ].map((qa, i) => (
             <button key={i} className="qa-btn" onClick={() => onNavigate(qa.page)}>
-              <span className="qa-icon">{qa.icon}</span>
+              <span className="qa-icon"><qa.icon size={28} strokeWidth={1.5} /></span>
               <span>{qa.label}</span>
             </button>
           ))}
@@ -634,7 +633,7 @@ const DashboardPage = ({ onNavigate, unreadCount, theme, onToggleTheme }) => {
 
           <div className="panel">
             <div className="panel-hd">
-              <h2>🔔 Notifications</h2>
+              <h2><Bell size={16} style={{ display: "inline", marginRight: 8 }} /> Notifications</h2>
               <a onClick={() => onNavigate("notifications")}>See all</a>
             </div>
             <div className="notif-list">
@@ -644,7 +643,10 @@ const DashboardPage = ({ onNavigate, unreadCount, theme, onToggleTheme }) => {
                     background: n.notification_type === "overdue" ? "rgba(224,92,92,.12)" : "rgba(201,168,76,.12)",
                     color: n.notification_type === "overdue" ? "var(--red)" : "var(--accent)"
                   }}>
-                    <Icon id={n.notification_type === "overdue" ? "ic-alert" : "ic-clock"} size="sm" />
+                    {n.notification_type === "overdue"
+                      ? <AlertCircle size={16} strokeWidth={2} />
+                      : <Clock size={16} strokeWidth={2} />
+                    }
                   </div>
                   <div>
                     <div className="ni-title">{n.title}</div>
@@ -690,7 +692,10 @@ const DashboardPage = ({ onNavigate, unreadCount, theme, onToggleTheme }) => {
                     background: t.status === "returned" ? "rgba(62,207,142,.12)" : "rgba(92,157,224,.12)",
                     color: t.status === "returned" ? "var(--green)" : "var(--blue)"
                   }}>
-                    <Icon id={t.status === "returned" ? "ic-return" : "ic-upload"} />
+                    {t.status === "returned"
+                      ? <RotateCcw size={18} strokeWidth={2} />
+                      : <Upload size={18} strokeWidth={2} />
+                    }
                   </div>
                   <div className="act-info">
                     <p>{t.status === "returned" ? "Book returned" : "Book issued"} by {t.member_name}</p>
@@ -810,7 +815,7 @@ const BooksPage = ({ unreadCount, onNotifClick, theme, onToggleTheme }) => {
       <Topbar title="Books Management" showSearch onSearch={v => load(v)} unreadCount={unreadCount} onNotifClick={onNotifClick} theme={theme} onToggleTheme={onToggleTheme} />
       <div className="content">
         <div className="toolbar">
-          <button className="btn btn-primary" onClick={openAdd}><Icon id="ic-plus" size="sm" /> Add Book</button>
+          <button className="btn btn-primary" onClick={openAdd}><Plus size={16} strokeWidth={2} /> Add Book</button>
           <select className="filter-select"><option>All Books</option><option>Available</option><option>Issued</option><option>Reserved</option></select>
           <div className="spacer" />
           <span style={{ fontSize: 13, color: "var(--muted)" }}>{books.length} books</span>
@@ -820,7 +825,7 @@ const BooksPage = ({ unreadCount, onNotifClick, theme, onToggleTheme }) => {
             ? <div style={{ color: "var(--muted)" }}>No books found</div>
             : books.map(book => (
               <div key={book.id} className="book-card">
-                <div className="book-cover" style={{ fontSize: 40 }}>📖</div>
+                <div className="book-cover" style={{ fontSize: 40, display: "flex", alignItems: "center", justifyContent: "center" }}><BookOpen size={40} strokeWidth={1.5} /></div>
                 <div className="book-card-body">
                   <h3>{book.title}</h3>
                   <div className="author">{book.author_name}</div>
@@ -941,7 +946,7 @@ const MembersPage = ({ unreadCount, onNotifClick, theme, onToggleTheme }) => {
       <Topbar title="Members Management" showSearch unreadCount={unreadCount} onNotifClick={onNotifClick} theme={theme} onToggleTheme={onToggleTheme} />
       <div className="content">
         <div className="toolbar">
-          <button className="btn btn-primary" onClick={openAdd}><Icon id="ic-plus" size="sm" /> Add Member</button>
+          <button className="btn btn-primary" onClick={openAdd}><Plus size={16} strokeWidth={2} /> Add Member</button>
           <select className="filter-select"><option>All Members</option><option>Students</option><option>Faculty</option><option>Staff</option></select>
           <div className="spacer" />
           <span style={{ fontSize: 13, color: "var(--muted)" }}>{members.length} members</span>
@@ -957,12 +962,7 @@ const MembersPage = ({ unreadCount, onNotifClick, theme, onToggleTheme }) => {
                 <div className="mstat"><div className="val" style={{ color: "var(--blue)" }}>{m.active_borrowings || 0}</div><div className="lbl">Books Issued</div></div>
                 <div className="mstat"><div className="val" style={{ color: m.unpaid_fines_amount > 0 ? "var(--red)" : "var(--accent)" }}>${(m.unpaid_fines_amount || 0).toFixed(2)}</div><div className="lbl">Outstanding Fines</div></div>
               </div>
-              <div style={{ fontSize: 11, color: "var(--muted)", marginBottom: 8 }}>📧 {m.email}</div>
-              <div style={{ marginBottom: 12 }}>
-                {m.has_account
-                  ? <span className={`badge ${m.account_active ? "badge-green" : "badge-gold"}`}>{m.account_active ? "Login active" : "Pending approval"}</span>
-                  : <span className="badge badge-blue">No login</span>}
-              </div>
+              <div style={{ fontSize: 11, color: "var(--muted)", marginBottom: 12 }}>📧 {m.email}</div>
               <div className="member-actions">
                 <button className="sm-btn" onClick={() => openEdit(m.id)}>Edit</button>
                 <button className="sm-btn" onClick={async () => { const res = await request(`/members/${m.id}/history/`); if (res?.status === "success") alert(res.data.map(t => `${t.book_title} - ${t.status}`).join("\n") || "No history"); }}>History</button>
@@ -1090,7 +1090,7 @@ const AuthorsPage = ({ unreadCount, onNotifClick, theme, onToggleTheme }) => {
       <Topbar title="Author Management" showSearch unreadCount={unreadCount} onNotifClick={onNotifClick} theme={theme} onToggleTheme={onToggleTheme} />
       <div className="content">
         <div className="toolbar">
-          <button className="btn btn-primary" onClick={openAdd}><Icon id="ic-plus" size="sm" /> Add Author</button>
+          <button className="btn btn-primary" onClick={() => setModalOpen(true)}><Icon id="ic-plus" size="sm" /> Add Author</button>
           <div className="spacer" />
           <span style={{ fontSize: 13, color: "var(--muted)" }}>{authors.length} authors</span>
         </div>
@@ -1103,7 +1103,7 @@ const AuthorsPage = ({ unreadCount, onNotifClick, theme, onToggleTheme }) => {
                   <div className="author-avatar" style={{ background: "#5c9de0" }}>{(a.first_name || "A").charAt(0)}</div>
                   <div>
                     <div className="author-name">{a.full_name || `${a.first_name || ""} ${a.last_name || ""}`.trim()}</div>
-                    <div className="author-nationality">🌍 {a.nationality || "Unknown"}</div>
+                    <div className="author-nationality" style={{ display: "flex", alignItems: "center", gap: 4 }}><Globe size={12} /> {a.nationality || "Unknown"}</div>
                   </div>
                 </div>
                 <div className="author-stats">
@@ -1111,10 +1111,7 @@ const AuthorsPage = ({ unreadCount, onNotifClick, theme, onToggleTheme }) => {
                   <div className="astat"><div className="val" style={{ color: "var(--accent)" }}>{a.birth_year || "-"}</div><div className="lbl">Birth Year</div></div>
                 </div>
                 <div className="author-genre">📚 {a.genre || "General"}</div>
-                <div className="author-actions">
-                  <button type="button" className="sm-btn" onClick={() => openEdit(a.id)}>Edit</button>
-                  <button type="button" className="sm-btn del" onClick={() => removeAuthor(a.id, a.full_name || `${a.first_name} ${a.last_name}`.trim())} disabled={(a.books_count || 0) > 0} title={(a.books_count || 0) > 0 ? "Delete linked books first" : "Delete author"}>Delete</button>
-                </div>
+                <div className="author-actions"><button className="sm-btn" onClick={() => setModalOpen(true)}>Edit</button></div>
               </div>
             ))
           }
@@ -1213,15 +1210,10 @@ const TransactionsPage = ({ unreadCount, onNotifClick, theme, onToggleTheme }) =
       <Topbar title="Issue / Return Books" showSearch unreadCount={unreadCount} onNotifClick={onNotifClick} theme={theme} onToggleTheme={onToggleTheme} />
       <div className="content">
         <div className="toolbar">
-          <button type="button" className="btn btn-primary" onClick={openNew}><Icon id="ic-plus" size="sm" /> New Transaction</button>
-          <select className="filter-select" value={statusFilter} onChange={e => setStatusFilter(e.target.value)}>
-            <option value="all">All Transactions</option>
-            <option value="issued">Issued</option>
-            <option value="returned">Returned</option>
-            <option value="overdue">Overdue</option>
-          </select>
+          <button className="btn btn-primary" onClick={() => setModalOpen(true)}><Icon id="ic-plus" size="sm" /> New Transaction</button>
+          <select className="filter-select"><option>All Transactions</option><option>Issued</option><option>Returned</option><option>Overdue</option></select>
           <div className="spacer" />
-          <button type="button" className="btn btn-outline"><Icon id="ic-download" size="sm" /> Export</button>
+          <button className="btn btn-outline"><Icon id="ic-download" size="sm" /> Export</button>
         </div>
         <div className="panel">
           <div className="panel-hd"><h2>Transaction Records</h2></div>
@@ -1240,18 +1232,8 @@ const TransactionsPage = ({ unreadCount, onNotifClick, theme, onToggleTheme }) =
                     <td><span className={`badge badge-${t.status === "returned" ? "green" : t.status === "overdue" ? "red" : "blue"}`}>{t.status}</span></td>
                     <td>
                       {(t.status === "issued" || t.status === "overdue")
-                        ? (
-                          <button
-                            type="button"
-                            className="btn btn-outline"
-                            style={{ padding: "4px 10px", fontSize: 12 }}
-                            disabled={returningId === t.id}
-                            onClick={(e) => { e.stopPropagation(); returnBook(t.id); }}
-                          >
-                            {returningId === t.id ? "Returning…" : "Return"}
-                          </button>
-                        )
-                        : <span style={{ color: "var(--muted)", fontSize: 12 }}>—</span>
+                        ? <button className="btn btn-outline" style={{ padding: "4px 10px", fontSize: 12 }} onClick={() => returnBook(t.id)}>Return</button>
+                        : <button className="icon-btn"><Icon id="ic-edit" size="sm" /></button>
                       }
                     </td>
                   </tr>
@@ -1333,20 +1315,20 @@ const FinesPage = ({ unreadCount, onNotifClick, theme, onToggleTheme }) => {
       <div className="content">
         <div className="stats-grid">
           {[
-            { icon: "💰", val: `$${unpaidTotal.toFixed(2)}`, label: "Unpaid Fines", color: "var(--red)" },
-            { icon: "✅", val: `$${paidTotal.toFixed(2)}`, label: "Collected This Year", color: "var(--green)" },
-            { icon: "⚠️", val: membersWithUnpaid, label: "Members with Unpaid Fines", color: "var(--accent)" },
-            { icon: "📋", val: `$${Number(fineRate).toFixed(2)}`, label: "Fine Rate / Day", color: "var(--text)" },
+            { icon: DollarSign, val: `$${unpaidTotal.toFixed(2)}`, label: "Unpaid Fines", color: "var(--red)" },
+            { icon: Check, val: `$${paidTotal.toFixed(2)}`, label: "Collected This Year", color: "var(--green)" },
+            { icon: AlertCircle, val: membersWithUnpaid, label: "Members with Unpaid Fines", color: "var(--accent)" },
+            { icon: Info, val: `$${Number(fineRate).toFixed(2)}`, label: "Fine Rate / Day", color: "var(--text)" },
           ].map((s, i) => (
             <div key={i} className="stat-card">
-              <div className="stat-icon">{s.icon}</div>
+              <div className="stat-icon"><s.icon size={24} strokeWidth={2} /></div>
               <div className="stat-val" style={{ color: s.color }}>{s.val}</div>
               <div className="stat-label">{s.label}</div>
             </div>
           ))}
         </div>
         <div className="overdue-alert">
-          <span style={{ fontSize: 20 }}>⚠️</span>
+          <AlertCircle size={20} style={{ color: "var(--red)" }} />
           <div><strong style={{ color: "var(--red)" }}>{membersWithUnpaid} members</strong> have unpaid fines.</div>
         </div>
         <div className="toolbar">
@@ -1357,7 +1339,7 @@ const FinesPage = ({ unreadCount, onNotifClick, theme, onToggleTheme }) => {
             <option value="waived">Waived</option>
           </select>
           <div className="spacer" />
-          <button type="button" className="btn btn-outline" onClick={load}><Icon id="ic-refresh" size="sm" /> Refresh</button>
+          <button className="btn btn-outline"><Icon id="ic-download" size="sm" /> Export</button>
         </div>
         <div className="panel">
           <div className="panel-hd"><h2>Fine Records</h2></div>
@@ -1477,7 +1459,7 @@ const ReservationsPage = ({ unreadCount, onNotifClick, theme, onToggleTheme }) =
             : displayed.map(res => (
             <div key={res.id} className={`reserv-card ${res.status}`}>
               <div className="rc-hd">
-                <div className="rc-icon"><span style={{ fontSize: 24 }}>📚</span></div>
+                <div className="rc-icon"><BookStack size={24} strokeWidth={1.5} /></div>
                 <div><div className="rc-title">{res.book_title}</div><div className="rc-author">Reservation</div></div>
                 <div className="rc-badge"><span className={`badge badge-${badgeColor(res.status)}`}>{res.status}</span></div>
               </div>
@@ -1558,12 +1540,12 @@ const ReportsPage = ({ unreadCount, onNotifClick, theme, onToggleTheme }) => {
   const openReport = (title, data) => setReportModal({ open: true, title, data });
 
   const reports = [
-    { key: "inventory", title: "Inventory Report", icon: <Icon id="ic-package" size="xl" />, desc: `Total books: ${reportData.inventory?.total_books ?? "—"}, Available: ${reportData.inventory?.available_quantity ?? "—"}` },
-    { key: "members", title: "Member Report", icon: <Icon id="ic-users" size="xl" />, desc: `Total: ${reportData.members?.total_members ?? "—"}, Students: ${reportData.members?.by_type?.student ?? "—"}` },
-    { key: "circulation", title: "Circulation Report", icon: <Icon id="ic-refresh" size="xl" />, desc: `Issued (30d): ${reportData.circulation?.total_issued ?? "—"}, Returned: ${reportData.circulation?.total_returned ?? "—"}` },
-    { key: "fines", title: "Fine Report", icon: <Icon id="ic-money" size="xl" />, desc: `Unpaid: ৳${Number(reportData.fines?.total_unpaid ?? 0).toFixed(2)}, Members: ${reportData.fines?.members_with_fines ?? "—"}` },
-    { key: "stats", title: "Statistics Report", icon: <Icon id="ic-chart" size="xl" />, desc: `Books: ${reportData.stats?.stats?.total_books ?? "—"}, Members: ${reportData.stats?.stats?.total_members ?? "—"}` },
-    { key: "overdue", title: "Overdue Report", icon: <Icon id="ic-alert" size="xl" />, desc: `Overdue items: ${reportData.overdue?.total_overdue ?? "—"}` },
+    { icon: <Icon id="ic-package" size="xl" />, title: "Inventory Report", desc: `Total books: ${reportData.inventory?.total_books ?? "—"}, Available: ${reportData.inventory?.available_quantity ?? "—"}` },
+    { icon: <Icon id="ic-users" size="xl" />, title: "Member Report", desc: "Analyze member activity, registration trends, and membership statistics." },
+    { icon: <Icon id="ic-refresh" size="xl" />, title: "Circulation Report", desc: `Issued (30d): ${reportData.circulation?.total_issued ?? "—"}, Returned: ${reportData.circulation?.total_returned ?? "—"}` },
+    { icon: <Icon id="ic-money" size="xl" />, title: "Fine Report", desc: `Unpaid: $${(reportData.fines?.total_unpaid ?? 0).toFixed ? Number(reportData.fines?.total_unpaid ?? 0).toFixed(2) : "—"}, Members with fines: ${reportData.fines?.members_with_fines ?? "—"}` },
+    { icon: <Icon id="ic-chart" size="xl" />, title: "Statistics Report", desc: "View comprehensive statistics and analytics of library operations." },
+    { icon: <Icon id="ic-alert" size="xl" />, title: "Overdue Report", desc: `Total overdue items: ${reportData.overdue?.total_overdue ?? "—"}` },
   ];
 
   const reportPayload = (key) => ({

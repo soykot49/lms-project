@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
+import { BookOpen, Mail, X, ArrowRight } from "lucide-react";
 
 // ============================================================
 // GLOBAL STYLES (injected once)
@@ -412,7 +413,7 @@ const Modal = ({ id, title, open, onClose, children, footer }) => (
     <div className="modal">
       <div className="modal-hd">
         <h2>{title}</h2>
-        <button className="modal-close" onClick={onClose}>✕</button>
+        <button className="modal-close" onClick={onClose}><X size={20} /></button>
       </div>
       {children}
       {footer && <div className="modal-footer">{footer}</div>}
@@ -604,7 +605,7 @@ const DashboardPage = ({ onNavigate, unreadCount, theme, onToggleTheme }) => {
           <div className="panel">
             <div className="panel-hd">
               <h2>Recent Transactions</h2>
-              <a onClick={() => onNavigate("transactions")}>View All →</a>
+              <a onClick={() => onNavigate("transactions")}>View All <ArrowRight size={14} style={{ display: "inline", marginLeft: 4, verticalAlign: "middle" }} /></a>
             </div>
             <table>
               <thead>
@@ -962,7 +963,7 @@ const MembersPage = ({ unreadCount, onNotifClick, theme, onToggleTheme }) => {
                 <div className="mstat"><div className="val" style={{ color: "var(--blue)" }}>{m.active_borrowings || 0}</div><div className="lbl">Books Issued</div></div>
                 <div className="mstat"><div className="val" style={{ color: m.unpaid_fines_amount > 0 ? "var(--red)" : "var(--accent)" }}>${(m.unpaid_fines_amount || 0).toFixed(2)}</div><div className="lbl">Outstanding Fines</div></div>
               </div>
-              <div style={{ fontSize: 11, color: "var(--muted)", marginBottom: 12 }}>📧 {m.email}</div>
+              <div style={{ fontSize: 11, color: "var(--muted)", marginBottom: 12 }}><Mail size={14} style={{ display: "inline", marginRight: 6, verticalAlign: "middle" }} /> {m.email}</div>
               <div className="member-actions">
                 <button className="sm-btn" onClick={() => openEdit(m.id)}>Edit</button>
                 <button className="sm-btn" onClick={async () => { const res = await request(`/members/${m.id}/history/`); if (res?.status === "success") alert(res.data.map(t => `${t.book_title} - ${t.status}`).join("\n") || "No history"); }}>History</button>
@@ -1110,7 +1111,7 @@ const AuthorsPage = ({ unreadCount, onNotifClick, theme, onToggleTheme }) => {
                   <div className="astat"><div className="val" style={{ color: "var(--blue)" }}>{a.books_count || 0}</div><div className="lbl">Books</div></div>
                   <div className="astat"><div className="val" style={{ color: "var(--accent)" }}>{a.birth_year || "-"}</div><div className="lbl">Birth Year</div></div>
                 </div>
-                <div className="author-genre">📚 {a.genre || "General"}</div>
+                <div className="author-genre"><BookOpen size={16} style={{ display: "inline", marginRight: 6, verticalAlign: "middle" }} /> {a.genre || "General"}</div>
                 <div className="author-actions"><button className="sm-btn" onClick={() => setModalOpen(true)}>Edit</button></div>
               </div>
             ))
